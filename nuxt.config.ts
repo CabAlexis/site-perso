@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    "@nuxtjs/tailwindcss"
+    "@nuxtjs/tailwindcss",
   ],
   app: {
     head: {
@@ -9,13 +9,21 @@ export default defineNuxtConfig({
       title: 'Cabalex',
       link: [
         {
+          rel: 'preconnect',
+          href: 'href="https://fonts.gstatic.com"'
+        },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.googleapis.com'
+        },
+        {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap'
         },
         {
-          rel: 'preconnect',
-          href: 'href="https://fonts.gstatic.com"'
-        },
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'
+        }
       ]
     },
   },

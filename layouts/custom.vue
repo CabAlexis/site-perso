@@ -1,7 +1,7 @@
 <template>
-    <div class="flex flex-col w-full h-screen bg-green-50">
+    <div class="min-h-screen">
         <PartialsHeader />
-        <main class="flex-grow w-full h-full p-4 mb-auto">
+        <main class="flex flex-col flex-grow lg:w-9/12 mb-auto ml-auto mr-auto mt-40">
             <slot />
         </main>
         <PartialsFooter />
