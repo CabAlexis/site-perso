@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
+    "@nuxtjs/dotenv",
+    [
+       "@nuxtjs/recaptcha",
+      {
+        siteKey: process.env.SITE_KEY,
+      }
+    ]
   ],
   app: {
     head: {
