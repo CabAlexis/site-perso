@@ -76,21 +76,20 @@
                             'border-green-500': !v$.message.$invalid,
                         }"></textarea>
                 </div>
+                <VueRecaptcha :sitekey="runtimeConfig.siteKey" :loadRecaptchaScript="true" @verify="verifyRecaptcha" class="m-auto"/>
             </div>
-            <VueRecaptcha :sitekey="env" :loadRecaptchaScript="true" @verify="verifyRecaptcha"
-                @expired="expiredRecaptcha" />
             <div>
                 <div class="w-full flex justify-center items-center">
                     <button
-                        class="shadow bg-secondary hover:bg-primary hover:text-secondary focus:shadow-outline focus:outline-none text-primary font-bold py-2 px-4 rounded"
-                        type="button" @click="submitForm">
-                        Envoyer
-                    </button>
-                </div>
-                <div class="md:w-2/3"></div>
+                    class="shadow bg-secondary hover:bg-primary hover:text-secondary focus:shadow-outline focus:outline-none text-primary font-bold py-2 px-4 rounded"
+                    type="button" @click="submitForm">
+                    Envoyer
+                </button>
             </div>
-        </form>
-    </div>
+            <div class="md:w-2/3"></div>
+        </div>
+    </form>
+</div>
     <GlobalModal v-if="displayAlert" title="Succés" message="L'email a bien été envoyé !" />
 </template>
 
@@ -98,10 +97,15 @@
 import { required, email, helpers } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
+const runtimeConfig = useRuntimeConfig()
+
 const router = useRouter();
 
-const env = process.env.SITE_KEY;
+const token = ref(null);
 
+const verifyRecaptcha = (response) => {
+    token.value = response;
+}
 const formData = reactive({
     firstname: '',
     lastname: '',
@@ -142,8 +146,9 @@ const rules = computed(() => {
 const v$ = useVuelidate(rules, formData);
 
 const submitForm = () => {
+    console.log(token.value);
     v$.value.$validate();
-    if (!v$.value.$error) {
+    if (!v$.value.$error && token.value) {
         loading.value = true;
         const requestOptions = {
             method: "POST",
@@ -164,6 +169,7 @@ const submitForm = () => {
                 resetFormData();
                 loading.value = false;
                 displayAlert.value = true;
+                token.value = null;
                 setTimeout(() => {
                     displayAlert.value = false;
                 }, 4000);

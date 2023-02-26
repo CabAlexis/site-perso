@@ -30,4 +30,10 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/global.css',
   ],
+  runtimeConfig: {
+    public: {
+      siteKey: process.env.NUXT_PUBLIC_SITE_KEY,
+      secretKey: process.env.NUXT_PUBLIC_SECRET_KEY,
+    }
+  }
 });
