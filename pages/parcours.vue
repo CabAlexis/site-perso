@@ -77,24 +77,25 @@
             </p>
         </div>
     </div>
-    <div class="flex justify-between mb-24 mt-24">
-        <div class="w-9/12 mr-24"> 
-            <h2 class="text-2xl font-bold text-secondary mb-6 mt-24">Pour conclure</h2>
-            <p class="lg:text-lg">
-                Cela fait que 2 ans que je suis développeur et j’aime déjà enormément mon travail et ce milieu. Il
-                y a beaucoup de partage aussi bien technique que humain dans ce domaine, ce qui le rend encore plus
-                merveilleux a mes yeux. Maintenant je vais développer l’API du blog qui sera relié a ce front développer via
-                Nuxt 3 (framework VueJS).
-                
-                Hésitez pas à me contacter si vous voulez en savoir plus, ou juste discuter de tout et de rien.
-                
-                A bientot.
-            </p>
+        <div class="flex flex-col md:flex-row justify-center items-center md:justify-between lg:justify-around lg:mt-12">
+            <div class="w-8/12 ml-12">
+                <h2 class="text-2xl font-bold text-secondary mb-6 mt-24">Pour conclure</h2>
+                <p class="lg:text-lg">
+                    Cela fait que 2 ans que je suis développeur et j’aime déjà enormément mon travail et ce milieu. Il
+                    y a beaucoup de partage aussi bien technique que humain dans ce domaine, ce qui le rend encore plus
+                    merveilleux a mes yeux. Maintenant je vais développer l’API du blog qui sera relié a ce front développer
+                    via
+                    Nuxt 3 (framework VueJS).
+
+                    Hésitez pas à me contacter si vous voulez en savoir plus, ou juste discuter de tout et de rien.
+
+                    A bientot.
+                </p>
+            </div>
+            <div class="mb-4 md:ml-8 slide-in-image w-4/12 mr-24 mt-24">
+                <img src="/img/undraw_mic_drop_uuyg.png" alt="Photo de moi" class="w-full img-shadow-left">
+            </div>
         </div>
-        <div class="mb-4 md:ml-8 slide-in-image w-3/12 ml-24 mt-24">
-            <img src="/img/undraw_mic_drop_uuyg.png" alt="Photo de moi" class="w-full img-shadow-right">
-        </div>
-    </div>
 </template>
 
 <script setup>
