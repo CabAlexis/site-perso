@@ -77,6 +77,8 @@
                         }"></textarea>
                 </div>
             </div>
+            <VueRecaptcha :sitekey="process.env.SITE_KEY" :loadRecaptchaScript="true" @verify="verifyRecaptcha"
+                @expired="expiredRecaptcha" />
             <div>
                 <div class="w-full flex justify-center items-center">
                     <button
@@ -137,19 +139,9 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, formData);
 
-const submitForm = async () => {
+const submitForm = () => {
     v$.value.$validate();
     if (!v$.value.$error) {
-        // Start the verification process
-        const response = await verifyCaptcha();
-
-        console.log(response);
-
-        // Display error message if verification was not successful
-        if (!response.success) {
-            $recaptcha.reset();
-            return;
-        }
         loading.value = true;
         const requestOptions = {
             method: "POST",
@@ -178,14 +170,6 @@ const submitForm = async () => {
     }
 }
 
-onMounted(async () => {
-    // Initialize recaptcha instance
-    try {
-        await $recaptcha.init();
-    } catch (e) {
-        console.log(e);
-    }
-})
 definePageMeta({
     layout: 'custom'
 })
