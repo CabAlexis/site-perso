@@ -2,7 +2,7 @@
     <header class="bg-primary z-50">
         <div class="fixed top-0 w-full m-auto z-50 shadow-2xl">
         <!-- Navbar -->
-        <div class="flex justify-between flex-wrap md:flex-nowrap lg:px-72" @scroll="handleScroll"
+        <div class="flex justify-around flex-wrap md:flex-nowrap" @scroll="handleScroll"
             :class="changeColorOnScroll ? 'bg-primary' : 'bg-secondary'">
             <nav class="md:mr-6 md:flex md:justify-between w-full md:w-auto"
                 :class="changeColorOnScroll ? 'bg-primary' : 'bg-secondary'">
