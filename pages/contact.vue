@@ -77,7 +77,7 @@
                         }"></textarea>
                 </div>
             </div>
-            <VueRecaptcha :sitekey="process.env.SITE_KEY" :loadRecaptchaScript="true" @verify="verifyRecaptcha"
+            <VueRecaptcha :sitekey="env" :loadRecaptchaScript="true" @verify="verifyRecaptcha"
                 @expired="expiredRecaptcha" />
             <div>
                 <div class="w-full flex justify-center items-center">
@@ -99,6 +99,8 @@ import { required, email, helpers } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
 const router = useRouter();
+
+const env = process.env.SITE_KEY;
 
 const formData = reactive({
     firstname: '',
