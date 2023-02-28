@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-5xl title-style underline-long-title w-2/12">Mentions légales</h1>
+    <h1 class="text-5xl text-secondary title-style underline-long-title w-3/12 p-2 md:p-0">Mentions légales</h1>
 
     <h2 class="text-2xl font-bold text-secondary mb-6 mt-12"> Directeur de la publication</h2>
     <p>

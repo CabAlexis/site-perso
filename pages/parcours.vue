@@ -63,8 +63,10 @@
             </p>
         </div>
     </div>
+    <div class="flex flex-col justify-center items-center lg:mt-12">
+        <div class="w-8/12 ml-12">
     <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Où j'aimerais aller</h2>
-    <p class="lg:text-lg">
+    <p class="lg:text-lg item-center">
         Mes objectifs en tant que développeur, seraient de continuer mon apprentissage sur Laravel pour devenir à
         terme, un expert de ce framework ! Tout ce qui est OPS m'intéresse énormément également.Surtout, j’aimerais
         pouvoir transmettre mes connaissances, donc sûrement un blog qui arrivera sur ce site. Tout ce qui est
@@ -72,6 +74,10 @@
         obligatoire en tant que développeur, donc pourquoi dans un avenir plus lointain devenir un lead développeur
         respecté de ses pairs !
     </p>
+</div>
+<div class="mb-4 md:ml-8 w-4/12 mr-24">
+        </div>
+</div>
     <div class="flex flex-col md:flex-row justify-center items-center md:justify-between lg:justify-around lg:mt-12">
         <div class="w-8/12 ml-12">
             <h2 class="text-2xl font-bold text-secondary mb-6 mt-24">Pour conclure</h2>
