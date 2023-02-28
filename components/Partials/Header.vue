@@ -1,67 +1,88 @@
 <template>
     <header class="bg-primary z-50">
         <div class="fixed top-0 w-full m-auto z-50 shadow-2xl">
-        <!-- Navbar -->
-        <div class="flex justify-around flex-wrap md:flex-nowrap" @scroll="handleScroll"
-            :class="changeColorOnScroll ? 'bg-primary' : 'bg-secondary'">
-            <nav class="md:mr-6 md:flex md:justify-between w-full md:w-auto"
+            <!-- Navbar -->
+            <div class="flex justify-around flex-wrap md:flex-nowrap" @scroll="handleScroll"
                 :class="changeColorOnScroll ? 'bg-primary' : 'bg-secondary'">
-                <div class="px-6 py-8 flex justify-between">
-                    <NuxtLink class="flex items-center justify-self-start text-white mr-6" to="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            class="w-10 h-10 mr-1"
-                            :class="changeColorOnScroll ? 'text-secondary' : 'text-primary'">
-                            <path fill-rule="evenodd"
-                                d="M8.478 1.6a.75.75 0 01.273 1.025 3.72 3.72 0 00-.425 1.122c.058.057.118.114.18.168A4.491 4.491 0 0112 2.25c1.413 0 2.673.651 3.497 1.668.06-.054.12-.11.178-.167a3.717 3.717 0 00-.426-1.126.75.75 0 111.298-.75 5.22 5.22 0 01.671 2.045.75.75 0 01-.187.582c-.241.27-.505.52-.787.749a4.495 4.495 0 01.216 2.1c-.106.792-.753 1.295-1.417 1.403-.182.03-.364.057-.547.081.152.227.273.476.359.741a23.122 23.122 0 003.832-.802 23.241 23.241 0 00-.345-2.634.75.75 0 011.474-.28c.21 1.115.348 2.256.404 3.418a.75.75 0 01-.516.749c-1.527.5-3.119.855-4.76 1.05-.074.38-.22.735-.423 1.05a24.61 24.61 0 015.943 1.358.75.75 0 01.492.75 24.665 24.665 0 01-1.189 6.25.75.75 0 01-1.425-.47 23.141 23.141 0 001.077-5.307c-.5-.168-1.009-.32-1.524-.454.068.234.104.484.104.746 0 3.956-2.521 7.5-6 7.5-3.478 0-6-3.544-6-7.5 0-.262.037-.511.104-.746-.514.134-1.022.286-1.522.454a23.14 23.14 0 001.077 5.308.75.75 0 01-1.425.468 24.663 24.663 0 01-1.19-6.25.75.75 0 01.493-.749 24.593 24.593 0 014.964-1.24h.01c.321-.046.644-.085.969-.118a2.982 2.982 0 01-.424-1.05 24.614 24.614 0 01-4.76-1.05.75.75 0 01-.516-.75c.057-1.161.194-2.302.405-3.417a.75.75 0 011.474.28c-.164.862-.28 1.74-.345 2.634 1.237.37 2.517.641 3.832.802.085-.265.207-.514.359-.74a18.732 18.732 0 01-.547-.082c-.664-.108-1.311-.611-1.417-1.403a4.535 4.535 0 01.217-2.103 6.788 6.788 0 01-.788-.751.75.75 0 01-.187-.583 5.22 5.22 0 01.67-2.04.75.75 0 011.026-.273z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-                        <span class="font-semibold text-3xl tracking-tight link-underline"
-                            :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary' : 'text-primary link-underline-tertiary'">Cabalex</span>
-                    </NuxtLink>
-                    <!-- Mobile menu button -->
-                    <div class="md:hidden justify-self-end" :class="changeColorOnScroll ? 'bg-primary text-secondary' : 'bg-secondary text-primary'" @click="toggleNav">
-                        <button type="button" class="hover:text-accent focus:outline-none">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
-                                <path fill-rule="evenodd"
-                                    d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
-                                </path>
-                            </svg>
-                        </button>
+                <nav class="md:mr-6 md:flex md:justify-between w-full md:w-auto"
+                    :class="changeColorOnScroll ? 'bg-primary' : 'bg-secondary'">
+                    <div class="px-6 py-8 flex justify-between">
+                        <NuxtLink class="flex items-center justify-self-start text-white mr-6" to="/">
+                            <div class="tooltip-box">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-paw mr-1 h-10 w-10" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    :class="changeColorOnScroll ? 'text-secondary' : 'text-primary'">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path
+                                        d="M14.7 13.5c-1.1 -2 -1.441 -2.5 -2.7 -2.5c-1.259 0 -1.736 .755 -2.836 2.747c-.942 1.703 -2.846 1.845 -3.321 3.291c-.097 .265 -.145 .677 -.143 .962c0 1.176 .787 2 1.8 2c1.259 0 3 -1 4.5 -1s3.241 1 4.5 1c1.013 0 1.8 -.823 1.8 -2c0 -.285 -.049 -.697 -.146 -.962c-.475 -1.451 -2.512 -1.835 -3.454 -3.538z">
+                                    </path>
+                                    <path
+                                        d="M20.188 8.082a1.039 1.039 0 0 0 -.406 -.082h-.015c-.735 .012 -1.56 .75 -1.993 1.866c-.519 1.335 -.28 2.7 .538 3.052c.129 .055 .267 .082 .406 .082c.739 0 1.575 -.742 2.011 -1.866c.516 -1.335 .273 -2.7 -.54 -3.052z">
+                                    </path>
+                                    <path
+                                        d="M9.474 9c.055 0 .109 0 .163 -.011c.944 -.128 1.533 -1.346 1.32 -2.722c-.203 -1.297 -1.047 -2.267 -1.932 -2.267c-.055 0 -.109 0 -.163 .011c-.944 .128 -1.533 1.346 -1.32 2.722c.204 1.293 1.048 2.267 1.933 2.267z">
+                                    </path>
+                                    <path
+                                        d="M16.456 6.733c.214 -1.376 -.375 -2.594 -1.32 -2.722a1.164 1.164 0 0 0 -.162 -.011c-.885 0 -1.728 .97 -1.93 2.267c-.214 1.376 .375 2.594 1.32 2.722c.054 .007 .108 .011 .162 .011c.885 0 1.73 -.974 1.93 -2.267z">
+                                    </path>
+                                    <path
+                                        d="M5.69 12.918c.816 -.352 1.054 -1.719 .536 -3.052c-.436 -1.124 -1.271 -1.866 -2.009 -1.866c-.14 0 -.277 .027 -.407 .082c-.816 .352 -1.054 1.719 -.536 3.052c.436 1.124 1.271 1.866 2.009 1.866c.14 0 .277 -.027 .407 -.082z">
+                                    </path>
+                                </svg>
+                                <div class="tooltip">
+                                    <span class="text">Pourquoi une patte d'ours ? Car cela me correspond bien.</span>
+                                </div>
+                            </div>
+                            <span class="font-semibold text-3xl tracking-tight link-underline"
+                                :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary' : 'text-primary link-underline-tertiary'">Cabalex</span>
+                        </NuxtLink>
+                        <!-- Mobile menu button -->
+                        <div class="md:hidden justify-self-end"
+                            :class="changeColorOnScroll ? 'bg-primary text-secondary' : 'bg-secondary text-primary'"
+                            @click="toggleNav">
+                            <button type="button" class="hover:text-accent focus:outline-none">
+                                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
+                                    <path fill-rule="evenodd"
+                                        d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+                <div :class="showMenu ? 'flex w-full' : 'hidden'"
+                    class="md:flex md:flex-row md:items-center md:space-x-10 md:mt-4 justify-end md:slide-in-from-right">
+                    <div class="text-sm md:flex mr-4 md:mr-0 mb-4 md:md-0">
+                        <NuxtLink to="/parcours" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
+                            @click="showMenu = false"
+                            :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
+                            Mon parcours
+                        </NuxtLink>
+                        <NuxtLink to="/experiences" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
+                            @click="showMenu = false"
+                            :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
+                            Mes expériences
+                        </NuxtLink>
+                        <NuxtLink to="/contact" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
+                            @click="showMenu = false"
+                            :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
+                            Me contacter
+                        </NuxtLink>
+                    </div>
+                    <div class="hidden md:block md:mb-4">
+                        <a href="/img/CV_Alexis_Cabillic.pdf" target="_blank" download="CV_Alexis_Cabillic.pdf"
+                            class="inline-block text-sm px-4 py-2 leading-none border-4 hover:border-transparent animate-bounce font-bold mr-4 rounded-lg"
+                            :class="changeColorOnScroll ? 'text-secondary border-secondary hover:text-primary hover:bg-secondary' : 'text-primary border-primary hover:text-secondary hover:bg-primary'">Télécharger
+                            mon CV</a>
                     </div>
                 </div>
-            </nav>
-            <div :class="showMenu ? 'flex w-full' : 'hidden'"
-                class="md:flex md:flex-row md:items-center md:space-x-10 md:mt-4 justify-end md:slide-in-from-right">
-                <div class="text-sm md:flex mr-4 md:mr-0 mb-4 md:md-0">
-                    <NuxtLink to="/parcours" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
-                        @click="showMenu = false"
-                        :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
-                        Mon parcours
-                    </NuxtLink>
-                    <NuxtLink to="/experiences" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
-                        @click="showMenu = false"
-                        :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
-                        Mes expériences
-                    </NuxtLink>
-                    <NuxtLink to="/contact" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
-                        @click="showMenu = false"
-                        :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
-                        Me contacter
-                    </NuxtLink>
-                </div>
-                <div class="hidden md:block md:mb-4">
-                    <a href="/img/CV_Alexis_Cabillic.pdf" target="_blank" download="CV_Alexis_Cabillic.pdf"
-                        class="inline-block text-sm px-4 py-2 leading-none border-4 hover:border-transparent animate-bounce font-bold mr-4 rounded-lg"
-                        :class="changeColorOnScroll ? 'text-secondary border-secondary hover:text-primary hover:bg-secondary' : 'text-primary border-primary hover:text-secondary hover:bg-primary'">Télécharger
-                        mon CV</a>
-                </div>
             </div>
-        </div>
-        <!-- Navbar -->
+            <!-- Navbar -->
 
-    </div>
-</header>
+        </div>
+    </header>
 </template>
 
 <script setup>
@@ -97,6 +118,7 @@ onUnmounted(() => {
     background-repeat: no-repeat;
     transition: background-size .5s ease-in-out;
 }
+
 .link-underline-tertiary {
     background-image: linear-gradient(transparent, transparent), linear-gradient(#A7ACD9, #A7ACD9)
 }
@@ -104,5 +126,34 @@ onUnmounted(() => {
 .link-underline:hover {
     background-size: 100% 5px;
     background-position: 0 100%
+}
+.tooltip-box {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-box:hover .tooltip {
+  opacity: 1;
+}
+
+.tooltip {
+  margin-bottom: 1rem;
+  color: #164E63;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 2px;
+
+  width: 250px;
+  bottom: -200%;
+  left: 50%;
+  margin-left: -60px;
+  padding: 0.5rem;
+  opacity: 0;
+  transition: opacity 1s;
+
+  position: absolute;
+  z-index: 1;
+
+  background: #FFF7D6;
 }
 </style>

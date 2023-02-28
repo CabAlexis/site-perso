@@ -3,7 +3,7 @@
         <div class="flex justify-between">
             <div class="flex flex-col">
                 <span class="text-sm text-secondary sm:text-center font-bold">© {{ new Date().getFullYear() }} Cabalex. Tout
-                    droits réservés.
+                    droits réservés. <NuxtLink to="/mentions-legales" class="hover:underline">Mentions légales</NuxtLink>
                 </span>
                 <span class="text-sm text-secondary">Merci à <a href="https://undraw.co/" class="hover:underline">Undraw</a> pour les illustrations.</span>
             </div>

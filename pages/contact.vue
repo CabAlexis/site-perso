@@ -19,7 +19,7 @@
 
 
 
-            <h2 class="text-5xl title-style underline-short-title">Je vous écoute</h2>
+            <h1 class="text-5xl title-style underline-short-title">Je vous écoute</h1>
         </div>
         <form class="w-full max-w-lg" ref="form">
             <div class="flex flex-wrap -mx-3 mb-6">
