@@ -82,7 +82,7 @@
                 <div class="w-full flex justify-center items-center">
                     <button
                     class="shadow bg-secondary hover:bg-primary hover:text-secondary focus:shadow-outline focus:outline-none text-primary font-bold py-2 px-4 rounded"
-                    type="button" @click="submitForm">
+                    type="button" @click="submitForm" aria-label="Envoyer">
                     Envoyer
                 </button>
             </div>

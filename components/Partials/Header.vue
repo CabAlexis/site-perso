@@ -42,7 +42,7 @@
                         <div class="md:hidden justify-self-end"
                             :class="changeColorOnScroll ? 'bg-primary text-secondary' : 'bg-secondary text-primary'"
                             @click="toggleNav">
-                            <button type="button" class="hover:text-accent focus:outline-none">
+                            <button type="button" class="hover:text-accent focus:outline-none" aria-label="Affichage navigation mobile">
                                 <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
                                     <path fill-rule="evenodd"
                                         d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">

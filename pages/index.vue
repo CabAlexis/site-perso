@@ -171,14 +171,14 @@
     <div class="flex justify-between items-center mt-24">
       <div class="w-full ml-12">
         <h2 class="text-2xl font-bold text-secondary mb-6 mt-8">Outils</h2>
-        <div class="flex flex-wrap">
-          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2">Git</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2">Table Plus</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2">PhpMyAdmin</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2">Méthodologie Agile</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2">Docker</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2">Postman</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2">Insomnia</div>
+        <div class="flex flex-wrap items-center">
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Git</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Table Plus</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">PhpMyAdmin</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Méthodologie Agile</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Docker</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Postman</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Insomnia</div>
         </div>
       </div>
       <div class="mb-4 md:ml-8 slide-in-image w-4/12">
@@ -198,20 +198,20 @@
       </div>
       <div class="w-full ml-24">
         <h2 class="text-2xl font-bold text-secondary mb-6 mt-8">Relationnel</h2>
-        <div class="flex flex-wrap">
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Sociabilité</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Adaptabilité</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Relation client</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Intelligence émotionelle</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Esprit d'équipe</div>
+        <div class="flex flex-wrap items-center">
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Sociabilité</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Adaptabilité</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Relation client</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Intelligence émotionelle</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Esprit d'équipe</div>
         </div>
         <h2 class="text-2xl font-bold text-secondary mb-6 mt-8">Organisationnel</h2>
         <div class="flex flex-wrap">
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Rigoureux</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Gestion du stress</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Apprentissage rapide</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Pensée logique</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2">Télétravail</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Rigoureux</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Gestion du stress</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Apprentissage rapide</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Pensée logique</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Télétravail</div>
         </div>
       </div>
 

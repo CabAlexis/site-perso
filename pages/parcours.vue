@@ -84,12 +84,12 @@
             <p class="lg:text-lg">
                 Cela fait que 2 ans que je suis développeur et j’aime déjà énormément mon travail et ce milieu. Il y a
                 beaucoup de partage aussi bien technique que humain dans ce domaine, ce qui le rend encore plus merveilleux
-                à mes yeux. Maintenant, je vais développer l’API du blog qui sera relié à ce front développer via Nuxt 3
+                à mes yeux. Maintenant, je vais développer l’API du blog qui sera relié à ce front développé via Nuxt 3
                 (framework VueJS). N'hésitez pas à me contacter si vous voulez en savoir plus, ou juste discuter de tout et
                 de rien.
             </p>
             <p class="lg:text-lg font-bold">
-                A bientôt et merci de votre visite.
+                A bientôt et merci de m'avoir lu.
             </p>
         </div>
         <div class="mb-4 md:ml-8 slide-in-image w-4/12 mr-24 mt-24">

@@ -11,6 +11,9 @@ export default defineNuxtConfig({
         // <meta name="description" content="My amazing site">
         { name: 'description', content: "Développeur avec 2 ans d'expérience, ayant fait le choix de me reconvertir dans ce domaine après beaucoup d'expériences différentes. Venez découvrir mon site." }
       ],
+      htmlAttrs: {
+        lang: 'fr'
+      },
       link: [
         {
           rel:"icon",
