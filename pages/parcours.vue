@@ -6,96 +6,90 @@
                 clip-rule="evenodd" />
         </svg>
 
-        <h2 class="text-5xl title-style underline-long-title">Développeur : Quand, pourquoi et ensuite ?</h2>
+        <h1 class="text-5xl title-style underline-long-title">Développeur : Quand, pourquoi et ensuite ?</h1>
     </div>
     <div class="flex flex-col md:flex-row justify-center items-center md:justify-between lg:justify-around lg:mt-12">
         <div class="mb-4 md:ml-8 slide-in-image w-4/12 mr-24">
             <img src="/img/IMG20220525193022.jpg" alt="Photo de moi" class="w-full img-shadow-left">
         </div>
         <div class="w-8/12 ml-12">
-            <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">D'ou je viens</h2>
+            <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">D'où je viens</h2>
             <p class="lg:text-lg">
-                Après une scolarité hmmm.. Complexe je dirais, j’ai quitté lé lycée au milieu de ma terminale S, après avoir
-                fait acte de présence à mon examen du bac, j’ai décidé d’essayer de trouver ma voie. J’ai donc commencer par
-                faire un service civique, quoi de mieux pour se trouver que d’aider les autres ?
-                Mais je n’ai pas bcp plus avancé malheureusement..
-
-                J’ai donc trouvé un travail de livreur de sushi, pour ne pas rester sans rien faire car je deteste ça.
-                Ensuite au bout de quelques temps je suis passé serveur. Ma loyauté et ma conscience professionnelle m’ont
-                permis de rapidement gravir les échellons, je suis passé manager adjoint d’un restaurant puis manager.
-
-                Sauf que, burn out.. Ce fut une période très compliquée pour moi.. Suite à ça je ne voulais plus repartir en
-                restauration et je voulais (re)trouver ma voie.
-
-                J’ai donc trouvé une poste de commercial web (ca commence). Sauf qu’au bout de 1 an, il faut croire que
-                j’étais pas totalement remis de ma depression, j’ai tout envoyé promener.
-
-                J’ai pris le temps de prendre soin de moi avant de vraiment prendre une décision sur mes projets futurs, et
-                un ami de mon frere m’a parlé de freecodecamp pour voir si le développement pourrait m’interesser.
-
-                Et BINGO ! 3 mois après la découverte du HTML, j’ai commencé une formation au sein de l’organisme O’Clock.
-                Puis 6 mois après cette formation j’ai trouvé un stage.
+                La scolarité m’ayant laissé un goût amer, j’ai quitté lé lycée au milieu de ma terminale S après avoir fait
+                acte de présence pour l’examen du bac. J’ai décidé d’essayer de trouver ma voie.
             </p>
-            <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Ou j'en suis</h2>
             <p class="lg:text-lg">
-                Comment j’ai trouvé mon stage, c’était une situation plutot cocasse, asseyez-vous je vais tout vous
-                raconter.
-
-                Après un entretien avec un développeur freelance qui voulait recruter un développeur pour créer sa boite
-                avec qui on s’est super bien entendu directement ! Il m’a avoué qu’il pouvait pas se permettre de recruter
-                un dev aussi junior comme premier recrutement.
-                Mais après une première expérience assez attroce j’ai décidé de le rappeler afin de lui demander de me
-                prendre en stage, je m’étais déjà renseigne sur toutes les conditions et les documents à prévoir pour me
-                prendre en stage eheh.
-
-                Il m’a dit oui ! Et il avait également trouvé un développeur.
-
-                C’était un stage de 3 mois (normalement). J’ai donc découvert Laravel lors de ce stage ainsi que VueJS.
-
-                Après quelques semaines, il s’est rendu compte que l’autre développeur avait très probablement menti sur ses
-                compétences. Il m’a donc proposé d’écouter mon stage et de “prendre la place” de l’autre développeur. J’ai
-                bien sur accepté directement.
-
-                Donc au bout de 2 mois de stage sur 3, je signe mon CDI.
-
-                La montée en compétence a du être plus rapide et efficace que prévu car j’ai du reprendre le projet client
-                du dit développeur.
-                J’ai quand meme adoré cette période !
-
-                Et ce la fait donc maintenant 2 ans que je suis développeur au sein de cette entreprise, nous sommes pas
-                passés de 2 à 5 développeurs en 2 ans !
+                J’ai alors commencé par faire un service civique. Quoi de mieux pour se trouver que d’aider les autres ?
+                Mais cette expérience ne m’a pas permis d’avancer dans mon choix de carrière malheureusement.
+                Par la suite, j'ai trouvé un travail de livreur de sushi, car je déteste rester inactif. Ensuite, au bout de
+                quelque temps, j’ai évolué et je suis passé serveur en restauration au sein de cette même entreprise. Ma
+                loyauté et ma conscience professionnelle m’ont permis de rapidement gravir les échelons, je suis passé
+                manager adjoint d’un restaurant puis manager.
             </p>
-            <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Ou j'aimerais aller</h2>
             <p class="lg:text-lg">
-                Mes objectifs en tant que développeur, ca serait de continuer mon apprentissage sur Laravel afin à termes de
-                devenir un expert de ce framework !
-                Tout ce qui est OPS m’interesse enormément également, et surtout j’aimerais pouvoir transmettre mes
-                connaissances, donc surement un blog qui arrivera sur ce site.
-                Tout ce qui est mangement d’équipe m’attire pas forcément, mais transmettre ses connaissances est pour moi
-                une qualité obligatoire en tant que développeur, donc pourquoi dans un avenir plus lointain devenir un lead
-                développeur respectés de ses pairs !
+                Le stress et les soucis personnels m’ont mené au burn out. Ce fut une période très compliquée pour moi…
+                Suite à ça je ne voulais plus repartir en restauration et je voulais (re)trouver ma voie. J’ai donc trouvé
+                un poste de commercial web. Mais, au bout d' 1 an, je me suis rendu compte que je n’étais pas
+                totalement remis de ma dépression, j’ai tout envoyé promener.
+                J’ai pris le temps nécessaire pour aller mieux avant de décider sur mes projets futurs. Un ami de mon frère
+                m’a parlé de freecodecamp pour voir si le développement pourrait m'intéresser. Et BINGO ! 3 mois après la
+                découverte du HTML, j’ai commencé une formation au sein de l’organisme O’Clock.
+            </p>
+            <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Où j'en suis</h2>
+            <p class="lg:text-lg">
+                Comment j’ai trouvé mon stage? C'était une situation plutôt cocasse. Je suis entré en contact avec un développeur
+                freelance qui voulait recruter un développeur pour créer sa
+                boîte et nous nous sommes bien entendus directement !
+            </p>
+            <p class="lg:text-lg">
+                Il m’a avoué ne pas pouvoir se permettre de recruter un dev aussi junior comme première recrue. Mais, après
+                une première expérience assez atroce, j'ai décidé de forcer le destin et de le rappeler afin d’obtenir un
+                stage dans sa société. <span class="font-bold">Il m’a dit oui !</span>
+            </p>
+            <p class="lg:text-lg">
+                Son équipe se composait alors de 3 personnes, lui-même en tant que patron, un développeur recruté avant que
+                je n’arrive et de moi en tant que stagiaire. Il était prévu que ce stage dure trois mois.
+                Lors de ce stage j'ai découvert Laravel ainsi que VueJS. Après quelques semaines, il s’est rendu compte que
+                l’autre développeur avait très probablement menti sur ses compétences.
+            </p>
+            <p class="lg:text-lg">
+                Il m’a donc proposé d’écourter mon stage et de “prendre la place” de son employé. J’ai bien sûr accepté
+                directement. C’est comme ça qu’au bout
+                de 2 mois de stage sur 3, je signe mon CDI. Il a fallu que je me challenge en étant plus efficace et plus
+                rapide car mon patron m’a placé sur le projet client dudit développeur. J’ai adoré cette période car j’ai
+                beaucoup appris ! Cela fait désormais 2 ans que j’évolue au sein de cette entreprise, notre équipe s’est
+                agrandie, nous sommes passés de 2 à 5 développeurs en 2 ans !
+
             </p>
         </div>
     </div>
-        <div class="flex flex-col md:flex-row justify-center items-center md:justify-between lg:justify-around lg:mt-12">
-            <div class="w-8/12 ml-12">
-                <h2 class="text-2xl font-bold text-secondary mb-6 mt-24">Pour conclure</h2>
-                <p class="lg:text-lg">
-                    Cela fait que 2 ans que je suis développeur et j’aime déjà enormément mon travail et ce milieu. Il
-                    y a beaucoup de partage aussi bien technique que humain dans ce domaine, ce qui le rend encore plus
-                    merveilleux a mes yeux. Maintenant je vais développer l’API du blog qui sera relié a ce front développer
-                    via
-                    Nuxt 3 (framework VueJS).
-
-                    Hésitez pas à me contacter si vous voulez en savoir plus, ou juste discuter de tout et de rien.
-
-                    A bientot.
-                </p>
-            </div>
-            <div class="mb-4 md:ml-8 slide-in-image w-4/12 mr-24 mt-24">
-                <img src="/img/undraw_mic_drop_uuyg.png" alt="Photo de moi" class="w-full img-shadow-left">
-            </div>
+    <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Où j'aimerais aller</h2>
+    <p class="lg:text-lg">
+        Mes objectifs en tant que développeur, seraient de continuer mon apprentissage sur Laravel pour devenir à
+        terme, un expert de ce framework ! Tout ce qui est OPS m'intéresse énormément également.Surtout, j’aimerais
+        pouvoir transmettre mes connaissances, donc sûrement un blog qui arrivera sur ce site. Tout ce qui est
+        management d’équipe ne m’attire pas forcément, mais transmettre ses connaissances est pour moi une qualité
+        obligatoire en tant que développeur, donc pourquoi dans un avenir plus lointain devenir un lead développeur
+        respecté de ses pairs !
+    </p>
+    <div class="flex flex-col md:flex-row justify-center items-center md:justify-between lg:justify-around lg:mt-12">
+        <div class="w-8/12 ml-12">
+            <h2 class="text-2xl font-bold text-secondary mb-6 mt-24">Pour conclure</h2>
+            <p class="lg:text-lg">
+                Cela fait que 2 ans que je suis développeur et j’aime déjà énormément mon travail et ce milieu. Il y a
+                beaucoup de partage aussi bien technique que humain dans ce domaine, ce qui le rend encore plus merveilleux
+                à mes yeux. Maintenant, je vais développer l’API du blog qui sera relié à ce front développer via Nuxt 3
+                (framework VueJS). N'hésitez pas à me contacter si vous voulez en savoir plus, ou juste discuter de tout et
+                de rien.
+            </p>
+            <p class="lg:text-lg font-bold">
+                A bientôt et merci de votre visite.
+            </p>
         </div>
+        <div class="mb-4 md:ml-8 slide-in-image w-4/12 mr-24 mt-24">
+            <img src="/img/undraw_mic_drop_uuyg.png" alt="Photo de moi" class="w-full img-shadow-left">
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -103,3 +97,9 @@ definePageMeta({
     layout: 'custom'
 })
 </script>
+
+<style scoped>
+p {
+    margin: 1rem;
+}
+</style>
