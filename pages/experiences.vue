@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-5xl title-style text-secondary underline-long-title w-1/6">Mes expériences</h1>
+    <h1 class="text-5xl title-style text-secondary underline-long-title w-2/6">Mes expériences</h1>
     <div class="timeline">
         <div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
             <div class="timeline__event__icon">
