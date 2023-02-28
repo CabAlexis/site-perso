@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-primary z-50">
+    <header class="bg-primary">
         <div class="fixed top-0 w-full m-auto z-50 shadow-2xl">
             <!-- Navbar -->
             <div class="flex justify-around flex-wrap md:flex-nowrap" @scroll="handleScroll"
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <span class="font-semibold text-3xl tracking-tight link-underline"
-                                :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary' : 'text-primary link-underline-tertiary'">Cabalex</span>
+                                :class="changeColorOnScroll ? 'text-secondary link-underline-secondary' : 'text-primary link-underline-primary'">Cabalex</span>
                         </NuxtLink>
                         <!-- Mobile menu button -->
                         <div class="md:hidden justify-self-end"
@@ -57,17 +57,17 @@
                     <div class="text-sm md:flex mr-4 md:mr-0 mb-4 md:md-0">
                         <NuxtLink to="/parcours" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
                             @click="showMenu = false"
-                            :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
+                            :class="changeColorOnScroll ? 'text-secondary link-underline-secondary' : 'text-primary link-underline-primary'">
                             Mon parcours
                         </NuxtLink>
                         <NuxtLink to="/experiences" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
                             @click="showMenu = false"
-                            :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
+                            :class="changeColorOnScroll ? 'text-secondary link-underline-secondary' : 'text-primary link-underline-primary'">
                             Mes expériences
                         </NuxtLink>
                         <NuxtLink to="/contact" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
                             @click="showMenu = false"
-                            :class="changeColorOnScroll ? 'text-secondary link-underline-tertiary hover:text-accent' : 'text-primary link-underline-tertiary hover:text-accent'">
+                            :class="changeColorOnScroll ? 'text-secondary link-underline-secondary' : 'text-primary link-underline-primary'">
                             Me contacter
                         </NuxtLink>
                     </div>
@@ -119,8 +119,11 @@ onUnmounted(() => {
     transition: background-size .5s ease-in-out;
 }
 
-.link-underline-tertiary {
-    background-image: linear-gradient(transparent, transparent), linear-gradient(#A7ACD9, #A7ACD9)
+.link-underline-secondary {
+    background-image: linear-gradient(transparent, transparent), linear-gradient(#164E63, #164E63)
+}
+.link-underline-primary {
+    background-image: linear-gradient(transparent, transparent), linear-gradient(#FFF7D6, #FFF7D6)
 }
 
 .link-underline:hover {
