@@ -58,7 +58,7 @@ body{
 }
 
 .underline-short-title {
-  padding: 30px 0 8px;
+  padding: 30px 8px 8px 8px;
   position: relative;
 }
 
@@ -75,6 +75,6 @@ body{
 }
 
 .underline-long-title {
-  padding: 30px 0 8px;
+  padding: 30px 8px 8px 8px;
   position: relative;
 }

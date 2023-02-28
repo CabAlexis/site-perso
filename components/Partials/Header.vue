@@ -72,7 +72,7 @@
                         </NuxtLink>
                     </div>
                     <div class="hidden md:block md:mb-4">
-                        <a href="/img/CV_Alexis_Cabillic.pdf" target="_blank" download="CV_Alexis_Cabillic.pdf"
+                        <a href="/img/CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf" target="_blank" download="CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf"
                             class="inline-block text-sm px-4 py-2 leading-none border-4 hover:border-transparent animate-bounce font-bold mr-4 rounded-lg"
                             :class="changeColorOnScroll ? 'text-secondary border-secondary hover:text-primary hover:bg-secondary' : 'text-primary border-primary hover:text-secondary hover:bg-primary'">Télécharger
                             mon CV</a>

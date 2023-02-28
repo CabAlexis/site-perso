@@ -68,7 +68,7 @@
     <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Où j'aimerais aller</h2>
     <p class="lg:text-lg item-center">
         Mes objectifs en tant que développeur, seraient de continuer mon apprentissage sur Laravel pour devenir à
-        terme, un expert de ce framework ! Tout ce qui est OPS m'intéresse énormément également.Surtout, j’aimerais
+        terme, un expert de ce framework ! Tout ce qui est OPS m'intéresse énormément également. Surtout, j’aimerais
         pouvoir transmettre mes connaissances, donc sûrement un blog qui arrivera sur ce site. Tout ce qui est
         management d’équipe ne m’attire pas forcément, mais transmettre ses connaissances est pour moi une qualité
         obligatoire en tant que développeur, donc pourquoi dans un avenir plus lointain devenir un lead développeur
