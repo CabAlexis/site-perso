@@ -227,8 +227,8 @@ definePageMeta({
 
 <style scoped>
 .tailwind {
-  width:2.5rem;
-  height:2.5rem;
+  width:2rem;
+  height:2rem;
   display:inline-block;
   background:#FFF7D6;
   -webkit-mask:url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1200px-Tailwind_CSS_Logo.svg.png") center/contain;
