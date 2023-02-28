@@ -214,7 +214,7 @@
           <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Télétravail</div>
         </div>
       </div>
-
+      
     </div>
   </div>
 </template>
