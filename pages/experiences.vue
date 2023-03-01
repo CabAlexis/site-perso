@@ -6,7 +6,7 @@
                 <font-awesome-icon icon="fa-solid fa-computer fa-2xl"/>
 
             </div>
-            <div class="timeline__event__date">
+            <div class="timeline__event__date whitespace-normal md:whitespace-nowrap">
                 Avril 2021 à aujourd'hui
             </div>
             <div class="timeline__event__content">
@@ -241,7 +241,6 @@ h2 {
             display: flex;
             align-items: center;
             justify-content: center;
-            white-space: nowrap;
             padding: 0 $spacing;
             border-radius: $bdrs 0 0 $bdrs;
         }

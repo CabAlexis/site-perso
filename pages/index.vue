@@ -2,7 +2,7 @@
   <div class="bg-primary p-24 m-8 rounded-xl">
     <div class="flex flex-col px-6 md:px-12 w-full items-center">
       <h1 class="text-5xl font-bold text-secondary title-style">Alexis Cabillic</h1>
-      <span class="text-2xl text-secondary title-style">Développeur Web</span>
+      <span class="text-2xl text-secondary title-style mt-4">Développeur FullStack Web et Web Mobile</span>
     </div>
   </div>
   <div class="m-auto mb-12">
