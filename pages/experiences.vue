@@ -16,6 +16,9 @@
                 <div class="timeline__event__description">
                     <ul class="list-disc list-inside">
                         <li>
+                            Participer au développement et à la maintenance de projets web.
+                        </li>
+                        <li>
                             Réaliser un backoffice en TALL Stack (Tailwind Alpine Laravel Livewire) pour un e-commerce en
                             ligne.
                         </li>
@@ -50,9 +53,12 @@
                 Septembre 2020
             </div>
             <div class="timeline__event__content">
+                <div class="flex justify-between items-center">
                 <div class="timeline__event__title mb-4">
                     Développeur Backend
                 </div>
+                <small>Projet de fin de formation</small>
+            </div>
                 <div class="timeline__event__description">
                     <ul class="list-disc list-inside">
                         <li>Réaliser une API Rest avec Symfony
@@ -66,7 +72,7 @@
         </div>
         <div class="timeline__event animated fadeInUp delay-1s timeline__event--type3">
             <div class="timeline__event__icon">
-                <font-awesome-icon icon="fa-solid fa-phone" />
+                <font-awesome-icon icon="fa-solid fa-blender-phone" />
 
             </div>
             <div class="timeline__event__date">
@@ -90,7 +96,7 @@
         <div class="timeline__event animated fadeInUp timeline__event--type1">
             <div class="timeline__event__icon">
                 <!-- <icon :icon="['fas', 'moped']" /> -->
-                <font-awesome-icon icon="fa-solid fa-spoon" />
+                <font-awesome-icon icon="fa-solid fa-utensils" />
 
             </div>
             <div class="timeline__event__date">
@@ -98,7 +104,7 @@
             </div>
             <div class="timeline__event__content">
                 <div class="timeline__event__title mb-4">
-                    Livreur, Serveur puis Manager
+                    Livreur, Serveur puis Manager en restauration japonaise
                 </div>
                 <div class="timeline__event__description">
                     <ul class="list-disc list-inside">

@@ -35,6 +35,7 @@
                 m’a parlé de freecodecamp pour voir si le développement pourrait m'intéresser. Et BINGO ! 3 mois après la
                 découverte du HTML, j’ai commencé une formation au sein de l’organisme O’Clock.
             </p>
+            <div class="w-full p-0.5 bg-secondary lg:w-1/3 my-20 mx-auto"></div>
             <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Où j'en suis</h2>
             <p class="lg:text-lg">
                 Comment j’ai trouvé mon stage? C'était une situation plutôt cocasse. Je suis entré en contact avec un développeur
@@ -63,6 +64,7 @@
             </p>
         </div>
     </div>
+    <div class="w-full p-0.5 bg-secondary lg:w-1/3 my-20 mx-auto"></div>
     <div class="flex flex-col justify-center items-center lg:mt-12">
         <div class="w-8/12 ml-12">
     <h2 class="text-2xl font-bold text-secondary mb-6 mt-12">Où j'aimerais aller</h2>
@@ -75,6 +77,7 @@
         respecté de ses pairs !
     </p>
 </div>
+<div class="w-full p-0.5 bg-secondary lg:w-1/3 my-20 mx-auto"></div>
 <div class="mb-4 md:ml-8 w-4/12 mr-24">
         </div>
 </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="bg-primary p-24 m-8 rounded-xl">
-    <div class="flex flex-col px-6 md:px-12 w-full items-center">
-      <h1 class="text-5xl font-bold text-secondary title-style">Alexis Cabillic</h1>
-      <span class="text-2xl text-secondary title-style mt-4">Développeur FullStack Web et Web Mobile</span>
+    <div class="flex flex-col px-6 md:px-12 w-full items-center wrapper">
+      <h1 class="text-5xl font-bold text-secondary title-style swipe">Alexis Cabillic</h1>
+      <h3 class="text-2xl text-secondary title-style mt-4 swipe swipe--delay">Développeur FullStack Web et Web Mobile</h3>
     </div>
   </div>
   <div class="m-auto mb-12">
@@ -17,7 +17,7 @@
       <h2 class="text-5xl title-style underline-short-title">Qui suis-je ?</h2>
     </div>
     <div class="w-9/12 m-auto mb-24">
-      <h3 class="font-bold text-xl">Bienvenue dans un petit bout de mon monde !</h3>
+      <h4 class="font-bold text-xl">Bienvenue dans un petit bout de mon monde !</h4>
       <p class="text-lg mt-4">
         Je suis un développeur avec 2 ans d'expérience, ayant fait le choix de me reconvertir dans ce domaine après
         beaucoup d'expériences différentes.
@@ -37,6 +37,7 @@
         contacter. Je suis toujours prêt à relever de nouveaux défis !
       </p>
     </div>
+    <div class="w-full p-0.5 bg-secondary lg:w-1/3 my-20 mx-auto"></div>
     <div class="flex items-center justify-end text-secondary mt-12 mb-12">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
         <path fill-rule="evenodd"
@@ -185,6 +186,7 @@
         <img src="/img/undraw_Web_developer_re_h7ie.png" alt="Photo de moi" class="w-full img-shadow-right">
       </div>
     </div>
+    <div class="w-full p-0.5 bg-secondary lg:w-1/3 my-20 mx-auto"></div>
     <div class="flex items-center text-secondary mt-12 mb-12">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
         <path
@@ -198,23 +200,47 @@
       </div>
       <div class="w-full ml-24">
         <h2 class="text-2xl font-bold text-secondary mb-6 mt-8">Relationnel</h2>
-        <div class="flex flex-wrap items-center">
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Sociabilité</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Adaptabilité</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Relation client</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Intelligence émotionelle</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Esprit d'équipe</div>
+        <div class="flex flex-wrap items-center items-stretch">
+          <div class="rounded-xl bg-secondary text-primary lg:w-3/12 md:w-4/12 w-8/12 text-center m-2 p-2 self-center">
+            Collaboration</div>
+          <div class="rounded-xl bg-secondary text-primary lg:w-3/12 md:w-4/12 w-8/12 text-center m-2 p-2">Adaptabilité
+          </div>
+          <div class="rounded-xl bg-secondary text-primary lg:w-3/12 md:w-4/12 w-8/12 text-center m-2 p-2">Relation client
+          </div>
+          <div class="rounded-xl bg-secondary text-primary lg:w-3/12 md:w-4/12 w-8/12 text-center m-2 p-2">Intelligence
+            émotionelle</div>
+          <div
+            class="rounded-xl bg-secondary text-primary lg:w-3/12 md:w-4/12 w-8/12 text-center m-2 p-2 flex justify-center items-center">
+            <span>Esprit d'équipe</span>
+          </div>
         </div>
         <h2 class="text-2xl font-bold text-secondary mb-6 mt-8">Organisationnel</h2>
-        <div class="flex flex-wrap">
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Rigoureux</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Gestion du stress</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Apprentissage rapide</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Pensée logique</div>
-          <div class="rounded-xl bg-secondary text-primary md:w-4/12 w-8/12 text-center m-2 p-2">Télétravail</div>
+        <div class="flex flex-wrap items-center items-stretch">
+          <div
+            class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2 flex justify-center items-center">
+            <span>Rigoureux</span>
+          </div>
+          <div
+            class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2 flex justify-center items-center">
+            <span>Gestion du stress</span>
+          </div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Apprentissage rapide
+          </div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Pensée logique</div>
+          <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Télétravail</div>
         </div>
       </div>
-      
+
+    </div>
+    <div class="w-full p-0.5 bg-secondary lg:w-1/3 my-20 mx-auto"></div>
+    <div class="flex justify-center items-center mt-20">
+      <img src="/img/c_a_t.png" alt="fleche" class="rotate-90 h-96">
+      <div class="ml-40">
+        <a href="/img/CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf" target="_blank"
+          download="CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf"
+          class="inline-block text-2xl px-4 py-2 leading-none border-4 hover:border-transparent animate-bounce font-bold mr-4 rounded-lg text-secondary border-secondary hover:text-primary hover:bg-secondary">Télécharger
+          mon CV</a>
+      </div>
     </div>
   </div>
 </template>
@@ -225,15 +251,87 @@ definePageMeta({
 })
 </script>
 
-<style scoped>
-.tailwind {
-  width:2rem;
-  height:2rem;
-  display:inline-block;
-  background:#FFF7D6;
-  -webkit-mask:url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1200px-Tailwind_CSS_Logo.svg.png") center/contain;
-          mask:url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1200px-Tailwind_CSS_Logo.svg.png") center/contain;
+<style lang="scss" scoped>
+.wrapper {
+ .swipe {
+  position: relative;
+  width: fit-content;
+    &::after {
+     display: block;
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 100%;
+     width: 0%;
+     height: 100%;
+     background-color: #164E63;
+     animation: swipe 1.5s ease-out 1s forwards;
+    }
+    &--delay {
+     &::after {
+      background-color: #164E63;
+      animation-delay: 1.5s;
+     }
+    }
+ }
+ 
+ h1 {
+  display: block;
+  color: #164E63;
+  font-size: 72px;
+  line-height: 1;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 15px 25px;
+  opacity: 0;
+  animation: fade 0.01s ease-out 1.75s forwards;
+ }
+ 
+ h3 {
+  display: block;
+  color: #164E63;
+  font-size: 32px;
+    line-height: 1;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 10px 15px;
+  opacity: 0;
+  animation: fade 0.01s ease-out 2.25s forwards;
+ }
 }
+
+@keyframes fade {
+ from { opacity: 0; }
+ to { opacity: 1; }
+}
+
+@keyframes swipe {
+ 0% {
+  right: 100%;
+  left: 0;
+  width: 0%;
+ }
+ 50% {
+  right: 0;
+  left: 0;
+  width: 100%;
+ }
+ 100% {
+  right: 0;
+  left: 100%;
+  width: 0%;
+ }
+}
+.tailwind {
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  background: #FFF7D6;
+  -webkit-mask: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1200px-Tailwind_CSS_Logo.svg.png") center/contain;
+  mask: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1200px-Tailwind_CSS_Logo.svg.png") center/contain;
+}
+
 .tooltip-box {
   position: relative;
   display: inline-block;
@@ -273,5 +371,4 @@ definePageMeta({
   border-width: 5px;
   border-style: solid;
   border-color: #FFF7D6 transparent transparent transparent;
-}
-</style>
+}</style>

@@ -55,27 +55,21 @@
                 <div :class="showMenu ? 'flex w-full' : 'hidden'"
                     class="md:flex md:flex-row md:items-center md:space-x-10 md:mt-4 justify-end md:slide-in-from-right">
                     <div class="text-sm md:flex mr-4 md:mr-0 mb-4 md:md-0">
-                        <NuxtLink to="/parcours" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
+                        <NuxtLink to="/parcours" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline transition ease-in-out hover:-translate-y-1 hover:scale-100"
                             @click="showMenu = false"
                             :class="changeColorOnScroll ? 'text-secondary link-underline-secondary' : 'text-primary link-underline-primary'">
                             Mon parcours
                         </NuxtLink>
-                        <NuxtLink to="/experiences" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
+                        <NuxtLink to="/experiences" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline transition ease-in-out hover:-translate-y-1 hover:scale-100"
                             @click="showMenu = false"
                             :class="changeColorOnScroll ? 'text-secondary link-underline-secondary' : 'text-primary link-underline-primary'">
                             Mes expériences
                         </NuxtLink>
-                        <NuxtLink to="/contact" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline"
+                        <NuxtLink to="/contact" class="block lg:inline-block lg:mt-0 mr-4 text-lg link-underline transition ease-in-out hover:-translate-y-1 hover:scale-100"
                             @click="showMenu = false"
                             :class="changeColorOnScroll ? 'text-secondary link-underline-secondary' : 'text-primary link-underline-primary'">
                             Me contacter
                         </NuxtLink>
-                    </div>
-                    <div class="hidden md:block md:mb-4">
-                        <a href="/img/CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf" target="_blank" download="CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf"
-                            class="inline-block text-sm px-4 py-2 leading-none border-4 hover:border-transparent animate-bounce font-bold mr-4 rounded-lg"
-                            :class="changeColorOnScroll ? 'text-secondary border-secondary hover:text-primary hover:bg-secondary' : 'text-primary border-primary hover:text-secondary hover:bg-primary'">Télécharger
-                            mon CV</a>
                     </div>
                 </div>
             </div>
