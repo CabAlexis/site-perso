@@ -233,14 +233,15 @@
 
     </div>
     <div class="w-full p-0.5 bg-secondary lg:w-1/3 my-20 mx-auto"></div>
-    <div class="flex justify-center items-center mt-20">
-      <img src="/img/c_a_t.png" alt="fleche" class="rotate-90 h-96">
-      <div class="ml-40">
+    <div class="flex flex-col-reverse md:flex-row-reverse justify-center items-center mt-20">
+      <div class="md:ml-40 ml-0">
         <a href="/img/CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf" target="_blank"
-          download="CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf"
-          class="inline-block text-2xl px-4 py-2 leading-none border-4 hover:border-transparent animate-bounce font-bold mr-4 rounded-lg text-secondary border-secondary hover:text-primary hover:bg-secondary">Télécharger
-          mon CV</a>
+        download="CV_Alexis_Cabillic_Développeur_Web_FullStack.pdf"
+        class="inline-block text-2xl px-4 py-2 leading-none border-4 hover:border-transparent animate-bounce font-bold mr-0 md:mr-4 rounded-lg text-secondary border-secondary hover:text-primary hover:bg-secondary">Télécharger
+        mon CV</a>
       </div>
+      <img src="/img/c_a_t.png" alt="fleche" class="hidden md:block rotate-90 h-96">
+      <img src="/img/c_a_t_responsive.png" alt="fleche" class="block md:hidden rotate-90 h-96 mr-20">
     </div>
   </div>
 </template>
