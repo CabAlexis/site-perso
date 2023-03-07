@@ -1,121 +1,201 @@
 <template>
     <h1 class="text-5xl title-style text-secondary underline-long-title w-2/6">Mes expériences</h1>
-    <div class="timeline">
-        <div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
-            <div class="timeline__event__icon">
-                <font-awesome-icon icon="fa-solid fa-computer fa-2xl"/>
+    <div class="hidden md:block">
+        <div class="timeline">
+            <div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
+                <div class="timeline__event__icon">
+                    <font-awesome-icon icon="fa-solid fa-computer fa-2xl" />
 
-            </div>
-            <div class="timeline__event__date whitespace-normal md:whitespace-nowrap">
-                Avril 2021 à aujourd'hui
-            </div>
-            <div class="timeline__event__content">
-                <div class="timeline__event__title mb-4">
-                    Développeur FullStack web et web mobile
                 </div>
-                <div class="timeline__event__description">
-                    <ul class="list-disc list-inside">
-                        <li>
-                            Participer au développement et à la maintenance de projets web.
-                        </li>
-                        <li>
-                            Réaliser un backoffice en TALL Stack (Tailwind Alpine Laravel Livewire) pour un e-commerce en
-                            ligne.
-                        </li>
-                        <li>
-                            Créer une API REST Laravel pour la refonte d'un CRM.
-                        </li>
-                        <li>
-                            Créer un front en Nuxt3 (framework VueJS).
-                        </li>
-                        <li>
-                            Mise en place d'un front en VueJS 3
-                        </li>
-                        <li>
-                            Créer une API NodeJS (Express) pour un projet interne
-                        </li>
-                        <li>
-                            Mise en place d'un Dockerfile, gestion de différents projets sous Docker
-                        </li>
-                        <li>
-                            Conceptualiser une base de données
-                        </li>
-                    </ul>
+                <div class="timeline__event__date whitespace-normal md:whitespace-nowrap">
+                    Avril 2021 à aujourd'hui
+                </div>
+                <div class="timeline__event__content">
+                    <div class="timeline__event__title mb-4">
+                        Développeur FullStack web et web mobile
+                    </div>
+                    <div class="timeline__event__description">
+                        <ul class="list-disc list-inside">
+                            <li>
+                                Participer au développement et à la maintenance de projets web.
+                            </li>
+                            <li>
+                                Réaliser un backoffice en TALL Stack (Tailwind Alpine Laravel Livewire) pour un e-commerce
+                                en
+                                ligne.
+                            </li>
+                            <li>
+                                Créer une API REST Laravel pour la refonte d'un CRM.
+                            </li>
+                            <li>
+                                Créer un front en Nuxt3 (framework VueJS).
+                            </li>
+                            <li>
+                                Mise en place d'un front en VueJS 3
+                            </li>
+                            <li>
+                                Créer une API NodeJS (Express) pour un projet interne
+                            </li>
+                            <li>
+                                Mise en place d'un Dockerfile, gestion de différents projets sous Docker
+                            </li>
+                            <li>
+                                Conceptualiser une base de données
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
+                <div class="timeline__event__icon">
+                    <font-awesome-icon icon="fa-solid fa-database" />
+
+                </div>
+                <div class="timeline__event__date">
+                    Septembre 2020
+                </div>
+                <div class="timeline__event__content">
+                    <div class="flex justify-between items-center">
+                        <div class="timeline__event__title mb-4">
+                            Développeur Backend
+                        </div>
+                        <small>Projet de fin de formation</small>
+                    </div>
+                    <div class="timeline__event__description">
+                        <ul class="list-disc list-inside">
+                            <li>Réaliser une API Rest avec Symfony
+                            </li>
+                            <li>Versionner le code sur github</li>
+                            <li>Collaborer en équipe</li>
+                            <li>Déploiement via AWS</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="timeline__event animated fadeInUp delay-1s timeline__event--type3">
+                <div class="timeline__event__icon">
+                    <font-awesome-icon icon="fa-solid fa-blender-phone" />
+
+                </div>
+                <div class="timeline__event__date">
+                    Septembre 2018 à Juillet 2019
+                </div>
+                <div class="timeline__event__content">
+                    <div class="timeline__event__title mb-4">
+                        Commercial web
+                    </div>
+                    <div class="timeline__event__description">
+                        <ul class="list-disc list-inside">
+                            <li>Accompagner un client dans la mise en place d'un site commercial</li>
+                            <li>Comprendre la mise en place et le fonctionnement d'un site commercial</li>
+                            <li>Réaliser la demonstration de nos produits aux futurs clients (Sites, Back Office)</li>
+                            <li>Organiser des mailings marketing</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="timeline__event animated fadeInUp timeline__event--type1">
+                <div class="timeline__event__icon">
+                    <!-- <icon :icon="['fas', 'moped']" /> -->
+                    <font-awesome-icon icon="fa-solid fa-utensils" />
+
+                </div>
+                <div class="timeline__event__date">
+                    Novembre 2013 à Septembre 2017
+                </div>
+                <div class="timeline__event__content">
+                    <div class="timeline__event__title mb-4">
+                        Livreur, Serveur puis Manager en restauration japonaise
+                    </div>
+                    <div class="timeline__event__description">
+                        <ul class="list-disc list-inside">
+                            <li>Organiser les plannings d'une équipe de 10 personnes</li>
+                            <li>Gérer les stocks et les apprivisionnement</li>
+                            <li>Plannifier les livraisons des commandes lors des services</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
-            <div class="timeline__event__icon">
-                <font-awesome-icon icon="fa-solid fa-database" />
-
+    </div>
+    <div class="mx-2 block md:hidden">
+        <div class="shadow-md">
+            <div class="bg-secondary text-primary text-center p-4"> <font-awesome-icon icon="fa-solid fa-computer fa-2xl" />
             </div>
-            <div class="timeline__event__date">
-                Septembre 2020
+            <div class="text-lg font-bold uppercase text-secondary bg-primary p-4 text-center">Avril 2021 à aujourd'hui
             </div>
-            <div class="timeline__event__content">
-                <div class="flex justify-between items-center">
-                <div class="timeline__event__title mb-4">
-                    Développeur Backend
-                </div>
-                <small>Projet de fin de formation</small>
-            </div>
-                <div class="timeline__event__description">
-                    <ul class="list-disc list-inside">
-                        <li>Réaliser une API Rest avec Symfony
-                        </li>
-                        <li>Versionner le code sur github</li>
-                        <li>Collaborer en équipe</li>
-                        <li>Déploiement via AWS</li>
-                    </ul>
-                </div>
-            </div>
+            <h2 class="timeline__event__title m-4 text-center">Développeur FullStack web et web mobile</h2>
+            <ul class="text-black list-disc list-inside p-4">
+                <li>
+                    Participer au développement et à la maintenance de projets web.
+                </li>
+                <li>
+                    Réaliser un backoffice en TALL Stack (Tailwind Alpine Laravel Livewire) pour un e-commerce en
+                    ligne.
+                </li>
+                <li>
+                    Créer une API REST Laravel pour la refonte d'un CRM.
+                </li>
+                <li>
+                    Créer un front en Nuxt3 (framework VueJS).
+                </li>
+                <li>
+                    Mise en place d'un front en VueJS 3
+                </li>
+                <li>
+                    Créer une API NodeJS (Express) pour un projet interne
+                </li>
+                <li>
+                    Mise en place d'un Dockerfile, gestion de différents projets sous Docker
+                </li>
+                <li>
+                    Conceptualiser une base de données
+                </li>
+            </ul>
         </div>
-        <div class="timeline__event animated fadeInUp delay-1s timeline__event--type3">
-            <div class="timeline__event__icon">
-                <font-awesome-icon icon="fa-solid fa-blender-phone" />
-
+        <div class="shadow-md mt-20">
+            <div class="bg-primary text-secondary text-center p-4"> <font-awesome-icon icon="fa-solid fa-database" />
             </div>
-            <div class="timeline__event__date">
-                Septembre 2018 à Juillet 2019
+            <div class="text-lg font-bold uppercase text-primary bg-secondary p-4 text-center"> Septembre 2020
             </div>
-            <div class="timeline__event__content">
-                <div class="timeline__event__title mb-4">
-                    Commercial web
-                </div>
-                <div class="timeline__event__description">
-                    <ul class="list-disc list-inside">
-                        <li>Accompagner un client dans la mise en place d'un site commercial</li>
-                        <li>Comprendre la mise en place et le fonctionnement d'un site commercial</li>
-                        <li>Réaliser la demonstration de nos produits aux futurs clients (Sites, Back Office)</li>
-                        <li>Organiser des mailings marketing</li>
-                    </ul>
-                </div>
-
-            </div>
+            <h2 class="timeline__event__title m-4 text-center">Développeur Backend
+            </h2>
+            <ul class="text-black list-disc list-inside p-4">
+                <li>Réaliser une API Rest avec Symfony
+                </li>
+                <li>Versionner le code sur github</li>
+                <li>Collaborer en équipe</li>
+                <li>Déploiement via AWS</li>
+            </ul>
         </div>
-        <div class="timeline__event animated fadeInUp timeline__event--type1">
-            <div class="timeline__event__icon">
-                <!-- <icon :icon="['fas', 'moped']" /> -->
-                <font-awesome-icon icon="fa-solid fa-utensils" />
-
+        <div class="shadow-md mt-20">
+            <div class="bg-primary text-secondary text-center p-4"> <font-awesome-icon icon="fa-solid fa-blender-phone" />
             </div>
-            <div class="timeline__event__date">
-                Novembre 2013 à Septembre 2017
+            <div class="text-lg font-bold uppercase text-primary bg-secondary p-4 text-center"> Septembre 2018 à Juillet
+                2019
             </div>
-            <div class="timeline__event__content">
-                <div class="timeline__event__title mb-4">
-                    Livreur, Serveur puis Manager en restauration japonaise
-                </div>
-                <div class="timeline__event__description">
-                    <ul class="list-disc list-inside">
-                        <li>Organiser les plannings d'une équipe de 10 personnes</li>
-                        <li>Gérer les stocks et les apprivisionnement</li>
-                        <li>Plannifier les livraisons des commandes lors des services</li>
-                    </ul>
-                </div>
-            </div>
+            <h2 class="timeline__event__title m-4 text-center">Commercial web</h2>
+            <ul class="text-black list-disc list-inside p-4">
+                <li>Accompagner un client dans la mise en place d'un site commercial</li>
+                <li>Comprendre la mise en place et le fonctionnement d'un site commercial</li>
+                <li>Réaliser la demonstration de nos produits aux futurs clients (Sites, Back Office)</li>
+                <li>Organiser des mailings marketing</li>
+            </ul>
         </div>
-
+        <div class="shadow-md mt-20">
+            <div class="bg-secondary text-primary text-center p-4"> <font-awesome-icon icon="fa-solid fa-utensils" />
+            </div>
+            <div class="text-lg font-bold uppercase text-secondary bg-primary p-4 text-center"> Novembre 2013 à Septembre
+                2017
+            </div>
+            <h2 class="timeline__event__title m-4 text-center"> Livreur, Serveur puis Manager en restauration japonaise</h2>
+            <ul class="text-black list-disc list-inside p-4">
+                <li>Organiser les plannings d'une équipe de 10 personnes</li>
+                <li>Gérer les stocks et les apprivisionnement</li>
+                <li>Plannifier les livraisons des commandes lors des services</li>
+            </ul>
+        </div>
     </div>
 </template>
 <script setup>
@@ -141,31 +221,10 @@ $color4: #FFF7D6;
 $color5: #164E63;
 $color6: #FFF7D6;
 
-* {
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 14px;
-}
-
-body {
-    background: #f6f9fc;
-    font-family: "Open Sans", sans-serif;
-    color: #525f7f;
-}
-
-h2 {
-    margin: 5%;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 100;
-}
-
 .timeline {
     display: flex;
     flex-direction: column;
-    margin: $margin auto;
+    // margin: $margin auto;
     position: relative;
 
     &__event {
@@ -316,6 +375,7 @@ h2 {
 
             &:nth-child(2n + 1) {
                 .timeline__event__icon {
+
                     &:before,
                     &:after {
                         background: $color2;
@@ -350,6 +410,7 @@ h2 {
 
             &:nth-child(2n + 1) {
                 .timeline__event__icon {
+
                     &:before,
                     &:after {
                         background: $color2;
@@ -360,6 +421,7 @@ h2 {
             .timeline__event__icon {
                 background: $color2;
                 color: $color1;
+
                 &:before,
                 &:after {
                     color: $color1;
@@ -381,6 +443,7 @@ h2 {
             .timeline__event__icon {
                 background: $color1;
                 color: $color2;
+
                 &:before,
                 &:after {
                     color: $color1;
@@ -454,4 +517,5 @@ h2 {
 
 li:not(:last-child) {
     margin-bottom: 1rem;
-}</style>
+}
+</style>

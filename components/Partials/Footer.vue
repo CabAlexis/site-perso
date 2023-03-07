@@ -3,9 +3,9 @@
         <div class="flex justify-between">
             <div class="flex flex-col">
                 <span class="text-sm text-secondary sm:text-center font-bold">© {{ new Date().getFullYear() }} Cabalex. Tous
-                    droits réservés. <NuxtLink to="/mentions-legales" class="hover:underline">Mentions légales</NuxtLink>
+                    droits réservés. <NuxtLink to="/mentions-legales" class="underline hover:underline-offset-2">Mentions légales</NuxtLink>
                 </span>
-                <span class="text-sm text-secondary">Merci à <a href="https://undraw.co/" class="hover:underline">Undraw</a> pour les illustrations.</span>
+                <span class="text-sm text-secondary hidden md:block">Merci à <a href="https://undraw.co/" class="hover:underline">Undraw</a> pour les illustrations.</span>
             </div>
             <div class="flex space-x-6 sm:justify-center sm:mt-0">
                 <a href="https://twitter.com/CabAlex7" class="text-secondary transition ease-in-out delay-50 hover:text-cyan-700 hover:-translate-y-1 hover:scale-150 duration-200">

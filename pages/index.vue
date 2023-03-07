@@ -2,7 +2,7 @@
   <div class="bg-primary p-24 m-8 rounded-xl">
     <div class="flex flex-col px-6 md:px-12 w-full items-center wrapper">
       <h1 class="text-5xl font-bold text-secondary title-style swipe">Alexis Cabillic</h1>
-      <h3 class="text-2xl text-secondary title-style mt-4 swipe swipe--delay">Développeur FullStack Web et Web Mobile</h3>
+      <h3 class="text-2xl text-secondary title-style mt-4 swipe swipe--delay">Développeur FullStack <span class="hidden md:inline-block">Web et Web Mobile</span></h3>
     </div>
   </div>
   <div class="m-auto mb-12">
@@ -51,11 +51,11 @@
       </svg>
       <h2 class="text-5xl title-style underline-long-title">Mes qualités techniques</h2>
     </div>
-    <div class="flex justify-between items-center">
-      <div class="mb-4 md:ml-8 slide-in-image w-4/12">
+    <div class="flex justify-between items-center w-9/12 md:w-full mx-auto md:mt-24">
+      <div class="mb-4 md:ml-8 slide-in-image w-4/12 hidden md:block">
         <img src="/img/undraw_Programming_re_kg9v.png" alt="Photo de moi" class="w-full img-shadow-left">
       </div>
-      <div class="w-full ml-24">
+      <div class="w-full ml-0 md:ml-24">
         <h2 class="text-2xl font-bold text-secondary mb-6">Backend</h2>
         <div class="flex flex-wrap">
           <div
@@ -169,8 +169,8 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-between items-center mt-24">
-      <div class="w-full ml-12">
+    <div class="flex justify-between items-center md:mt-24 w-9/12 md:w-full mx-auto">
+      <div class="w-full ml-0 md:ml-12 mx-auto">
         <h2 class="text-2xl font-bold text-secondary mb-6 mt-8">Outils</h2>
         <div class="flex flex-wrap items-center">
           <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Git</div>
@@ -182,7 +182,7 @@
           <div class="rounded-xl bg-secondary text-primary md:w-3/12 w-8/12 text-center m-2 p-2">Insomnia</div>
         </div>
       </div>
-      <div class="mb-4 md:ml-8 slide-in-image w-4/12">
+      <div class="mb-4 md:ml-8 slide-in-image w-4/12 hidden md:block">
         <img src="/img/undraw_Web_developer_re_h7ie.png" alt="Photo de moi" class="w-full img-shadow-right">
       </div>
     </div>
@@ -194,11 +194,11 @@
       </svg>
       <h2 class="text-5xl title-style underline-long-title">Mes qualités humaines</h2>
     </div>
-    <div class="flex justify-between items-center mt-24">
-      <div class="mb-4 md:ml-8 slide-in-image w-4/12">
+    <div class="flex justify-between items-center mt-24 w-9/12 md:w-full mx-auto">
+      <div class="mb-4 md:ml-8 slide-in-image w-4/12 hidden md:block">
         <img src="/img/undraw_building_websites_i78t.png" alt="Photo de moi" class="w-full img-shadow-left">
       </div>
-      <div class="w-full ml-24">
+      <div class="w-full ml-0 md:ml-24">
         <h2 class="text-2xl font-bold text-secondary mb-6 mt-8">Relationnel</h2>
         <div class="flex flex-wrap items-center items-stretch">
           <div class="rounded-xl bg-secondary text-primary lg:w-3/12 md:w-4/12 w-8/12 text-center m-2 p-2 self-center">

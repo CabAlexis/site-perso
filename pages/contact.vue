@@ -35,6 +35,9 @@
                             'border-red-500 focus:border-red-500': v$.firstname.$error,
                             'border-green-500': !v$.firstname.$invalid,
                         }">
+                    <p v-for="error of v$.firstname.$errors" :key="error.$uid" class="text-sm text-red-500">
+                        {{ error.$message }}
+                    </p>
                 </div>
                 <div class="w-full md:w-1/2 px-3">
                     <label class="block uppercase tracking-wide text-secondary text-xs font-bold mb-2" for="grid-last-name">
@@ -47,6 +50,9 @@
                             'border-red-500 focus:border-red-500': v$.lastname.$error,
                             'border-green-500': !v$.lastname.$invalid,
                         }">
+                    <p v-for="error of v$.lastname.$errors" :key="error.$uid" class="text-sm text-red-500">
+                        {{ error.$message }}
+                    </p>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -61,6 +67,9 @@
                             'border-red-500 focus:border-red-500': v$.email.$error,
                             'border-green-500': !v$.email.$invalid,
                         }">
+                    <p v-for="error of v$.email.$errors" :key="error.$uid" class="text-sm text-red-500">
+                        {{ error.$message }}
+                    </p>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -75,21 +84,25 @@
                             'border-red-500 focus:border-red-500': v$.message.$error,
                             'border-green-500': !v$.message.$invalid,
                         }"></textarea>
+                    <p v-for="error of v$.message.$errors" :key="error.$uid" class="text-sm text-red-500">
+                        {{ error.$message }}
+                    </p>
                 </div>
-                <VueRecaptcha :sitekey="runtimeConfig.siteKey" :loadRecaptchaScript="true" @verify="verifyRecaptcha" class="m-auto"/>
+                <VueRecaptcha :sitekey="runtimeConfig.siteKey" :loadRecaptchaScript="true" @verify="verifyRecaptcha"
+                    class="m-auto" />
             </div>
             <div>
                 <div class="w-full flex justify-center items-center">
                     <button
-                    class="shadow bg-secondary hover:bg-primary hover:text-secondary focus:shadow-outline focus:outline-none text-primary font-bold py-2 px-4 rounded"
-                    type="button" @click="submitForm" aria-label="Envoyer">
-                    Envoyer
-                </button>
+                        class="shadow bg-secondary hover:bg-primary hover:text-secondary focus:shadow-outline focus:outline-none text-primary font-bold py-2 px-4 rounded"
+                        type="button" @click="submitForm" aria-label="Envoyer">
+                        Envoyer
+                    </button>
+                </div>
+                <div class="md:w-2/3"></div>
             </div>
-            <div class="md:w-2/3"></div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
     <GlobalModal v-if="displayAlert" title="Succés" message="L'email a bien été envoyé !" />
 </template>
 
