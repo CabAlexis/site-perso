@@ -1,11 +1,5 @@
 <template>
-  <div class="bg-primary p-24 m-8 rounded-xl">
-    <div class="flex flex-col px-6 md:px-12 w-full items-center wrapper">
-      <h1 class="text-5xl font-bold text-secondary title-style swipe">Alexis Cabillic</h1>
-      <h3 class="text-2xl text-secondary title-style mt-4 swipe swipe--delay">Développeur FullStack <span class="hidden md:inline-block">Web et Web Mobile</span></h3>
-    </div>
-  </div>
-  <div class="m-auto mb-12">
+  <div class="m-auto mb-12 mt-96">
     <div class="flex items-center text-secondary mt-12 mb-12">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
         <path fill-rule="evenodd"
@@ -250,80 +244,11 @@
 definePageMeta({
   layout: 'custom'
 })
+
+const route = useRoute();
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
- .swipe {
-  position: relative;
-  width: fit-content;
-    &::after {
-     display: block;
-     content: '';
-     position: absolute;
-     top: 0;
-     left: 0;
-     right: 100%;
-     width: 0%;
-     height: 100%;
-     background-color: #164E63;
-     animation: swipe 1.5s ease-out 1s forwards;
-    }
-    &--delay {
-     &::after {
-      background-color: #164E63;
-      animation-delay: 1.5s;
-     }
-    }
- }
- 
- h1 {
-  display: block;
-  color: #164E63;
-  font-size: 72px;
-  line-height: 1;
-  font-weight: 900;
-  text-transform: uppercase;
-  padding: 15px 25px;
-  opacity: 0;
-  animation: fade 0.01s ease-out 1.75s forwards;
- }
- 
- h3 {
-  display: block;
-  color: #164E63;
-  font-size: 32px;
-    line-height: 1;
-  font-weight: 900;
-  text-transform: uppercase;
-  padding: 10px 15px;
-  opacity: 0;
-  animation: fade 0.01s ease-out 2.25s forwards;
- }
-}
-
-@keyframes fade {
- from { opacity: 0; }
- to { opacity: 1; }
-}
-
-@keyframes swipe {
- 0% {
-  right: 100%;
-  left: 0;
-  width: 0%;
- }
- 50% {
-  right: 0;
-  left: 0;
-  width: 100%;
- }
- 100% {
-  right: 0;
-  left: 100%;
-  width: 0%;
- }
-}
 .tailwind {
   width: 2rem;
   height: 2rem;

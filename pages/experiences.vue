@@ -1,4 +1,5 @@
 <template>
+    <div>
     <h1 class="text-5xl title-style text-secondary underline-long-title w-2/6">Mes expériences</h1>
     <div class="hidden md:block">
         <div class="timeline">
@@ -197,6 +198,7 @@
             </ul>
         </div>
     </div>
+</div>
 </template>
 <script setup>
 definePageMeta({

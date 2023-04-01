@@ -1,4 +1,5 @@
 <template>
+    <div>
     <div role="status" v-if="loading" class="h-screen flex justify-center items-center">
         <svg aria-hidden="true" class="w-16 h-16 mr-2 text-secondary animate-spin fill-primary" viewBox="0 0 100 101"
             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,6 +105,7 @@
         </form>
     </div>
     <GlobalModal v-if="displayAlert" title="Succés" message="L'email a bien été envoyé !" />
+</div>
 </template>
 
 <script setup>

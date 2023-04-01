@@ -1,4 +1,5 @@
 <template>
+    <div>
     <div class="flex items-center text-secondary mt-12 mb-12">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
             <path fill-rule="evenodd"
@@ -99,6 +100,7 @@
             <img src="/img/undraw_mic_drop_uuyg.png" alt="Photo de moi" class="w-full img-shadow-left">
         </div>
     </div>
+</div>
 </template>
 
 <script setup>
