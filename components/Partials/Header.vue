@@ -76,7 +76,7 @@
             </div>
             <!-- Navbar -->
         </div>
-        <div class="bg-primary p-24 mt-20 rounded-xl banner fixed top-0 w-full" v-if="route.fullPath === '/' && !changeColorOnScroll">
+        <div class="bg-primary p-24 mt-20 rounded-xl banner fixed top-0 w-full" v-if="route.fullPath === '/'" :class="changeColorOnScroll ? 'hidden-banner' : 'visible-banner'">
             <div class="flex flex-col w-full items-center wrapper">
                 <h1 class="text-5xl font-bold text-secondary title-style swipe">Alexis Cabillic</h1>
                 <h3 class="text-2xl text-secondary title-style mt-4 swipe swipe--delay">Développeur FullStack <span
@@ -93,6 +93,7 @@ const toggleNav = () => {
     return showMenu.value = !showMenu.value
 };
 const changeColorOnScroll = ref(false);
+
 const handleScroll = () => {
     if (window.scrollY > 160) {
         changeColorOnScroll.value = true;
@@ -109,7 +110,7 @@ onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll);
 })
 </script>
-<style scoped>
+<style scoped lang="scss">
 .wrapper {
   .swipe {
     position: relative;
@@ -193,10 +194,18 @@ onUnmounted(() => {
 
 .banner {
   opacity: 0;
-  transform: translateY(-100px);
+}
+.banner.visible-banner {
+  opacity: 1;
+  transform: translateY(0);
   animation: appear 1s ease-out forwards;
 }
 
+.banner.hidden-banner {
+  opacity: 0;
+  transform: translateY(-100px);
+  animation: disappear 0.2s ease-out forwards;
+}
 @keyframes appear {
   0% {
     opacity: 0;
@@ -206,6 +215,16 @@ onUnmounted(() => {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes disappear {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100px);
   }
 }
 .link-underline {
