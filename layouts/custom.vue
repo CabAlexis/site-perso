@@ -12,7 +12,7 @@
     </main>
     <PartialsFooter />
   </div> -->
-    <div class="flex justify-center items-center flex-col min-h-screen bg-[#f0f2f5] text-center px-4">
+    <div class="flex justify-center items-center flex-col min-h-screen bg-[#f0f2f5] text-center px-4" v-if="!loading">
       <h1 class="text-3xl md:text-5xl font-bold text-[#333] mt-0 mb-8">
         Site en Cours de Rénovation
       </h1>
