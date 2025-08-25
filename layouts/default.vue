@@ -12,7 +12,7 @@
               alexis@remote:~$
             </a>
           </div>
-          
+
           <!-- Desktop Navigation -->
           <div class="hidden md:flex items-center space-x-6">
             <a href="#about" class="text-green-400 font-mono hover:text-yellow-400 transition-colors">ls about</a>
@@ -58,13 +58,13 @@
             </div>
           </div>
         </div>
-        
+
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="mb-6 md:mb-0">
-            <h3 class="text-xl font-bold mb-2 font-mono">Alexis.exe</h3>
+            <h3 class="text-xl font-bold mb-2 text-zinc-300 font-mono">Alexis.exe</h3>
             <p class="text-zinc-400">Dev fullstack remote & bidouilleur d'apps</p>
           </div>
-          
+
           <div class="flex space-x-6">
             <a href="mailto:alexis.cabillic@gmail.com" class="text-zinc-400 hover:text-yellow-400 transition-colors text-2xl" title="Email">
               📧
@@ -77,10 +77,10 @@
             </a>
           </div>
         </div>
-        
+
         <div class="border-t border-zinc-800 mt-8 pt-8 text-center text-zinc-400">
           <p class="font-mono text-sm">
-            © 2025 - Codé avec ❤️, Laravel et beaucoup de ☕
+            © 2025 - Codé avec ❤️, Nuxt et beaucoup de ☕
           </p>
           <p class="text-xs mt-2 opacity-75">
             PS: Ce site ne collecte aucune donnée. Promis juré. 🤞

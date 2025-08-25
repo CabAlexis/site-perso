@@ -9,7 +9,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1.0',
       title: 'Alexis Cabillic - Dev fullstack qui fait des trucs qui marchent',
       meta: [
-        { name: 'description', content: "Développeur Laravel/Vue.js reconverti. Je code des apps web en remote. Pas de jargon, juste du concret." }
+        { name: 'description', content: "Développeur Laravel/Vue.js reconverti. Je code des apps web en remote. Comprendre vos enjeux, concevoir des solutions, c'est ça mon métier." }
       ],
       htmlAttrs: {
         lang: 'fr'
