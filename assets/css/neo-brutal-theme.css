@@ -1,0 +1,604 @@
+/* Thème néo-brutaliste unifié */
+
+/* Cards uniformisées néo-brutalistes */
+.cyber-card {
+  padding: 16px !important;
+  background: linear-gradient(135deg, #b8b8b8 0%, #a0a0a0 100%) !important;
+  border: 3px solid #000000 !important;
+  box-shadow:
+    3px 3px 0px #22c55e,
+    6px 6px 0px #000000 !important;
+  transition: all 0.15s ease !important;
+  position: relative !important;
+  z-index: 20 !important;
+  color: #000000 !important;
+}
+
+@media (min-width: 640px) {
+  .cyber-card {
+    padding: 24px !important;
+    border: 4px solid #000000 !important;
+    box-shadow:
+      4px 4px 0px #22c55e,
+      8px 8px 0px #000000 !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cyber-card {
+    padding: 32px !important;
+    box-shadow:
+      6px 6px 0px #22c55e,
+      12px 12px 0px #000000 !important;
+  }
+}
+
+.cyber-card:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow:
+    5px 5px 0px #22c55e,
+    10px 10px 0px #000000,
+    0 0 20px rgba(34, 197, 94, 0.3) !important;
+}
+
+@media (min-width: 1024px) {
+  .cyber-card:hover {
+    transform: translate(-3px, -3px) !important;
+    box-shadow:
+      9px 9px 0px #22c55e,
+      15px 15px 0px #000000,
+      0 0 30px rgba(34, 197, 94, 0.3) !important;
+  }
+}
+
+/* Sections néo-brutalistes uniformisées */
+.cyber-section {
+  background:
+    linear-gradient(135deg, #d0d0d0 0%, #c0c0c0 25%, #c8c8c8 50%, #b8b8b8 75%, #d5d5d5 100%) !important;
+  border-top: 4px solid #22c55e !important;
+  border-bottom: 4px solid #22c55e !important;
+  position: relative !important;
+  color: #000000 !important;
+}
+
+/* Scanlines plus visibles pour sections claires */
+.cyber-section::before {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 4px,
+    rgba(0, 0, 0, 0.05) 4px,
+    rgba(0, 0, 0, 0.05) 8px
+  ) !important;
+}
+
+/* Particules ULTRA VISIBLES partout */
+.cyber-section .sparks,
+.hero-casual .sparks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.cyber-section .spark,
+.hero-casual .spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #22c55e 0%, #16a34a 70%, transparent 100%);
+  border-radius: 50%;
+  animation: spark-rise-brutal 4s infinite linear;
+  box-shadow:
+    0 0 20px #22c55e,
+    0 0 40px rgba(34, 197, 94, 0.8),
+    0 0 60px rgba(34, 197, 94, 0.4);
+}
+
+.cyber-section .spark:nth-child(odd),
+.hero-casual .spark:nth-child(odd) {
+  animation-duration: 3s;
+  background: radial-gradient(circle, #facc15 0%, #eab308 70%, transparent 100%);
+  box-shadow:
+    0 0 25px #facc15,
+    0 0 45px rgba(250, 204, 21, 0.8),
+    0 0 65px rgba(250, 204, 21, 0.4);
+  width: 10px;
+  height: 10px;
+}
+
+.cyber-section .spark:nth-child(3n),
+.hero-casual .spark:nth-child(3n) {
+  animation-duration: 5s;
+  background: radial-gradient(circle, #22c55e 0%, #16a34a 60%, #14532d 100%);
+  box-shadow:
+    0 0 30px #22c55e,
+    0 0 55px rgba(34, 197, 94, 0.8),
+    0 0 75px rgba(34, 197, 94, 0.6);
+  width: 6px;
+  height: 6px;
+}
+
+.cyber-section .spark:nth-child(2n),
+.hero-casual .spark:nth-child(2n) {
+  animation-duration: 3.5s;
+  background: radial-gradient(circle, #ffffff 0%, #f0f0f0 50%, rgba(255,255,255,0.8) 100%);
+  box-shadow:
+    0 0 22px #ffffff,
+    0 0 40px rgba(255, 255, 255, 0.8),
+    0 0 60px rgba(255, 255, 255, 0.4);
+  width: 7px;
+  height: 7px;
+}
+
+/* Positioning des sparkles pour distribution parfaite */
+.cyber-section .spark:nth-child(1), .hero-casual .spark:nth-child(1) { left: 5%; animation-delay: 0s; }
+.cyber-section .spark:nth-child(2), .hero-casual .spark:nth-child(2) { left: 12%; animation-delay: 0.3s; }
+.cyber-section .spark:nth-child(3), .hero-casual .spark:nth-child(3) { left: 20%; animation-delay: 0.6s; }
+.cyber-section .spark:nth-child(4), .hero-casual .spark:nth-child(4) { left: 28%; animation-delay: 0.9s; }
+.cyber-section .spark:nth-child(5), .hero-casual .spark:nth-child(5) { left: 35%; animation-delay: 1.2s; }
+.cyber-section .spark:nth-child(6), .hero-casual .spark:nth-child(6) { left: 43%; animation-delay: 1.5s; }
+.cyber-section .spark:nth-child(7), .hero-casual .spark:nth-child(7) { left: 52%; animation-delay: 1.8s; }
+.cyber-section .spark:nth-child(8), .hero-casual .spark:nth-child(8) { left: 60%; animation-delay: 2.1s; }
+.cyber-section .spark:nth-child(9), .hero-casual .spark:nth-child(9) { left: 68%; animation-delay: 2.4s; }
+.cyber-section .spark:nth-child(10), .hero-casual .spark:nth-child(10) { left: 75%; animation-delay: 2.7s; }
+.cyber-section .spark:nth-child(11), .hero-casual .spark:nth-child(11) { left: 83%; animation-delay: 3s; }
+.cyber-section .spark:nth-child(12), .hero-casual .spark:nth-child(12) { left: 90%; animation-delay: 0.2s; }
+.cyber-section .spark:nth-child(13), .hero-casual .spark:nth-child(13) { left: 95%; animation-delay: 0.5s; }
+.cyber-section .spark:nth-child(14), .hero-casual .spark:nth-child(14) { left: 3%; animation-delay: 0.8s; }
+.cyber-section .spark:nth-child(15), .hero-casual .spark:nth-child(15) { left: 15%; animation-delay: 1.1s; }
+.cyber-section .spark:nth-child(16), .hero-casual .spark:nth-child(16) { left: 25%; animation-delay: 1.4s; }
+.cyber-section .spark:nth-child(17), .hero-casual .spark:nth-child(17) { left: 33%; animation-delay: 1.7s; }
+.cyber-section .spark:nth-child(18), .hero-casual .spark:nth-child(18) { left: 45%; animation-delay: 2s; }
+.cyber-section .spark:nth-child(19), .hero-casual .spark:nth-child(19) { left: 55%; animation-delay: 2.3s; }
+.cyber-section .spark:nth-child(20), .hero-casual .spark:nth-child(20) { left: 65%; animation-delay: 2.6s; }
+.cyber-section .spark:nth-child(21), .hero-casual .spark:nth-child(21) { left: 77%; animation-delay: 2.9s; }
+.cyber-section .spark:nth-child(22), .hero-casual .spark:nth-child(22) { left: 87%; animation-delay: 3.2s; }
+.cyber-section .spark:nth-child(23), .hero-casual .spark:nth-child(23) { left: 93%; animation-delay: 0.1s; }
+.cyber-section .spark:nth-child(24), .hero-casual .spark:nth-child(24) { left: 7%; animation-delay: 0.4s; }
+.cyber-section .spark:nth-child(25), .hero-casual .spark:nth-child(25) { left: 17%; animation-delay: 0.7s; }
+
+@keyframes spark-rise-brutal {
+  0% {
+    transform: translateY(100vh) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.8;
+    transform: translateY(95vh) scale(0.8) rotate(15deg);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(85vh) scale(1.2) rotate(60deg);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(15vh) scale(1) rotate(300deg);
+  }
+  95% {
+    opacity: 0.8;
+    transform: translateY(5vh) scale(0.6) rotate(345deg);
+  }
+  100% {
+    transform: translateY(0) scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Animations de scroll révélées */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation fluide pour les cards */
+@keyframes cardSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes slideInBounce {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flipIn {
+  0% {
+    opacity: 0;
+    transform: rotateX(-90deg) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0);
+  }
+}
+
+@keyframes slideInRotate {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) rotate(5deg) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes glitchIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px) skew(-5deg);
+  }
+  20% {
+    opacity: 0.8;
+    transform: translateX(10px) skew(2deg);
+  }
+  40% {
+    opacity: 0.9;
+    transform: translateX(-5px) skew(-1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) skew(0deg);
+  }
+}
+
+/* Classes d'animation au scroll */
+.scroll-animate-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.scroll-animate-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+.scroll-animate-up {
+  animation: slideInUp 0.8s ease-out;
+}
+
+.scroll-animate-zoom {
+  animation: zoomIn 0.8s ease-out;
+}
+
+/* Titres néo-brutalistes uniformisés */
+.neon-glow {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%) !important;
+  color: #000000 !important;
+  padding: 8px 12px !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  position: relative !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-size: 1.1rem !important;
+  margin-bottom: 12px !important;
+  word-wrap: break-word !important;
+  max-width: 100% !important;
+}
+
+@media (min-width: 640px) {
+  .neon-glow {
+    padding: 16px 24px !important;
+    border: 6px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    font-size: 2rem !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .neon-glow {
+    padding: 20px 32px !important;
+    border: 8px solid #000000 !important;
+    box-shadow: 8px 8px 0px #000000 !important;
+    font-size: 2.4rem !important;
+    letter-spacing: 3px !important;
+    margin-bottom: 24px !important;
+  }
+}
+
+.neon-text {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%) !important;
+  color: #ffffff !important;
+  padding: 6px 10px !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 2px 2px 0px #ffffff !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  font-size: 0.85rem !important;
+  margin-bottom: 8px !important;
+  word-wrap: break-word !important;
+  max-width: 100% !important;
+}
+
+@media (min-width: 640px) {
+  .neon-text {
+    padding: 10px 16px !important;
+    border: 4px solid #000000 !important;
+    box-shadow: 4px 4px 0px #ffffff !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 14px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .neon-text {
+    padding: 12px 20px !important;
+    border: 5px solid #000000 !important;
+    box-shadow: 5px 5px 0px #ffffff !important;
+    font-size: 1.3rem !important;
+    margin-bottom: 16px !important;
+  }
+}
+
+/* Terminal content néo-brutaliste */
+.terminal-content {
+  background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%) !important;
+  border: 4px solid #000000 !important;
+  box-shadow:
+    6px 6px 0px #22c55e,
+    12px 12px 0px #000000 !important;
+  color: #000000 !important;
+}
+
+/* Lignes de terminal néo-brutalistes */
+.terminal-line {
+  background: #c8c8c8 !important;
+  border: 2px solid #000000 !important;
+  border-left: 4px solid #22c55e !important;
+  box-shadow: 2px 2px 0px #22c55e !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+  margin: 4px 0 !important;
+  padding: 8px 12px 8px 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+@media (min-width: 640px) {
+  .terminal-line {
+    border: 3px solid #000000 !important;
+    border-left: 6px solid #22c55e !important;
+    box-shadow: 3px 3px 0px #22c55e !important;
+    margin: 6px 0 !important;
+    padding: 10px 16px 10px 32px !important;
+    white-space: normal !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .terminal-line {
+    margin: 8px 0 !important;
+    padding: 12px 20px 12px 40px !important;
+  }
+}
+
+.terminal-line:hover {
+  background: #22c55e !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-color: #000000 !important;
+}
+
+/* Couleurs texte néo-brutalistes */
+.text-green-300 {
+  color: #15803d !important;
+  font-weight: 600 !important;
+}
+
+.text-green-400 {
+  color: #16a34a !important;
+  font-weight: 600 !important;
+}
+
+.text-yellow-400 {
+  color: #ca8a04 !important;
+  font-weight: 600 !important;
+}
+
+.text-white {
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+.text-black {
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+.text-gray-400 {
+  color: #374151 !important;
+  font-weight: 600 !important;
+}
+
+/* Comments néo-brutalistes */
+.terminal-comment {
+  background: #e8e8e8 !important;
+  border: 2px solid #6b7280 !important;
+  box-shadow: 2px 2px 0px #6b7280 !important;
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+}
+
+/* Titre principal banner */
+.modern-title {
+  color: #000000 !important;
+  font-weight: 900 !important;
+  font-size: 2rem !important;
+}
+
+@media (min-width: 640px) {
+  .modern-title {
+    font-size: 2.8rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .modern-title {
+    font-size: 3.5rem !important;
+  }
+}
+
+/* Amélioration des icônes et éléments visuels */
+.text-6xl {
+  font-size: 2rem !important;
+  font-weight: 900 !important;
+}
+
+@media (min-width: 640px) {
+  .text-6xl {
+    font-size: 3rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .text-6xl {
+    font-size: 4rem !important;
+  }
+}
+
+.text-4xl {
+  font-size: 1.5rem !important;
+  font-weight: 900 !important;
+}
+
+@media (min-width: 640px) {
+  .text-4xl {
+    font-size: 2.25rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .text-4xl {
+    font-size: 3rem !important;
+  }
+}
+
+/* Responsive text sizes for mobile */
+.text-xl {
+  font-size: 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .text-xl {
+    font-size: 1.25rem !important;
+  }
+}
+
+.text-2xl {
+  font-size: 1.25rem !important;
+}
+
+@media (min-width: 640px) {
+  .text-2xl {
+    font-size: 1.5rem !important;
+  }
+}
+
+.text-lg {
+  font-size: 0.95rem !important;
+}
+
+@media (min-width: 640px) {
+  .text-lg {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* Navigation hover fixes */
+nav a.text-green-400:hover {
+  color: #facc15 !important;
+}
+
+nav a.bg-yellow-400:hover {
+  background-color: transparent !important;
+  color: #facc15 !important;
+}
+
+footer a:hover {
+  color: #facc15 !important;
+}
+
+footer a[title="LinkedIn"]:hover {
+  color: #3b82f6 !important;
+}
+
+footer a[title="GitHub"]:hover {
+  color: #22c55e !important;
+}

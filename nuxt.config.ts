@@ -7,10 +7,9 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       viewport: 'width=device-width, initial-scale=1.0',
-      title: 'Cabalex',
+      title: 'Alexis Cabillic - Dev fullstack qui fait des trucs qui marchent',
       meta: [
-        // <meta name="description" content="My amazing site">
-        { name: 'description', content: "Développeur avec 2 ans d'expérience, ayant fait le choix de me reconvertir dans ce domaine après beaucoup d'expériences différentes. Venez découvrir mon site." }
+        { name: 'description', content: "Développeur Laravel/Vue.js reconverti. Je code des apps web en remote. Pas de jargon, juste du concret." }
       ],
       htmlAttrs: {
         lang: 'fr'
@@ -18,12 +17,12 @@ export default defineNuxtConfig({
       link: [
         {
           rel:"icon",
-          href:"/img/favicon.svg",
+          href:"/favicon.svg",
           type:"image/svg+xml"
         },
         {
           rel: 'preconnect',
-          href: 'href="https://fonts.gstatic.com"'
+          href: 'https://fonts.gstatic.com'
         },
         {
           rel: 'preconnect',
@@ -31,23 +30,12 @@ export default defineNuxtConfig({
         },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap'
-        },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'
         }
       ]
     },
   },
   css: [
-    '~/assets/css/global.css',
-    '@fortawesome/fontawesome-svg-core/styles.css'
+    '~/assets/css/global.css'
   ],
-  runtimeConfig: {
-    public: {
-      siteKey: process.env.NUXT_PUBLIC_SITE_KEY,
-      secretKey: process.env.NUXT_PUBLIC_SECRET_KEY,
-    }
-  }
 });
