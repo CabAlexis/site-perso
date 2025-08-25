@@ -1,42 +1,82 @@
 <template>
   <div>
+    <!-- Mobile Terminal (only on mobile) -->
+    <div class="md:hidden">
+      <MobileTerminal />
+    </div>
+
+    <!-- Desktop Version (hidden on mobile) -->
+    <div class="hidden md:block">
     <!-- Hero Section avec style décontracté -->
     <section class="hero-casual section-padding flex items-center justify-center relative overflow-hidden">
-      <div class="container-width">
+      <!-- Matrix rain background -->
+      <div class="matrix-rain absolute inset-0 z-0"></div>
+
+      <!-- Étincelles qui montent -->
+      <div class="sparks absolute inset-0 z-4">
+        <div class="spark" v-for="n in 25" :key="'banner-spark-' + n"></div>
+      </div>
+
+      <!-- Particle system -->
+      <div class="particles absolute inset-0 z-2">
+        <div class="particle" v-for="n in 35" :key="n" :style="{animationDelay: (n * 0.05) + 's'}"></div>
+      </div>
+
+      <div class="container-width relative z-10">
         <div class="text-center relative z-10">
-          <!-- Emoji en background plus subtils -->
-          <div class="absolute -top-16 -left-16 text-6xl opacity-10 select-none">👋</div>
-          <div class="absolute -top-8 -right-16 text-5xl opacity-10 select-none">💻</div>
-          <div class="absolute -bottom-16 left-8 text-6xl opacity-10 select-none">☕</div>
-          
-          <div class="mb-4">
-            <span class="accent-text text-lg">~/</span>
-            <span class="font-mono text-lg text-zinc-600">alexis-cabillic</span>
+          <!-- Enhanced ASCII art background -->
+          <div class="absolute -top-20 -left-20 text-8xl opacity-30 select-none font-mono text-green-400 floating matrix-char">{}</div>
+          <div class="absolute -top-12 -right-20 text-6xl opacity-25 select-none font-mono text-green-400 floating-delayed matrix-char">[]</div>
+          <div class="absolute -bottom-20 left-12 text-8xl opacity-30 select-none font-mono text-green-400 floating-slow matrix-char">;;</div>
+          <div class="absolute top-1/2 -right-12 text-5xl opacity-20 select-none font-mono text-green-400 floating matrix-char">&lt;/&gt;</div>
+          <div class="absolute top-1/4 -left-12 text-5xl opacity-20 select-none font-mono text-green-400 floating-delayed matrix-char">$</div>
+          <div class="absolute top-3/4 -right-16 text-4xl opacity-15 select-none font-mono text-green-400 floating-slow matrix-char">npm</div>
+          <div class="absolute bottom-1/4 -left-16 text-4xl opacity-15 select-none font-mono text-green-400 floating matrix-char">git</div>
+          <div class="absolute top-1/3 right-1/4 text-3xl opacity-10 select-none font-mono text-green-400 floating-delayed matrix-char">&&</div>
+          <div class="absolute bottom-1/3 left-1/4 text-3xl opacity-10 select-none font-mono text-green-400 floating-slow matrix-char">||</div>
+
+          <div class="mb-12 terminal-path glitch-hover">
+            <span class="accent-text text-2xl terminal-prompt">~/</span>
+            <span class="font-mono text-4xl text-green-300 typing-username">alexis-cabillic</span>
           </div>
-          
-          <h1 class="modern-title mb-6">
-            Alexis
-          </h1>
-          
-          <div class="modern-subtitle mb-8">
-            Dev fullstack qui code des trucs qui marchent
-          </div>
-          
-          <div class="terminal mb-8 max-w-2xl mx-auto text-left">
-            <div class="typing">
-              Laravel + Vue.js = ❤️
+
+          <div class="modern-subtitle mb-16">
+            <div class="cyber-subtitle">
+              <span class="terminal-cursor text-green-400">$</span>
+              <span class="text-white">dev --fullstack --remote</span>
             </div>
-            <div class="mt-2">// Reconverti, passionné par le code propre</div>
-            <div class="mt-1 text-yellow-400">➜ Bidouille des apps depuis son bureau en remote</div>
-            <div class="mt-1 text-green-300">whoami: ancien-pas-dev-maintenant-si</div>
           </div>
-          
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#projets" class="btn-funky">
-              Voir mes bidouilles
+
+          <div class="terminal mb-16 max-w-4xl mx-auto text-left terminal-glow terminal-enhanced">
+            <div class="terminal-header mb-4">
+              <div class="flex items-center justify-between">
+                <div class="flex space-x-2">
+                  <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                  <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                </div>
+                <span class="text-xs text-green-400 font-mono">terminal v2.1.0</span>
+              </div>
+            </div>
+            <div class="typing-enhanced mb-3">
+              <span class="text-green-300">root@alexis:~#</span> <span class="typing-text">laravel --vue --clean-code</span>
+            </div>
+            <div class="mt-4 text-yellow-400 font-mono typing-output" style="animation-delay: 2s">Scanning for optimal stack...</div>
+            <div class="mt-2 text-green-300 font-mono typing-output" style="animation-delay: 3s">✓ Laravel framework loaded</div>
+            <div class="mt-1 text-green-300 font-mono typing-output" style="animation-delay: 3.5s">✓ Vue.js components initialized</div>
+            <div class="mt-1 text-green-300 font-mono typing-output" style="animation-delay: 4s">✓ Clean code principles applied</div>
+            <div class="mt-3 text-gray-400 font-mono typing-output" style="animation-delay: 4.5s">/* reconversion: success ✓ */</div>
+            <div class="mt-2 text-yellow-400 typing-output" style="animation-delay: 5s">~ $ whoami</div>
+            <div class="mt-1 text-green-300 typing-output font-bold" style="animation-delay: 5.5s">dev_from_home 🏠</div>
+            <div class="mt-3 text-green-400 blinking-cursor" style="animation-delay: 6s">│</div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+            <a href="#projets" class="btn-funky-enhanced">
+              ./projects
             </a>
-            <a href="#contact" class="btn-outline-funky">
-              On discute ?
+            <a href="#contact" class="btn-outline-funky-enhanced">
+              ./contact
             </a>
           </div>
         </div>
@@ -44,42 +84,43 @@
     </section>
 
     <!-- À propos avec plus de personnalité -->
-    <section id="about" class="section section-padding bg-white">
+    <section id="about" class="section section-padding bg-black text-white scroll-reveal cyber-section">
+      <!-- Étincelles pour cette section -->
+      <div class="sparks">
+        <div class="spark" v-for="n in 20" :key="'about-spark-' + n"></div>
+      </div>
       <div class="container-width">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 class="text-4xl font-bold mb-6 text-zinc-900">
-              Salut ! 👋
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+          <div class="terminal-content">
+            <h2 class="text-4xl font-bold mb-6 text-green-400 font-mono neon-glow scroll-animate-zoom">
+              $ cat about.md
             </h2>
-            <div class="prose prose-lg max-w-none text-zinc-600 space-y-6">
-              <p>
-                <strong>La version courte :</strong> J'ai 30 ans, j'étais pas développeur avant, maintenant je le suis. 
-                Plot twist réussi ! 🎉
+            <div class="prose prose-lg max-w-none text-green-300 space-y-6 font-mono">
+              <p class="terminal-line">
+                <span class="text-yellow-400">>></span> Reconversion. Avant : pas dev. Maintenant : dev.
               </p>
-              <p>
-                <strong>La version un peu plus longue :</strong> Après plein de jobs différents, j'ai découvert Laravel et ça a été le coup de foudre. 
-                Maintenant je passe mes journées à coder des applications web qui, miracle, fonctionnent la plupart du temps.
+              <p class="terminal-line">
+                <span class="text-yellow-400">>></span> Laravel = coup de foudre. Apps web qui marchent (la plupart du temps).
               </p>
-              <p>
-                <strong>Mon truc en plus :</strong> J'adore bidouiller des projets perso ! NutriFollow (outil pour diététiciens), Film Match (pour savoir quoi regarder en couple), et plein d'autres trucs mais chut c'est secret 🤫. 
-                Ces projets m'ont énormément appris - bien plus que n'importe quel tuto. C'est comme ça que je suis devenu le dev que je suis aujourd'hui !
+              <p class="terminal-line">
+                <span class="text-yellow-400">>></span> Projets perso = vraie école. Plus efficace que les tutos.
               </p>
             </div>
           </div>
-          
+
           <div class="relative">
-            <div class="card-weird">
-              <div class="text-6xl mb-4">🧑‍💻</div>
-              <h3 class="font-bold text-xl mb-4">Mes qualités & points forts</h3>
-              <ul class="space-y-2 text-zinc-600">
-                <li>• <strong>Adaptabilité :</strong> reconversion réussie, j'apprends vite</li>
-                <li>• <strong>Autonomie :</strong> 100% remote, je gère mes projets de A à Z</li>
-                <li>• <strong>Pragmatique :</strong> code propre mais qui répond au besoin</li>
-                <li>• <strong>Curieux :</strong> toujours en train de tester de nouveaux trucs</li>
-                <li>• <strong>Persévérant :</strong> quand ça bug, je lâche pas l'affaire</li>
+            <div class="card-weird cyber-card">
+              <div class="text-6xl mb-4 text-green-400">[DEV]</div>
+              <h3 class="font-bold text-xl mb-4 text-green-400 font-mono neon-text">$ ls -la skills/</h3>
+              <ul class="space-y-2 text-green-300 font-mono text-sm">
+                <li class="terminal-line"><span class="text-yellow-400">></span> adaptable.exe</li>
+                <li class="terminal-line"><span class="text-yellow-400">></span> autonomous_remote.sh</li>
+                <li class="terminal-line"><span class="text-yellow-400">></span> clean_code.js</li>
+                <li class="terminal-line"><span class="text-yellow-400">></span> curiosity_driven.py</li>
+                <li class="terminal-line"><span class="text-yellow-400">></span> debug_persistent.php</li>
               </ul>
-              <p class="text-sm text-zinc-500 mt-4 italic">
-                Le remote work m'a appris à être super organisé et autonome. Pas besoin de micro-management !
+              <p class="text-sm text-gray-400 mt-4 font-mono terminal-comment">
+                # remote_work: true
               </p>
             </div>
           </div>
@@ -88,54 +129,70 @@
     </section>
 
     <!-- Stack technique avec style -->
-    <section id="stack" class="section section-padding bg-zinc-100">
+    <section id="stack" class="section section-padding bg-zinc-900 text-white scroll-reveal cyber-section">
+      <!-- Étincelles pour cette section -->
+      <div class="sparks">
+        <div class="spark" v-for="n in 22" :key="'stack-spark-' + n"></div>
+      </div>
       <div class="container-width">
-        <h2 class="text-4xl font-bold text-center mb-12 text-zinc-900">
-          Ma boîte à outils 🧰
+        <h2 class="text-4xl font-bold text-center mb-12 text-green-400 font-mono neon-glow scroll-animate-zoom">
+          $ which tools
         </h2>
-        
-        <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <!-- Backend -->
-          <div class="card-weird">
-            <h3 class="font-bold text-xl mb-4 text-zinc-900">Backend</h3>
+          <div class="card-weird cyber-card scroll-animate-bounce" style="animation-delay: 0.1s">
+            <!-- Particules pour cette card -->
+            <div class="particles">
+              <div class="particle" v-for="n in 8" :key="'backend-' + n" :style="{left: (n * 12.5) + '%', animationDelay: (n * 0.15) + 's'}"></div>
+            </div>
+            <h3 class="font-bold text-xl mb-4 text-green-400 font-mono neon-text">./backend</h3>
             <div class="space-y-3">
               <div class="tech-badge">🐘 PHP</div>
               <div class="tech-badge">🎯 Laravel</div>
               <div class="tech-badge">🗄️ MySQL</div>
               <div class="tech-badge">⚡ Node.js</div>
             </div>
-            <p class="text-sm text-zinc-600 mt-4">
-              Laravel, c'est mon doudou. Eloquent, Blade, Artisan... j'adore cet écosystème. 
-              Perfect pour développer en remote avec une équipe ou en solo.
+            <p class="text-sm text-gray-400 mt-4 font-mono terminal-comment">
+              # Laravel ecosystem: eloquent, blade, artisan
             </p>
           </div>
 
           <!-- Frontend -->
-          <div class="card-weird">
-            <h3 class="font-bold text-xl mb-4 text-zinc-900">Frontend</h3>
+          <div class="card-weird cyber-card scroll-animate-flip" style="animation-delay: 0.3s">
+            <!-- Particules pour cette card -->
+            <div class="particles">
+              <div class="particle" v-for="n in 8" :key="'frontend-' + n" :style="{left: (n * 12.5) + '%', animationDelay: (n * 0.15) + 's'}"></div>
+            </div>
+            <h3 class="font-bold text-xl mb-4 text-green-400 font-mono neon-text">./frontend</h3>
             <div class="space-y-3">
               <div class="tech-badge">💚 Vue.js</div>
               <div class="tech-badge">🎨 Tailwind</div>
               <div class="tech-badge">📱 Nuxt</div>
               <div class="tech-badge">🔥 Alpine.js</div>
             </div>
-            <p class="text-sm text-zinc-600 mt-4">
-              Vue.js pour la logique, Tailwind pour le style. Simple, efficace, et ça marche super bien en télétravail !
+            <p class="text-sm text-gray-400 mt-4 font-mono terminal-comment">
+              # reactive + utility-first css
             </p>
           </div>
 
           <!-- Outils -->
-          <div class="card-weird">
-            <h3 class="font-bold text-xl mb-4 text-zinc-900">Mes potes du quotidien</h3>
+          <div class="card-weird cyber-card scroll-animate-rotate" style="animation-delay: 0.5s">
+            <!-- Particules pour cette card -->
+            <div class="particles">
+              <div class="particle" v-for="n in 8" :key="'tools-' + n" :style="{left: (n * 12.5) + '%', animationDelay: (n * 0.15) + 's'}"></div>
+            </div>
+            <h3 class="font-bold text-xl mb-4 text-green-400 font-mono neon-text">./daily_drivers</h3>
             <div class="space-y-3">
               <div class="tech-badge">🔧 Git</div>
               <div class="tech-badge">🐳 Docker</div>
               <div class="tech-badge">✅ PHPUnit</div>
               <div class="tech-badge">🚀 GitHub Actions</div>
             </div>
-            <p class="text-sm text-zinc-600 mt-4">
-              Sans Git, je suis perdu. Docker me sauve la vie pour les envs de dev. 
-              Et GitHub Actions, c'est magique pour déployer depuis mon salon !
+            <p class="text-sm text-gray-400 mt-4 font-mono terminal-comment">
+              # git: version_control<br>
+              # docker: env_isolation<br>
+              # actions: ci/cd_pipeline
             </p>
           </div>
         </div>
@@ -143,159 +200,175 @@
     </section>
 
     <!-- Projets avec plus de fun -->
-    <section id="projets" class="section section-padding bg-white">
+    <section id="projets" class="section section-padding bg-black text-white scroll-reveal cyber-section">
+      <!-- Étincelles pour cette section -->
+      <div class="sparks">
+        <div class="spark" v-for="n in 25" :key="'projets-spark-' + n"></div>
+      </div>
       <div class="container-width">
-        <h2 class="text-4xl font-bold text-center mb-4 text-zinc-900">
-          Mes petits projets 🚀
+        <h2 class="text-4xl font-bold text-center mb-4 text-green-400 font-mono neon-glow scroll-animate-zoom">
+          $ ls projects/
         </h2>
-        <p class="text-center text-zinc-600 mb-12 max-w-2xl mx-auto">
-          Ces projets m'ont appris plus que tous les cours du monde. Chaque bug, chaque refacto, chaque "ça marche pas" m'a fait progresser.
-          Voici mes principales expérimentations qui ont façonné le dev que je suis...
+        <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto font-mono terminal-comment">
+          # learning_by_building > tutorials
         </p>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <!-- NutriFollow -->
-          <div class="card-weird">
-            <div class="text-4xl mb-4">🥗</div>
-            <h3 class="text-xl font-bold text-zinc-900 mb-3">NutriFollow</h3>
-            <p class="text-zinc-600 mb-4">
-              Une app pour diététiciens-nutritionnistes : gestion patients, consultations, plans alimentaires, suivi... 
-              L'idée m'est venue en discutant avec des pros de la nutrition qui galèrent avec Excel ! 
-              <strong>Actuellement en étude de marché</strong> pour voir si ça vaut le coup de creuser.
+          <div class="card-weird cyber-card scroll-animate-scale" style="animation-delay: 0.2s">
+            <!-- Particules pour cette card -->
+            <div class="particles">
+              <div class="particle" v-for="n in 6" :key="'nutri-' + n" :style="{left: (n * 16.6) + '%', animationDelay: (n * 0.2) + 's'}"></div>
+            </div>
+            <div class="text-4xl mb-4 text-green-400">[APP]</div>
+            <h3 class="text-xl font-bold text-green-400 mb-3 font-mono neon-text">nutrifollow/</h3>
+            <p class="text-green-300 mb-4 font-mono text-xs sm:text-sm">
+              <span class="text-gray-400"># nutrition_management_app</span><br>
+              <span class="text-yellow-400">-</span> patient tracking<br>
+              <span class="text-yellow-400">-</span> meal planning<br>
+              <span class="text-yellow-400">-</span> consultation notes
             </p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="tech-badge">Laravel</span>
               <span class="tech-badge">Vue.js</span>
-              <span class="tech-badge">Market Research</span>
+              <span class="tech-badge">MySQL</span>
             </div>
-            <p class="text-xs text-zinc-500">Status: En étude de marché 📊 (validation du besoin en cours)</p>
+            <p class="text-xs text-gray-400 font-mono terminal-comment">status: active_development</p>
           </div>
 
-          <!-- Projets Secrets CDI -->
-          <div class="card-weird">
-            <div class="text-4xl mb-4">🤐</div>
-            <h3 class="text-xl font-bold text-zinc-900 mb-3">Projets secrets</h3>
-            <p class="text-zinc-600 mb-4">
-              Plein d'autres projets en cours... mais chut ! 🤫 
-              Dans le cadre de mon CDI, je bosse sur des trucs cool que je peux pas encore dévoiler. 
-              <strong>Le genre de projets qui me font kiffer le dev</strong> tous les jours !
+          <!-- Personal Tools -->
+          <div class="card-weird cyber-card scroll-animate-glitch" style="animation-delay: 0.4s">
+            <!-- Particules pour cette card -->
+            <div class="particles">
+              <div class="particle" v-for="n in 6" :key="'ptools-' + n" :style="{left: (n * 16.6) + '%', animationDelay: (n * 0.2) + 's'}"></div>
+            </div>
+            <div class="text-4xl mb-4 text-green-400">[TOOLS]</div>
+            <h3 class="text-xl font-bold text-green-400 mb-3 font-mono neon-text">personal_tools/</h3>
+            <p class="text-green-300 mb-4 font-mono text-xs sm:text-sm">
+              <span class="text-gray-400"># various utilities</span><br>
+              <span class="text-yellow-400">-</span> cli tools<br>
+              <span class="text-yellow-400">-</span> automation scripts<br>
+              <span class="text-yellow-400">-</span> productivity hacks
             </p>
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="tech-badge">🔒 Confidentiel</span>
-              <span class="tech-badge">Laravel</span>
-              <span class="tech-badge">Vue.js</span>
+              <span class="tech-badge">PHP</span>
+              <span class="tech-badge">Bash</span>
+              <span class="tech-badge">Python</span>
             </div>
-            <p class="text-xs text-zinc-500">Status: En développement actif 🚀 (mais secret défense !)</p>
+            <p class="text-xs text-gray-400 font-mono terminal-comment">status: ongoing</p>
           </div>
 
           <!-- Film Match -->
-          <div class="card-weird">
-            <div class="text-4xl mb-4">🎬</div>
-            <h3 class="text-xl font-bold text-zinc-900 mb-3">Film Match</h3>
-            <p class="text-zinc-600 mb-4">
-              Le projet qui a sauvé mon couple ! 😂 
-              Plus sérieusement : app pour couples qui galèrent à choisir un film. Chacun swipe ses préfs, l'algo trouve les matchs. 
-              <strong>Fini les soirées perdues à scroller Netflix !</strong> Ma copine et mes potes l'utilisent vraiment, ça c'est le vrai test !
+          <div class="card-weird cyber-card scroll-animate-left" style="animation-delay: 0.6s">
+            <!-- Particules pour cette card -->
+            <div class="particles">
+              <div class="particle" v-for="n in 6" :key="'film-' + n" :style="{left: (n * 16.6) + '%', animationDelay: (n * 0.2) + 's'}"></div>
+            </div>
+            <div class="text-4xl mb-4 text-green-400">[APP]</div>
+            <h3 class="text-xl font-bold text-green-400 mb-3 font-mono neon-text">film_match/</h3>
+            <p class="text-green-300 mb-4 font-mono text-xs sm:text-sm">
+              <span class="text-gray-400"># couple movie picker</span><br>
+              <span class="text-yellow-400">-</span> swipe preferences<br>
+              <span class="text-yellow-400">-</span> match algorithm<br>
+              <span class="text-yellow-400">-</span> no more netflix scrolling
             </p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="tech-badge">Vue.js</span>
               <span class="tech-badge">TMDB API</span>
               <span class="tech-badge">PWA</span>
             </div>
-            <p class="text-xs text-zinc-500">Status: En prod chez moi ! ✅ (mes amis l'utilisent vraiment)</p>
+            <p class="text-xs text-gray-400 font-mono terminal-comment">status: production</p>
           </div>
         </div>
 
         <div class="text-center mt-12">
-          <p class="text-zinc-600 mb-6">
-            <strong>La vraie école du dev :</strong> bidouiller, casser, réparer, refactoriser, recommencer... 
-            C'est comme ça qu'on apprend vraiment ! Chaque projet m'a fait progresser de ouf. 🚀
+          <p class="text-gray-400 mb-6 font-mono terminal-comment">
+            # break.fix.learn.repeat
           </p>
-          <a href="https://github.com/cabalex" class="link-funky text-lg" target="_blank" rel="noopener">
-            → Voir le code sur GitHub
+          <a href="https://github.com/CabAlexis" class="link-funky text-lg font-mono text-green-400 neon-link" target="_blank" rel="noopener">
+            >> github.com/CabAlexis
           </a>
         </div>
       </div>
     </section>
 
     <!-- Blog/LinkedIn -->
-    <section id="blog" class="section section-padding bg-yellow-50">
+    <section id="blog" class="section section-padding bg-zinc-900 text-white scroll-reveal cyber-section">
+      <!-- Étincelles pour cette section -->
+      <div class="sparks">
+        <div class="spark" v-for="n in 18" :key="'blog-spark-' + n"></div>
+      </div>
       <div class="container-width">
-        <div class="card-weird max-w-4xl mx-auto text-center">
-          <div class="text-6xl mb-6">📝</div>
-          <h2 class="text-4xl font-bold mb-6 text-zinc-900">
-            Mes réflexions en vrac
+        <div class="card-weird cyber-card max-w-4xl mx-auto text-center">
+          <!-- Particules pour cette card -->
+          <div class="particles">
+            <div class="particle" v-for="n in 12" :key="'blog-card-' + n" :style="{left: (n * 8.33) + '%', animationDelay: (n * 0.1) + 's'}"></div>
+          </div>
+          <div class="text-6xl mb-6 text-green-400">[LOG]</div>
+          <h2 class="text-4xl font-bold mb-6 text-green-400 font-mono neon-glow scroll-animate-zoom">
+            $ cat thoughts.log
           </h2>
-          <p class="text-lg text-zinc-600 mb-8">
-            Je partage mes galères et mes trouvailles sur <strong>LinkedIn</strong>. 
-            Entre retours d'expérience, découvertes techniques et réflexions sur le développement.
-            Pas de blog fancy, juste des posts honnêtes depuis mon bureau à la maison.
+          <p class="text-sm sm:text-lg text-green-300 mb-6 sm:mb-8 font-mono">
+            <span class="text-gray-400"># sharing experience on linkedin</span><br>
+            <span class="text-gray-400"># no_fancy_blog, just_real_posts</span>
           </p>
-          <div class="grid md:grid-cols-2 gap-6 text-left mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left mb-8">
             <div>
-              <h4 class="font-bold mb-2">Côté technique :</h4>
-              <ul class="text-zinc-600 space-y-1 text-sm">
-                <li>• Comment j'ai fait foirer mon premier deploy</li>
-                <li>• Laravel tips qui m'ont sauvé la vie</li>
-                <li>• Pourquoi j'ai arrêté d'avoir peur des tests</li>
-                <li>• Clean code vs. deadline serrée</li>
+              <h4 class="font-bold mb-2 font-mono text-green-400 neon-text">./tech/</h4>
+              <ul class="text-green-300 space-y-1 text-xs sm:text-sm font-mono">
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>first_deploy_disaster.md</span></li>
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>laravel_lifesavers.php</span></li>
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>overcoming_test_fear.js</span></li>
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>clean_vs_deadline.md</span></li>
               </ul>
             </div>
             <div>
-              <h4 class="font-bold mb-2">Côté lifestyle & remote :</h4>
-              <ul class="text-zinc-600 space-y-1 text-sm">
-                <li>• Remote work à 100% : comment bien s'organiser</li>
-                <li>• Mes flops de projets et pourquoi c'est formateur</li>
-                <li>• Reconversion dev : la vraie version, pas Instagram</li>
-                <li>• Remote work full time : avantages et pièges</li>
-                <li>• Home office : mes tips pour être productif</li>
+              <h4 class="font-bold mb-2 font-mono text-green-400 neon-text">./life/</h4>
+              <ul class="text-green-300 space-y-1 text-xs sm:text-sm font-mono">
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>remote_work_100.sh</span></li>
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>failed_projects.log</span></li>
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>career_switch_real.md</span></li>
+                <li class="terminal-line"><span class="text-yellow-400 mr-2">-</span><span>home_office_tips.txt</span></li>
               </ul>
             </div>
           </div>
-          <a href="https://linkedin.com/in/alexiscabillic" class="btn-funky" target="_blank" rel="noopener">
-            Me suivre sur LinkedIn
+          <a href="https://www.linkedin.com/in/alexis-cabillic/" class="btn-funky" target="_blank" rel="noopener">
+            >> linkedin
           </a>
         </div>
       </div>
     </section>
 
     <!-- Contact décontracté -->
-    <section id="contact" class="section section-padding bg-zinc-900 text-white">
+    <section id="contact" class="section section-padding bg-zinc-900 text-white scroll-reveal cyber-section">
+      <!-- Étincelles pour cette section -->
+      <div class="sparks">
+        <div class="spark" v-for="n in 20" :key="'contact-spark-' + n"></div>
+      </div>
       <div class="container-width text-center">
-        <h2 class="text-4xl font-bold mb-6">
-          On se fait un café ? ☕
+        <h2 class="text-4xl font-bold mb-6 scroll-animate-zoom">
+          $ ./contact.sh
         </h2>
-        <p class="text-xl mb-12 text-zinc-300 max-w-2xl mx-auto">
-          Un projet à discuter ? Une question technique ? Envie d'échanger sur le remote work ou la reconversion dev ? 
-          Ou juste un petit hello ? Écrivez-moi, je réponds toujours depuis mon bureau à la maison ! ☕
+        <p class="text-xl mb-12 text-black-300 max-w-2xl mx-auto font-mono">
+          # questions? projects? just_say_hi?
         </p>
-        
-        <div class="flex flex-col sm:flex-row gap-6 justify-center mb-8">
-          <a href="mailto:alexis@cabillic.fr" class="btn-funky">
-            📧 alexis@cabillic.fr
+
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-8">
+          <a href="mailto:alexis.cabillic@gmail.com" class="btn-funky-enhanced">
+            >> alexis.cabillic@gmail.com
           </a>
-          <a href="https://linkedin.com/in/alexiscabillic" class="btn-outline-funky text-white border-white" target="_blank" rel="noopener">
-            💼 LinkedIn
+          <a href="https://www.linkedin.com/in/alexis-cabillic/" class="btn-outline-funky-enhanced" target="_blank" rel="noopener">
+            linkedin
           </a>
         </div>
-        
+
         <div class="terminal max-w-lg mx-auto">
-          <div>git clone https://github.com/cabalex</div>
-          <div class="text-yellow-400 mt-2">// Ou juste un petit hello par email 👋</div>
+          <div>$ ping alexis@cabillic.fr</div>
+          <div class="text-yellow-400 mt-2"># always responds</div>
+          <div class="text-green-300 mt-1">connection: established</div>
         </div>
       </div>
     </section>
+    </div>
   </div>
 </template>
-
-<script setup>
-useHead({
-  title: 'Alexis Cabillic - Dev fullstack qui fait des trucs qui marchent',
-  meta: [
-    {
-      name: 'description',
-      content: 'Développeur Laravel/Vue.js reconverti. Je code des apps web en remote. Pas de jargon, juste du concret.'
-    }
-  ]
-})
-</script>

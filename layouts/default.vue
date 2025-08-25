@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <!-- Navigation avec style terminal -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-900/95 backdrop-blur-md border-b-2 border-yellow-400">
+    <!-- Navigation avec style terminal (hidden on mobile) -->
+    <nav class="hidden md:block fixed top-0 left-0 right-0 z-50 bg-zinc-900/95 backdrop-blur-md border-b-6 border-black" style="box-shadow: 0 6px 0px #22c55e;">
       <div class="container-width section-padding">
         <div class="flex items-center justify-between py-3">
           <div class="flex items-center space-x-3">
@@ -44,12 +44,12 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-1 pt-16">
+    <main class="flex-1">
       <slot />
     </main>
 
-    <!-- Footer avec personnalité -->
-    <footer class="bg-zinc-900 text-white section-padding py-12">
+    <!-- Footer avec personnalité (hidden on mobile) -->
+    <footer class="hidden md:block bg-zinc-900 text-white section-padding py-12">
       <div class="container-width">
         <div class="text-center mb-8">
           <div class="terminal inline-block mb-6">
@@ -66,13 +66,13 @@
           </div>
           
           <div class="flex space-x-6">
-            <a href="mailto:alexis@cabillic.fr" class="text-zinc-400 hover:text-yellow-400 transition-colors text-2xl" title="Email">
+            <a href="mailto:alexis.cabillic@gmail.com" class="text-zinc-400 hover:text-yellow-400 transition-colors text-2xl" title="Email">
               📧
             </a>
-            <a href="https://linkedin.com/in/alexiscabillic" target="_blank" rel="noopener" class="text-zinc-400 hover:text-blue-400 transition-colors text-2xl" title="LinkedIn">
+            <a href="https://www.linkedin.com/in/alexis-cabillic/" target="_blank" rel="noopener" class="text-zinc-400 hover:text-blue-400 transition-colors text-2xl" title="LinkedIn">
               💼
             </a>
-            <a href="https://github.com/cabalex" target="_blank" rel="noopener" class="text-zinc-400 hover:text-green-400 transition-colors text-2xl" title="GitHub">
+            <a href="https://github.com/CabAlexis" target="_blank" rel="noopener" class="text-zinc-400 hover:text-green-400 transition-colors text-2xl" title="GitHub">
               🐙
             </a>
           </div>
