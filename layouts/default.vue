@@ -80,7 +80,7 @@
 
         <div class="border-t border-zinc-800 mt-8 pt-8 text-center text-zinc-400">
           <p class="font-mono text-sm">
-            © 2025 - Codé avec ❤️, Nuxt et beaucoup de ☕
+            © 2026 - Codé avec ❤️, Nuxt et beaucoup de ☕
           </p>
           <p class="text-xs mt-2 opacity-75">
             PS: Ce site ne collecte aucune donnée. Promis juré. 🤞
