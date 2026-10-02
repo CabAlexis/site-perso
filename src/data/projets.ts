@@ -132,9 +132,9 @@ const fiches = [
     preuves: [
       { libelle: 'Surface', valeur: '71 commandes slash', note: 'discord.js, better-sqlite3, dotenv : trois dépendances' },
       {
-        libelle: 'Dépôt',
+        libelle: 'Consultable',
         valeur: null,
-        todo: 'le dépôt CabAlexis/bot-legendes est-il public ? Si oui, lien à ajouter',
+        todo: "dépôt privé et serveur Discord fermé : rien n'est consultable de l'extérieur, et « 71 commandes » est un chiffre déclaratif. Étendre l'exception de Dofus Switcher à ce projet, ou fournir un élément consultable ?",
       },
     ],
   },
