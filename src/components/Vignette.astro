@@ -1,0 +1,38 @@
+---
+/*
+ * Vignette d'une coupe pour l'accueil : la silhouette du mécanisme, sans
+ * texte (illisible à cette taille). Purement décorative : le lien qui la
+ * contient porte le nom du projet.
+ */
+import type { DonneesCoupe } from '../data/coupes';
+import { pointe } from '../lib/pointe';
+
+interface Props {
+  id: string;
+  coupe: DonneesCoupe;
+}
+const { id, coupe } = Astro.props;
+const hachures = `${id}-hachures`;
+---
+<svg class="vignette" viewBox={`0 0 360 ${coupe.hauteur}`} aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id={hachures} width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="10" class="coupe-hachure" />
+    </pattern>
+  </defs>
+  {coupe.liens.map((lien) => (
+    <g class="coupe-lien" data-etape={lien.etape ?? 0}>
+      <polyline points={lien.points.map((p) => p.join(',')).join(' ')} class:list={['coupe-trace', { 'coupe-tirets': lien.tirets }]} />
+      {lien.fleche !== false && <path d={pointe(lien.points, 14, 0.5)} class="coupe-pointe" />}
+    </g>
+  ))}
+  {coupe.noeuds.map((n) => (
+    <g class:list={['coupe-noeud', n.ton && `coupe-${n.ton}`]} data-etape={n.etape ?? 0}>
+      <rect x={n.x} y={n.y} width={n.l} height={n.h} class="coupe-fond" />
+      {n.ton === 'contrainte' && <rect x={n.x} y={n.y} width={n.l} height={n.h} fill={`url(#${hachures})`} />}
+      <rect x={n.x} y={n.y} width={n.l} height={n.h} class="coupe-cadre" />
+      {/* Deux traits à la place du titre, pour garder la lecture « boîte étiquetée ». */}
+      <line x1={n.x + 14} y1={n.y + 22} x2={n.x + Math.min(n.l - 14, 14 + n.titre.length * 7)} y2={n.y + 22} class="vignette-titre" />
+    </g>
+  ))}
+</svg>

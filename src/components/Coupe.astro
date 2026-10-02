@@ -54,21 +54,11 @@ interface Props {
   cartouche: [string, string];
 }
 
+import { pointe } from '../lib/pointe';
+
 const { id, titre, resume, hauteur, noeuds, liens, notes = [], cartouche } = Astro.props;
 const largeur = 360;
 const hauteurTotale = hauteur + 52;
-
-// Pointe de flèche orientée selon le dernier segment.
-function pointe(points: [number, number][]): string {
-  const [x1, y1] = points[points.length - 2];
-  const [x2, y2] = points[points.length - 1];
-  const a = Math.atan2(y2 - y1, x2 - x1);
-  const longueur = 8;
-  const ouverture = 0.42;
-  const g = [x2 - longueur * Math.cos(a - ouverture), y2 - longueur * Math.sin(a - ouverture)];
-  const d = [x2 - longueur * Math.cos(a + ouverture), y2 - longueur * Math.sin(a + ouverture)];
-  return `M${x2},${y2} L${g[0].toFixed(1)},${g[1].toFixed(1)} L${d[0].toFixed(1)},${d[1].toFixed(1)} Z`;
-}
 
 const hachures = `${id}-hachures`;
 ---

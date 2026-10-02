@@ -1,13 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+import Vignette from '../components/Vignette.astro';
 import { projets } from '../data/projets';
+import { coupes } from '../data/coupes';
 ---
 <Base
   titre="Alexis Cabillic"
   description="Développeur web à Pau. Quatre projets décrits en détail : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté."
 >
   <header class="accueil-tete grille">
-    <h1 class="geant plein"><span>Alexis</span> <span>Cabillic</span></h1>
+    <p class="etiquette">Développeur · Pau</p>
+    <h1 class="geant">Alexis Cabillic</h1>
     <div class="prose">
       <p class="chapeau">
         Je développe des applications web, de la base de données jusqu'au serveur qui les
@@ -21,6 +24,16 @@ import { projets } from '../data/projets';
         chiffres cités sont déclarés et datés, et ce qui ne tourne plus est présenté comme tel.
       </p>
     </div>
+    <ul class="planche" aria-label="Les quatre projets">
+      {projets.map((projet, i) => (
+        <li>
+          <a class="carte" href={`/${projet.slug}`}>
+            <Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} />
+            <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> {projet.titre}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </header>
 
   <section class="grille bloc" aria-labelledby="projets">

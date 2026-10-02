@@ -85,10 +85,12 @@
   /* Les deux tailles d'affichage sortent de l'échelle et suivent la largeur
      de la fenêtre : ce sont elles qui débordent de la colonne de texte. */
   --t-titre: clamp(3rem, 0.9rem + 9.2vw, 10.5rem);
-  --t-geant: clamp(4.5rem, 1rem + 15vw, 15rem);
+  --t-geant: clamp(3rem, 1.9rem + 3.4vw, 5.25rem);
 
   --gouttiere: clamp(1rem, 4vw, 3rem);
-  --mesure: 68ch;
+  /* En rem et non en ch : la grille doit être la même pour le bandeau en mono
+     et pour le corps. 38rem ≈ 70 caractères du corps. */
+  --mesure: 38rem;
   --rythme: calc(var(--t-0) * 1.6);
 }
 
@@ -190,11 +192,11 @@
   @media (min-width: 68rem) {
     .grille {
       grid-template-columns:
-        [plein-start] minmax(var(--gouttiere), 7rem)
+        [plein-start] minmax(clamp(2rem, 6vw, 7rem), 1fr)
         [texte-start] minmax(0, var(--mesure))
         [texte-end] clamp(2.5rem, 5vw, 6rem)
         [marge-start] minmax(18rem, 28rem)
-        [marge-end] minmax(var(--gouttiere), 1fr)
+        [marge-end] minmax(var(--gouttiere), 1.6fr)
         [plein-end];
     }
     .grille > .plein { padding-inline: 0; grid-column: texte-start / marge-end; }
@@ -384,7 +386,7 @@
     }
   }
 
-  .coupe [data-etape], .repere {
+  :is(.coupe, .vignette) [data-etape], .repere {
     /* --actif vaut 0 au repos, 1 quand l'étape est lue. */
     color: color-mix(in oklab, var(--signal) calc(var(--actif) * 100%), var(--trait-fort));
   }
@@ -488,15 +490,62 @@
   .geant {
     font-size: var(--t-geant);
     font-stretch: 62%;
-    font-weight: 850;
-    line-height: 0.84;
-    letter-spacing: -0.015em;
-    margin-inline-start: -0.05em;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    margin-inline-start: -0.03em;
   }
-  .geant span { display: block; }
-  .geant span + span { padding-inline-start: 0.42em; }
+  .accueil-tete .etiquette { margin-bottom: -0.6rem; }
 
-  .liste-projets { list-style: none; padding: 0; margin-top: var(--rythme); counter-reset: projet; }
+  /*
+   * La planche : les quatre coupes en vignettes, l'idée directrice des pages
+   * projet ramenée sur l'accueil. Au survol ou au focus, toute la coupe
+   * s'allume, par la même variable --actif que dans les pages.
+   */
+  .planche {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 1.25rem;
+    list-style: none;
+    padding: 0;
+    align-content: start;
+  }
+  .carte { display: grid; gap: 0.55rem; text-decoration: none; }
+  .carte .vignette {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 360 / 550;
+    padding: 0.6rem;
+    border: 1px solid var(--trait);
+    background: var(--papier);
+  }
+  .carte-nom {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    font-size: var(--t-1);
+    font-stretch: 62%;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .carte-nom .etiquette { font-stretch: 100%; font-weight: 400; }
+  .carte:hover .carte-nom, .carte:focus-visible .carte-nom { color: var(--signal); }
+  .carte:hover .vignette, .carte:focus-visible .vignette { border-color: var(--signal); }
+
+  .vignette [data-etape] { --actif: 0; transition: --actif 0.25s ease-out; }
+  .carte:hover .vignette [data-etape], .carte:focus-visible .vignette [data-etape] { --actif: 1; }
+  .vignette :is(.coupe-cadre, .coupe-trace, .coupe-hachure, .vignette-titre) { vector-effect: non-scaling-stroke; }
+  .vignette .coupe-cadre, .vignette .coupe-trace { stroke-width: calc(1px + var(--actif) * 1px); }
+  .vignette-titre { stroke: var(--encre); stroke-width: 2px; }
+
+  @media (min-width: 68rem) {
+    .accueil-tete .planche { grid-column: marge; grid-row: 1 / span 4; }
+  }
+  @media (max-width: 67.99rem) {
+    .planche { max-width: 34rem; }
+  }
+
+  .liste-projets { list-style: none; padding-block: 0; margin-top: var(--rythme); }
   .liste-projets > li { border-top: 1px solid var(--encre); }
   .liste-projets > li:last-child { border-bottom: 1px solid var(--encre); }
   .liste-projets a {
