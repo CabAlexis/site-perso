@@ -18,7 +18,7 @@ const declares = projet.elements.filter((e) => !e.url);
         <span>{String(numero).padStart(2, '0')} / {String(projets.length).padStart(2, '0')}</span>
         <span class:list={['statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
       </p>
-      <h1 class="affiche plein">{projet.titre}</h1>
+      <h1 class="affiche plein"><span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></h1>
       <div class="chapeau"><slot name="contexte" /></div>
     </header>
 

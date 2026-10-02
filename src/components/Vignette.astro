@@ -10,11 +10,12 @@ import { pointe } from '../lib/pointe';
 interface Props {
   id: string;
   coupe: DonneesCoupe;
+  transition?: string;
 }
-const { id, coupe } = Astro.props;
+const { id, coupe, transition } = Astro.props;
 const hachures = `${id}-hachures`;
 ---
-<svg class="vignette" viewBox={`0 0 360 ${coupe.hauteur}`} aria-hidden="true" focusable="false">
+<svg class="vignette" style={transition ? `view-transition-name: ${transition}` : undefined} viewBox={`0 0 360 ${coupe.hauteur}`} aria-hidden="true" focusable="false">
   <defs>
     <pattern id={hachures} width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <line x1="0" y1="0" x2="0" y2="10" class="coupe-hachure" />

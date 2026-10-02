@@ -30,8 +30,8 @@ import { boucle, coupes } from '../data/coupes';
       {projets.map((projet, i) => (
         <li>
           <a class="carte" href={`/${projet.slug}`}>
-            <span class="trace" style={`--rang: ${i}`}><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} /></span>
-            <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> {projet.titre}</span>
+            <span class="trace" style={`--rang: ${i}`}><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} transition={`coupe-${projet.slug}`} /></span>
+            <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> <span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></span>
           </a>
         </li>
       ))}

@@ -414,6 +414,7 @@
   /* Flux : la boucle tourne, lentement. Le temps, pas le défilement, la pilote. */
   .coupe-flux { stroke-dasharray: 6 5; animation: flux 1.6s linear infinite; }
   .coupe .coupe-lien .coupe-flux { animation-timeline: auto; }
+  .coupe-paquet { fill: var(--signal); stroke: var(--papier); stroke-width: 2px; }
   @keyframes flux { to { stroke-dashoffset: -11; } }
   .coupe-pointe { fill: currentColor; }
   .coupe-pastille circle { fill: var(--papier); stroke: currentColor; stroke-width: 1.5px; }
@@ -496,7 +497,27 @@
 
 @layer composants {
   .bloc { margin-top: calc(var(--rythme) * 3); row-gap: calc(var(--rythme) * 0.6); }
-  .accueil-tete { padding-top: calc(var(--rythme) * 2); row-gap: calc(var(--rythme) * 1.5); }
+  .accueil-tete {
+    position: relative;
+    isolation: isolate;
+    padding-top: calc(var(--rythme) * 2);
+    padding-bottom: calc(var(--rythme) * 1.5);
+    row-gap: calc(var(--rythme) * 1.5);
+  }
+  /* Fond de planche : papier millimétré, très léger, qui s'efface vers le bas. */
+  .accueil-tete::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--trait) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--trait) 45%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: -1px -1px;
+    mask-image: linear-gradient(to bottom, black 55%, transparent);
+    pointer-events: none;
+  }
   .geant {
     font-size: var(--t-geant);
     font-stretch: 62%;
@@ -627,7 +648,25 @@
   }
 }
 
+/* ── Transitions entre pages ─────────────────────────────────────────── */
+
+/*
+ * La vignette d'un projet sur l'accueil et la coupe de sa page portent le même
+ * view-transition-name (coupe-<slug>), comme le nom et le titre (titre-<slug>).
+ * À la navigation, le navigateur fait glisser et grandir l'un jusqu'à l'autre.
+ * CSS seul ; sans support, navigation normale ; rien en mouvement réduit.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+::view-transition-group(*) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.15, 1);
+}
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.3s; }
+
 @media (prefers-reduced-motion: reduce) {
+  .coupe-paquet { display: none; }
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
