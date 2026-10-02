@@ -532,6 +532,46 @@
     mask-image: linear-gradient(to bottom, black 55%, transparent);
     pointer-events: none;
   }
+
+  /*
+   * Le quadrillage sort du traceur : il s'imprime de haut en bas, balayé par
+   * une ligne rouge sur toute la largeur, en même temps que les vignettes se
+   * dessinent. Puis, au défilement, il remonte plus lentement que le contenu
+   * (timeline de défilement, sans JS). Le texte, lui, ne bouge jamais.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    .accueil-tete::before { animation: imprime 1.3s cubic-bezier(0.45, 0, 0.2, 1) both; }
+    .accueil-tete::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      top: 0;
+      z-index: -1;
+      height: 2px;
+      background: var(--signal);
+      box-shadow: 0 0 18px 2px color-mix(in oklab, var(--signal) 35%, transparent);
+      opacity: 0;
+      pointer-events: none;
+      animation: balaye 1.3s cubic-bezier(0.45, 0, 0.2, 1) both;
+    }
+    @supports (animation-timeline: scroll()) {
+      .accueil-tete::before {
+        animation:
+          imprime 1.3s cubic-bezier(0.45, 0, 0.2, 1) both,
+          derive linear both;
+        animation-timeline: auto, scroll(root);
+        animation-range: normal, 0 100vh;
+      }
+    }
+  }
+  @keyframes imprime {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0); }
+  }
+  @keyframes derive {
+    from { background-position: -1px -1px; }
+    to { background-position: -1px 119px; }
+  }
   .geant {
     font-size: var(--t-geant);
     font-stretch: 62%;
