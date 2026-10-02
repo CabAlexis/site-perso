@@ -7,8 +7,9 @@ import Etape from '../components/Etape.astro';
   <Fragment slot="contexte">
     <p>
       SaaS de suivi pour diététiciens indépendants, sur nutrifollow.fr, conçu et construit
-      seul. Il est fonctionnel ; une migration vers un hébergement certifié HDS est requise
-      avant de le mettre en service. Personne ne l'utilise aujourd'hui.
+      seul. Il est fonctionnel ; trois conditions, dont la migration vers un hébergement
+      certifié HDS, restent à remplir avant d'accueillir des patients réels. Personne ne
+      l'utilise aujourd'hui.
     </p>
   </Fragment>
 
@@ -16,7 +17,7 @@ import Etape from '../components/Etape.astro';
     slot="coupe"
     id="coupe-nutrifollow"
     titre="Coupe de l'application et de ses frontières"
-    resume="Praticien sur ordinateur et patient sur téléphone utilisent la même application Laravel servie par Inertia. Le contrôleur des patients et une portée globale par cabinet isolent les données. Reverb pousse le chat et le journal en temps réel. Les demandes d'IA passent par une file Redis vers Groq. L'ensemble tourne sur un VPS non certifié HDS, ce qui interdit d'y accueillir des patients réels."
+    resume="Praticien sur ordinateur et patient sur téléphone utilisent la même application Laravel servie par Inertia. Le contrôleur des patients et une portée globale par cabinet isolent les données. Reverb pousse le chat et le journal en temps réel. Les demandes d'IA passent par une file Redis vers Groq. Trois conditions bloquent l'accueil de patients réels : hébergement HDS, pseudonymisation avant l'appel au service d'inférence, chiffrement étendu."
     hauteur={550}
     cartouche={['Coupe · NutriFollow', 'Laravel 13']}
     noeuds={[
@@ -27,7 +28,7 @@ import Etape from '../components/Etape.astro';
       { x: 190, y: 222, l: 150, h: 72, titre: 'Reverb', lignes: ['chat, journal', 'en direct'], etape: 3 },
       { x: 190, y: 334, l: 150, h: 72, titre: 'File Redis', lignes: ['jobs IA → Groq', 'JSON validé'], etape: 4 },
       { x: 20, y: 350, l: 150, h: 56, titre: 'MySQL', lignes: ['portée par cabinet'], etape: 1 },
-      { x: 20, y: 452, l: 320, h: 72, titre: 'VPS Hostinger, déployé par Forge', lignes: ['non certifié HDS :', 'pas de patients réels'], ton: 'contrainte', etape: 2 },
+      { x: 20, y: 452, l: 320, h: 72, titre: 'Mise en service', lignes: ['HDS, pseudonymisation, chiffrement :', 'trois conditions avant patients réels'], ton: 'contrainte', etape: 2 },
     ]}
     liens={[
       { points: [[95, 70], [95, 110]], etape: 3 },
@@ -82,10 +83,14 @@ import Etape from '../components/Etape.astro';
     </Etape>
     <Etape n={2}>
       <p>
-        Deuxième évidence inutilisable : héberger le produit comme le reste, sur mon VPS. En
-        France, des données de santé hébergées pour le compte de tiers doivent l'être chez un
-        hébergeur certifié HDS. Le VPS actuel ne l'est pas. Le produit fonctionne, mais il ne
-        peut pas accueillir de patients réels tant que cette migration n'est pas faite.
+        Deuxième évidence inutilisable : mettre en service, tel quel, un produit qui fonctionne.
+        Trois contraintes identifiées conditionnent l'accueil de patients réels. L'hébergement :
+        en France, des données de santé hébergées pour le compte de tiers doivent l'être chez un
+        hébergeur certifié HDS, et le produit doit migrer vers l'un d'eux. La pseudonymisation :
+        les données d'un patient doivent être pseudonymisées avant tout appel au service
+        d'inférence, qui est un tiers. Le chiffrement : déjà appliqué aux traitements et aux
+        notes médicales, il doit s'étendre au reste du dossier médical. Le produit fonctionne ;
+        ces trois points décident du moment où il pourra servir.
       </p>
     </Etape>
   </section>
@@ -115,8 +120,7 @@ import Etape from '../components/Etape.astro';
         rendez-vous) passe par Groq, choisi pour son coût. Chaque demande est un job asynchrone
         dans une file Redis. Le JSON renvoyé est validé avant affichage, et le résultat est
         présenté comme une proposition à valider par le praticien, jamais comme une
-        prescription. Ce qui reste ouvert est écrit dans le rapport d'audit : les données
-        envoyées au modèle, hébergé aux États-Unis, ne sont pas encore pseudonymisées.
+        prescription.
       </p>
     </Etape>
     <p>
@@ -129,11 +133,6 @@ import Etape from '../components/Etape.astro';
       même audit a déplacé les photos de santé d'un disque public vers un disque privé, servi
       derrière des autorisations. Il a aussi mis à zéro les alertes de
       <code>composer audit</code> et <code>npm audit</code>.
-    </p>
-    <p>
-      Les traitements et les notes médicales sont chiffrés en base ; les allergies, pathologies
-      et régimes ne le sont pas. Je le précise parce que « données chiffrées » sans détail ne
-      voudrait rien dire.
     </p>
     <p>
       Ce qui manque pour lancer le produit n'est pas que technique : le démarchage n'a pas été
