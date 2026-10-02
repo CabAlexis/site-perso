@@ -2,14 +2,13 @@
 import Projet from '../layouts/Projet.astro';
 import Coupe from '../components/Coupe.astro';
 import Etape from '../components/Etape.astro';
-import Todo from '../components/Todo.astro';
 ---
 <Projet slug="bot-legendes">
   <Fragment slot="contexte">
     <p>
       Bot Discord de l'alliance Dofus « Faut Y Songer » : collection des Légendes des Songes,
-      giveaways, candidatures d'entrée sur le serveur, organisation des runs. En service, dans
-      un conteneur podman sur mon VPS.
+      giveaways, candidatures d'entrée sur le serveur, organisation des runs. En service sur mon
+      VPS, sous supervisord, déployé par Forge.
     </p>
   </Fragment>
 
@@ -17,12 +16,12 @@ import Todo from '../components/Todo.astro';
     slot="coupe"
     id="coupe-bot"
     titre="Coupe de ce qui survit à un arrêt du bot"
-    resume="Le bot tourne dans un conteneur podman relancé en cas de plantage. Tout l'état utile est dans une base SQLite. Au démarrage, il replanifie les giveaways et tire ceux dont l'échéance est passée. Au tirage, il lit les réactions via l'API REST de Discord. La porte d'entrée du serveur ne dépend pas de lui : elle est verrouillée par les permissions Discord."
+    resume="Le bot tourne comme démon supervisord, lancé au démarrage de la machine et relancé s'il s'arrête. Tout l'état utile est dans une base SQLite. Au démarrage, il replanifie les giveaways et tire ceux dont l'échéance est passée. Au tirage, il lit les réactions via l'API REST de Discord. La porte d'entrée du serveur ne dépend pas de lui : elle est verrouillée par les permissions Discord."
     hauteur={450}
     cartouche={['Coupe · Bot Légendes', 'discord.js · SQLite']}
     noeuds={[
       { x: 20, y: 14, l: 320, h: 56, titre: 'Discord', lignes: ['passerelle (événements) · API REST'], ton: 'externe' },
-      { x: 20, y: 118, l: 320, h: 180, titre: 'Conteneur podman', lignes: ['--restart=unless-stopped'], etape: 2 },
+      { x: 20, y: 118, l: 320, h: 180, titre: 'Démon supervisord (Forge)', lignes: ['autostart · autorestart'], etape: 2 },
       { x: 36, y: 180, l: 138, h: 102, titre: 'Au démarrage', lignes: ['giveaways', 'replanifiés ;', 'échéance passée', 'tirée aussitôt'], etape: 2 },
       { x: 188, y: 180, l: 138, h: 102, titre: 'Au tirage', lignes: ['réactions lues', 'en REST, par', 'pages de 100'], etape: 3 },
       { x: 20, y: 340, l: 160, h: 72, titre: 'SQLite · WAL', lignes: ['état durable', 'aucun état en RAM'], etape: 1 },
@@ -74,20 +73,22 @@ import Todo from '../components/Todo.astro';
     <h2 id="choix" class="intertitre">Ce qui a été choisi, et ce que ça a coûté</h2>
     <Etape n={2}>
       <p>
-        Le bot tourne dans un conteneur podman lancé avec <code>--restart=unless-stopped</code> :
-        s'il plante, podman le relance. Au démarrage, il replanifie tous les giveaways en cours ;
-        un tirage dont l'échéance est passée pendant l'arrêt a lieu aussitôt. Il nettoie les
-        salons vocaux temporaires et la file d'attente, et publie l'info du jour s'il l'a
-        manquée, dans la limite de trois heures de retard. Les réactions posées sur
-        des messages antérieurs au redémarrage sont reçues aussi, grâce aux <em>partials</em> de
-        discord.js.
+        En production, le bot tourne sous supervisord, déclaré comme démon dans Forge :
+        <code>node src/index.js</code>, sous l'utilisateur <code>forge</code>.
+        <code>autostart</code> le lance au démarrage de la machine, <code>autorestart</code> le
+        relance s'il s'arrête. À l'arrêt, <code>stopasgroup</code> et <code>killasgroup</code>
+        visent tout le groupe de processus : supervisor envoie le signal d'arrêt, attend
+        15 secondes (<code>stopwaitsecs</code>), puis tue le groupe entier, sans laisser de
+        processus orphelin. La sortie standard, seul journal du bot, tourne sur trois fichiers de
+        5 Mo. Le conteneur podman du dépôt ne sert qu'au développement local.
       </p>
       <p>
-        La limite est connue : <code>unless-stopped</code> relance le conteneur après un
-        plantage, pas après un redémarrage de la machine. Pour cela, il faut que le service
-        <code>podman-restart</code> soit actif.
+        Au démarrage, le bot replanifie tous les giveaways en cours ; un tirage dont l'échéance
+        est passée pendant l'arrêt a lieu aussitôt. Il nettoie les salons vocaux temporaires et la
+        file d'attente, et publie l'info du jour s'il l'a manquée, dans la limite de trois heures
+        de retard. Les réactions posées sur des messages antérieurs au redémarrage sont reçues
+        aussi, grâce aux <em>partials</em> de discord.js.
       </p>
-      <Todo note="le service podman-restart est-il activé sur le VPS ? (sinon le bot ne revient pas après un reboot)" />
     </Etape>
     <Etape n={3}>
       <p>

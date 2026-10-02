@@ -84,7 +84,7 @@ const fiches = [
     slug: 'bot-legendes',
     titre: 'Bot Légendes',
     angle: "Un bot Discord pensé pour qu'une panne ne fasse rien perdre et n'ouvre rien.",
-    statut: { code: 'service', libelle: 'En service · conteneur podman' },
+    statut: { code: 'service', libelle: 'En service · démon supervisord' },
     description:
       "Bot Discord d'une alliance Dofus, conçu pour la panne : état en base, giveaways repris "
       + 'au redémarrage, tirage lu en REST, porte fermée si le bot tombe.',
