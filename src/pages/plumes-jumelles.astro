@@ -2,7 +2,6 @@
 import Projet from '../layouts/Projet.astro';
 import Coupe from '../components/Coupe.astro';
 import Etape from '../components/Etape.astro';
-import Todo from '../components/Todo.astro';
 ---
 <Projet slug="plumes-jumelles">
   <Fragment slot="contexte">
@@ -11,7 +10,6 @@ import Todo from '../components/Todo.astro';
       autour d'une communauté Instagram consacrée aux livres. En production sur
       plumes-jumelles.fr depuis le 4 septembre 2026. C'est ma première référence client livrée.
     </p>
-    <Todo note="autorisation des clientes pour citer leurs prénoms (Emeline et Maëva) et pour publier une capture" />
   </Fragment>
 
   <Coupe
@@ -61,7 +59,6 @@ import Todo from '../components/Todo.astro';
         qui ne sont pas techniciennes devaient pouvoir le faire tourner seules.
       </p>
     </Etape>
-    <Todo note="organisation des clientes avant / après le site (comment elles géraient les envois, ce qui a changé)" />
   </section>
 
   <section aria-labelledby="evidence">
@@ -121,7 +118,6 @@ import Todo from '../components/Todo.astro';
         grille de frais de port et les pages légales. Passer une commande à « Expédiée » envoie le
         mail d'expédition. Les adresses des abonnées s'exportent en CSV pour l'envoi postal.
       </p>
-      <Todo note="ce que les clientes gèrent réellement seules au quotidien, avec leurs mots" />
     </Etape>
     <p>
       Pas de rendu côté serveur, et c'est voulu. Il aurait imposé un démon Node sur Forge, plus
@@ -140,10 +136,5 @@ import Todo from '../components/Todo.astro';
       de frais de port ne couvre ni l'outre-mer ni Monaco, et les codes postaux correspondants
       sont refusés à la commande.
     </p>
-  </section>
-
-  <section aria-labelledby="clientes">
-    <h2 id="clientes" class="intertitre">Ce qu'en disent les clientes</h2>
-    <Todo note="citation des clientes, avec leur accord" />
   </section>
 </Projet>
