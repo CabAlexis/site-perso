@@ -1,0 +1,15 @@
+---
+/*
+ * Passage du texte lié à une étape de la coupe. Le repère numéroté est
+ * décoratif (aria-hidden) : la coupe a sa propre description textuelle, et le
+ * texte se lit sans elle.
+ */
+interface Props {
+  n: number;
+}
+const { n } = Astro.props;
+---
+<div class="etape" data-etape-texte={n}>
+  <span class="repere" aria-hidden="true">{n}</span>
+  <slot />
+</div>

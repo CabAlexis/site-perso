@@ -1,0 +1,150 @@
+---
+/*
+ * Coupe : le schéma du mécanisme réel d'un projet, dessiné comme une vue en
+ * coupe de dessin technique. Les données (nœuds, liens, notes) sont décrites
+ * dans chaque page ; ce composant ne fait que les tracer.
+ *
+ * Chaque élément peut porter un numéro d'étape. Le même numéro marque un
+ * passage du texte (composant Etape) : sans CSS récent, c'est la seule
+ * liaison, et elle suffit. Avec les animations pilotées par le défilement,
+ * l'étape s'allume pendant que son passage traverse la zone de lecture
+ * (voir global.css, section « Coupe »). Aucun JavaScript.
+ *
+ * Conventions de dessin :
+ *   - trait plein : composant que j'ai écrit ou configuré ;
+ *   - trait tireté : système externe (Stripe, Discord, KWin…) ;
+ *   - hachures : contrainte, ce qui borne la solution.
+ */
+
+export interface Noeud {
+  x: number;
+  y: number;
+  l: number;
+  h: number;
+  titre: string;
+  lignes?: string[];
+  etape?: number;
+  ton?: 'externe' | 'contrainte';
+}
+
+export interface Lien {
+  points: [number, number][];
+  etape?: number;
+  etiquette?: { x: number; y: number; texte: string; ancre?: 'start' | 'middle' | 'end' };
+  fleche?: boolean;
+  tirets?: boolean;
+}
+
+export interface Note {
+  x: number;
+  y: number;
+  texte: string;
+  etape?: number;
+  ancre?: 'start' | 'middle' | 'end';
+}
+
+interface Props {
+  id: string;
+  titre: string;
+  resume: string;
+  hauteur: number;
+  noeuds: Noeud[];
+  liens: Lien[];
+  notes?: Note[];
+  cartouche: [string, string];
+}
+
+const { id, titre, resume, hauteur, noeuds, liens, notes = [], cartouche } = Astro.props;
+const largeur = 360;
+const hauteurTotale = hauteur + 52;
+
+// Pointe de flèche orientée selon le dernier segment.
+function pointe(points: [number, number][]): string {
+  const [x1, y1] = points[points.length - 2];
+  const [x2, y2] = points[points.length - 1];
+  const a = Math.atan2(y2 - y1, x2 - x1);
+  const longueur = 8;
+  const ouverture = 0.42;
+  const g = [x2 - longueur * Math.cos(a - ouverture), y2 - longueur * Math.sin(a - ouverture)];
+  const d = [x2 - longueur * Math.cos(a + ouverture), y2 - longueur * Math.sin(a + ouverture)];
+  return `M${x2},${y2} L${g[0].toFixed(1)},${g[1].toFixed(1)} L${d[0].toFixed(1)},${d[1].toFixed(1)} Z`;
+}
+
+const hachures = `${id}-hachures`;
+---
+<figure class="coupe marge" aria-labelledby={`${id}-legende`}>
+  <svg
+    viewBox={`0 0 ${largeur} ${hauteurTotale}`}
+    role="img"
+    aria-labelledby={`${id}-titre ${id}-resume`}
+  >
+    <title id={`${id}-titre`}>{titre}</title>
+    <desc id={`${id}-resume`}>{resume}</desc>
+    <defs>
+      <pattern id={hachures} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="6" class="coupe-hachure" />
+      </pattern>
+    </defs>
+
+    {/* Repères d'angle, comme sur une planche. */}
+    <path class="coupe-repere" d={`M0.5,12 V0.5 H12 M${largeur - 12},0.5 H${largeur - 0.5} V12 M${largeur - 0.5},${hauteurTotale - 12} V${hauteurTotale - 0.5} H${largeur - 12} M12,${hauteurTotale - 0.5} H0.5 V${hauteurTotale - 12}`} />
+
+    {liens.map((lien) => (
+      <g class="coupe-lien" data-etape={lien.etape}>
+        <polyline
+          points={lien.points.map((p) => p.join(',')).join(' ')}
+          class:list={['coupe-trace', { 'coupe-tirets': lien.tirets }]}
+        />
+        {lien.fleche !== false && <path d={pointe(lien.points)} class="coupe-pointe" />}
+        {lien.etiquette && (
+          <text
+            x={lien.etiquette.x}
+            y={lien.etiquette.y}
+            text-anchor={lien.etiquette.ancre ?? 'start'}
+            class="coupe-etiquette"
+          >{lien.etiquette.texte}</text>
+        )}
+      </g>
+    ))}
+
+    {noeuds.map((n) => (
+      <g class:list={['coupe-noeud', n.ton && `coupe-${n.ton}`]} data-etape={n.etape}>
+        <rect x={n.x} y={n.y} width={n.l} height={n.h} class="coupe-fond" />
+        {n.ton === 'contrainte' && (
+          <rect x={n.x} y={n.y} width={n.l} height={n.h} fill={`url(#${hachures})`} class="coupe-hachures" />
+        )}
+        <rect x={n.x} y={n.y} width={n.l} height={n.h} class="coupe-cadre" />
+        <text x={n.x + 12} y={n.y + 21} class="coupe-titre">{n.titre}</text>
+        {(n.lignes ?? []).map((ligne, i) => (
+          <text x={n.x + 12} y={n.y + 39 + i * 15} class="coupe-detail">{ligne}</text>
+        ))}
+        {n.etape && (
+          <g class="coupe-pastille">
+            <circle cx={n.x + n.l} cy={n.y} r="10" />
+            <text x={n.x + n.l} y={n.y + 4} text-anchor="middle">{n.etape}</text>
+          </g>
+        )}
+      </g>
+    ))}
+
+    {notes.map((note) => (
+      <text
+        x={note.x}
+        y={note.y}
+        text-anchor={note.ancre ?? 'start'}
+        class="coupe-note"
+        data-etape={note.etape}
+      >{note.texte}</text>
+    ))}
+
+    <g class="coupe-cartouche">
+      <line x1="0" y1={hauteur + 8} x2={largeur} y2={hauteur + 8} />
+      <text x="0" y={hauteur + 28}>{cartouche[0]}</text>
+      <text x={largeur} y={hauteur + 28} text-anchor="end">{cartouche[1]}</text>
+    </g>
+  </svg>
+  <figcaption id={`${id}-legende`} class="etiquette">
+    {titre}. Les numéros renvoient aux passages du texte. Trait tireté : système externe ;
+    hachures : contrainte.
+  </figcaption>
+</figure>

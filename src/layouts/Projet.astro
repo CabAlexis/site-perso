@@ -1,0 +1,53 @@
+---
+import Base from './Base.astro';
+import Todo from '../components/Todo.astro';
+import { projets, projetParSlug } from '../data/projets';
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+const { projet, numero, precedent, suivant } = projetParSlug(slug);
+---
+<Base titre={projet.titre} description={projet.description} type="article">
+  <article class="projet">
+    <header class="projet-tete grille">
+      <p class="etiquette projet-repere">
+        <span>{String(numero).padStart(2, '0')} / {String(projets.length).padStart(2, '0')}</span>
+        <span class:list={['statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+      </p>
+      <h1 class="affiche plein">{projet.titre}</h1>
+      <div class="chapeau"><slot name="contexte" /></div>
+    </header>
+
+    <div class="corps grille">
+      <slot name="coupe" />
+      <div class="prose">
+        <slot />
+
+        <section aria-labelledby="verifiable">
+          <h2 id="verifiable" class="intertitre">Vérifiable</h2>
+          <dl class="preuves">
+            {projet.preuves.map((p) => (
+              <div>
+                <dt class="etiquette">{p.libelle}</dt>
+                <dd>
+                  {p.valeur && (p.url ? <a href={p.url}>{p.valeur}</a> : <span>{p.valeur}</span>)}
+                  {p.note && <span class="etiquette preuve-note">{p.note}</span>}
+                  {p.todo && <Todo note={p.todo} />}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </div>
+    </div>
+
+    <nav class="suite grille" aria-label="Autres projets">
+      <div class="plein suite-liens">
+        {precedent ? <a href={`/${precedent.slug}`} rel="prev"><span class="etiquette">Précédent</span> {precedent.titre}</a> : <a href="/"><span class="etiquette">Retour</span> Accueil</a>}
+        {suivant ? <a href={`/${suivant.slug}`} rel="next"><span class="etiquette">Suivant</span> {suivant.titre}</a> : <a href="/"><span class="etiquette">Retour</span> Accueil</a>}
+      </div>
+    </nav>
+  </article>
+</Base>
