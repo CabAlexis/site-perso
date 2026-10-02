@@ -66,11 +66,19 @@ import Todo from '../components/Todo.astro';
 
   <section aria-labelledby="evidence">
     <h2 id="evidence" class="intertitre">Ce qui rendait la solution évidente inutilisable</h2>
-    <Todo note="pourquoi un développement spécifique plutôt qu'une plateforme hébergée (Shopify, WooCommerce + extension d'abonnement…) : ce qui la rendait inutilisable pour ce produit" />
+    <p>
+      Une plateforme hébergée aurait convenu à une boutique. Mais le projet n'était pas une
+      boutique au départ, et ne l'est devenu qu'en partie, en grossissant avec les demandes des
+      clientes : l'abonnement, l'univers du mois réservé aux abonnées, des fichiers délivrés selon
+      les mois effectivement payés. Sur une plateforme, chaque demande de ce genre se négocie
+      contre les limites de l'outil et de ses extensions tierces ; en développement spécifique,
+      elle se code. Le coût est assumé : aucun filet. Tout ce qu'une plateforme donne d'office a
+      dû être construit, du back-office aux frais de port en passant par les rétractations.
+    </p>
     <Etape n={2}>
       <p>
-        Une contrainte au moins rendait la configuration par défaut inutilisable : laisser
-        l'application envoyer ses mails avec l'adresse du domaine, sans plus. Pour un produit par
+        Même chose pour les mails : la configuration par défaut, qui laisse l'application
+        envoyer avec l'adresse du domaine sans plus, était inutilisable. Pour un produit par
         abonnement, les mails font partie du produit : confirmation de souscription, changement
         de formule, expédition d'une commande, accusé de rétractation. Sans domaine authentifié,
         ces mails finissent dans les spams ou n'arrivent pas du tout.
@@ -89,10 +97,11 @@ import Todo from '../components/Todo.astro';
     <h2 id="choix" class="intertitre">Ce qui a été choisi, et ce que ça a coûté</h2>
     <p>
       La première version était écrite en AdonisJS et Nuxt (premier commit le 22 mars 2026).
-      Elle a été entièrement réécrite en Laravel 13 et Inertia le 28 mai ; l'ancienne est
-      archivée sur une branche. Le prix : deux mois de travail refaits.
+      Elle a été entièrement réécrite en Laravel 13 et Inertia le 28 mai, pour une raison de
+      maintenance : c'est la stack que je maîtrise le mieux, sur un projet client que je suivrai
+      dans la durée. L'ancienne version est archivée sur une branche. Le prix : une réécriture
+      complète en cours de projet.
     </p>
-    <Todo note="pourquoi la version AdonisJS + Nuxt a été abandonnée au profit de Laravel" />
     <Etape n={3}>
       <p>
         Stripe est la référence des prix : le catalogue est synchronisé depuis Stripe, et le
@@ -115,9 +124,9 @@ import Todo from '../components/Todo.astro';
       <Todo note="ce que les clientes gèrent réellement seules au quotidien, avec leurs mots" />
     </Etape>
     <p>
-      Pas de rendu côté serveur, et c'est voulu. Le faire tourner aurait imposé un démon Node
-      sur Forge, plus un audit de chaque page, dont le panier qui vit dans le
-      <code>localStorage</code>. Les balises utiles au référencement sont rendues par Blade.
+      Pas de rendu côté serveur, et c'est voulu. Il aurait imposé un démon Node sur Forge, plus
+      un audit de chaque page, dont le panier qui vit dans le <code>localStorage</code>, pour un
+      gain nul : les balises utiles au référencement sont rendues par Blade.
     </p>
     <p>
       La rétractation est acceptée jusqu'à 30 jours après le paiement d'une commande, au lieu
