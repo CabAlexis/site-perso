@@ -1,0 +1,140 @@
+---
+import Projet from '../layouts/Projet.astro';
+import Coupe from '../components/Coupe.astro';
+import Etape from '../components/Etape.astro';
+import Todo from '../components/Todo.astro';
+---
+<Projet slug="plumes-jumelles">
+  <Fragment slot="contexte">
+    <p>
+      Site d'abonnement et boutique en ligne pour Plumes Jumelles, un duo de créatrices réunies
+      autour d'une communauté Instagram consacrée aux livres. En production sur
+      plumes-jumelles.fr depuis le 4 septembre 2026. C'est ma première référence client livrée.
+    </p>
+    <Todo note="autorisation des clientes pour citer leurs prénoms (Emeline et Maëva) et pour publier une capture" />
+  </Fragment>
+
+  <Coupe
+    slot="coupe"
+    id="coupe-plumes"
+    titre="Coupe du parcours d'une abonnée, d'Instagram à la boîte aux lettres"
+    resume="L'audience vient d'Instagram vers le site Laravel, qui gère comptes, abonnements et boutique. Le paiement passe par Stripe Checkout, dont les webhooks mettent à jour l'état local. Les créatrices pilotent commandes et abonnées dans un back-office dont elles exportent les adresses pour l'envoi postal. Les mails transactionnels partent par le SMTP de Brevo depuis un domaine authentifié DKIM."
+    hauteur={535}
+    cartouche={['Coupe · Plumes Jumelles', 'Laravel 13']}
+    noeuds={[
+      { x: 20, y: 14, l: 200, h: 56, titre: 'Instagram', lignes: ['audience non possédée'], ton: 'externe', etape: 1 },
+      { x: 20, y: 110, l: 320, h: 72, titre: 'plumes-jumelles.fr · Laravel 13', lignes: ['abonnement, boutique, comptes'], etape: 1 },
+      { x: 20, y: 222, l: 150, h: 88, titre: 'Back-office', lignes: ['commandes, stock,', 'univers, abonnées'], etape: 4 },
+      { x: 190, y: 222, l: 150, h: 72, titre: 'Stripe Checkout', lignes: ['prix de référence', 'webhooks'], ton: 'externe', etape: 3 },
+      { x: 20, y: 350, l: 150, h: 56, titre: 'Export CSV', lignes: ['adresses'], etape: 4 },
+      { x: 190, y: 334, l: 150, h: 72, titre: 'SMTP Brevo', lignes: ['domaine signé', 'DKIM'], etape: 2 },
+      { x: 20, y: 446, l: 150, h: 56, titre: 'Courrier', lignes: ['goodies + histoire'], ton: 'externe', etape: 4 },
+      { x: 190, y: 446, l: 150, h: 72, titre: "Boîte de l'abonnée", lignes: ['confirmation,', 'expédition'], ton: 'externe', etape: 2 },
+    ]}
+    liens={[
+      { points: [[95, 70], [95, 110]], etape: 1 },
+      { points: [[95, 182], [95, 222]], etape: 4 },
+      { points: [[265, 182], [265, 222]], etape: 3 },
+      { points: [[340, 258], [352, 258], [352, 150], [340, 150]], etape: 3 },
+      { points: [[95, 310], [95, 350]], etape: 4 },
+      { points: [[95, 406], [95, 446]], etape: 4 },
+      { points: [[170, 266], [180, 266], [180, 370], [190, 370]], etape: 2, etiquette: { x: 188, y: 324, texte: '« Expédiée »' } },
+      { points: [[265, 406], [265, 446]], etape: 2 },
+    ]}
+  />
+
+  <section aria-labelledby="probleme">
+    <h2 id="probleme" class="intertitre">Le problème</h2>
+    <Etape n={1}>
+      <p>
+        Avant ce site, Plumes Jumelles n'avait pas de site, seulement une page Instagram. La
+        communauté s'y était formée, mais sur une plateforme qui n'appartient pas aux
+        créatrices : pas de liste d'abonnées à elles, pas d'adresses postales, pas de paiement
+        récurrent.
+      </p>
+      <p>
+        Or le produit qu'elles voulaient lancer en dépendait entièrement. C'est un abonnement :
+        chaque mois, une histoire inédite qu'elles écrivent, envoyée par courrier avec des
+        goodies et, selon la formule, un objet fait main. À côté, une boutique de papeterie
+        artisanale prolonge l'univers. Il leur fallait un canal à elles : des comptes, des
+        adresses, des prélèvements, un moyen fiable de prévenir chaque abonnée. Et deux personnes
+        qui ne sont pas techniciennes devaient pouvoir le faire tourner seules.
+      </p>
+    </Etape>
+    <Todo note="organisation des clientes avant / après le site (comment elles géraient les envois, ce qui a changé)" />
+  </section>
+
+  <section aria-labelledby="evidence">
+    <h2 id="evidence" class="intertitre">Ce qui rendait la solution évidente inutilisable</h2>
+    <Todo note="pourquoi un développement sur mesure plutôt qu'une plateforme hébergée (Shopify, WooCommerce + extension d'abonnement…) : ce qui la rendait inutilisable pour ce produit" />
+    <Etape n={2}>
+      <p>
+        Une contrainte au moins rendait la configuration par défaut inutilisable : laisser
+        l'application envoyer ses mails avec l'adresse du domaine, sans plus. Pour un produit par
+        abonnement, les mails font partie du produit : confirmation de souscription, changement
+        de formule, expédition d'une commande, accusé de rétractation. Sans domaine authentifié,
+        ces mails finissent dans les spams ou n'arrivent pas du tout.
+      </p>
+      <p>
+        Les mails partent donc par le SMTP de Brevo, depuis un domaine signé DKIM, avec la
+        configuration DNS qui va avec. Une commande de diagnostic (<code>pj:mail-test</code>)
+        vérifie l'envoi et renvoie vers les journaux de Brevo quand un message ne part pas. La
+        délivrabilité n'est pas un détail d'infrastructure ici : c'est la condition pour que
+        l'abonnement fonctionne.
+      </p>
+    </Etape>
+  </section>
+
+  <section aria-labelledby="choix">
+    <h2 id="choix" class="intertitre">Ce qui a été choisi, et ce que ça a coûté</h2>
+    <p>
+      La première version était écrite en AdonisJS et Nuxt (premier commit le 22 mars 2026).
+      Elle a été entièrement réécrite en Laravel 13 et Inertia le 28 mai ; l'ancienne est
+      archivée sur une branche. Le prix : deux mois de travail refaits.
+    </p>
+    <Todo note="pourquoi la version AdonisJS + Nuxt a été abandonnée au profit de Laravel" />
+    <Etape n={3}>
+      <p>
+        Stripe est la référence des prix : le catalogue est synchronisé depuis Stripe, et le
+        paiement passe par Stripe Checkout, la page de paiement hébergée par Stripe. L'état local
+        suit les webhooks : souscription créée, modifiée, résiliée, facture payée. Chaque formule
+        existe en deux offres. Sans engagement, elle est prélevée chaque mois ; avec engagement,
+        elle est payée en une fois sur un tarif annuel. Un garde-fou refuse un abonnement dont la
+        périodicité du tarif ne correspond pas à la durée d'engagement. Les abonnements offerts
+        s'arrêtent seuls grâce à une date de fin posée côté Stripe.
+      </p>
+    </Etape>
+    <Etape n={4}>
+      <p>
+        Le back-office est écrit sur mesure, en Inertia et Vue. Les créatrices y gèrent les
+        produits et le stock, les formules, l'univers du mois et ses fichiers réservés aux
+        abonnées, les commandes, les remboursements via Stripe, les rétractations, les avis, la
+        grille de frais de port et les pages légales. Passer une commande à « Expédiée » envoie le
+        mail d'expédition. Les adresses des abonnées s'exportent en CSV pour l'envoi postal.
+      </p>
+      <Todo note="ce que les clientes gèrent réellement seules au quotidien, avec leurs mots" />
+    </Etape>
+    <p>
+      Pas de rendu côté serveur, et c'est voulu. Le faire tourner aurait imposé un démon Node
+      sur Forge, plus un audit de chaque page, dont le panier qui vit dans le
+      <code>localStorage</code>. Les balises utiles au référencement sont rendues par Blade.
+    </p>
+    <p>
+      La rétractation est acceptée jusqu'à 30 jours après le paiement d'une commande, au lieu
+      des 14 jours légaux à compter de la réception. Le site ne suit pas la date de réception,
+      et plutôt que de construire ce suivi, la fenêtre a été élargie. Elle couvre le délai légal
+      tant que la livraison prend moins de seize jours. Pour un abonnement, la rétractation reste ouverte 14 jours après la
+      souscription.
+    </p>
+    <p>
+      La livraison est limitée à la France métropolitaine, à la demande des clientes : la grille
+      de frais de port ne couvre ni l'outre-mer ni Monaco, et les codes postaux correspondants
+      sont refusés à la commande.
+    </p>
+  </section>
+
+  <section aria-labelledby="clientes">
+    <h2 id="clientes" class="intertitre">Ce qu'en disent les clientes</h2>
+    <Todo note="citation des clientes, avec leur accord" />
+  </section>
+</Projet>
