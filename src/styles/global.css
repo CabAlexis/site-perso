@@ -344,6 +344,7 @@
   /* Passage lié à une étape : le repère pend dans la marge gauche. */
   .etape { position: relative; }
   .etape > * + * { margin-top: var(--rythme); }
+  .etape > .repere + * { margin-top: 0; }
   .repere {
     display: inline-grid;
     place-items: center;
@@ -410,6 +411,10 @@
   .coupe-note:not([data-etape]) { fill: var(--encre-2); font-weight: 400; }
   .coupe-trace { fill: none; stroke: currentColor; stroke-linejoin: round; }
   .coupe-tirets { stroke-dasharray: 5 4; }
+  /* Flux : la boucle tourne, lentement. Le temps, pas le défilement, la pilote. */
+  .coupe-flux { stroke-dasharray: 6 5; animation: flux 1.6s linear infinite; }
+  .coupe .coupe-lien .coupe-flux { animation-timeline: auto; }
+  @keyframes flux { to { stroke-dashoffset: -11; } }
   .coupe-pointe { fill: currentColor; }
   .coupe-pastille circle { fill: var(--papier); stroke: currentColor; stroke-width: 1.5px; }
   .coupe-pastille text {
@@ -551,9 +556,44 @@
     .planche { max-width: 34rem; }
   }
 
-  .facons { list-style: none; padding: 0; display: grid; gap: calc(var(--rythme) * 0.8); }
-  .facons li { padding-top: calc(var(--rythme) * 0.6); border-top: 1px solid var(--trait); }
+  .facons .etape { padding-top: calc(var(--rythme) * 0.6); border-top: 1px solid var(--trait); }
+  .facons .etape + .etape { margin-top: calc(var(--rythme) * 0.8); }
+  @media (min-width: 68rem) { .facons .repere { top: calc(var(--rythme) * 0.6 + 0.15rem); } }
   .facons strong { display: block; font-stretch: 92%; font-weight: 700; font-size: var(--t-1); line-height: 1.25; margin-bottom: 0.3rem; }
+
+  /*
+   * Tracé de la planche au chargement : chaque vignette se dessine de haut en
+   * bas, une ligne de balayage la parcourt, l'une après l'autre. Décor
+   * uniquement : aucun texte n'attend, et rien ne bouge en mouvement réduit.
+   */
+  .trace { position: relative; display: block; }
+  @media (prefers-reduced-motion: no-preference) {
+    .trace .vignette {
+      animation: trace 1.2s cubic-bezier(0.45, 0, 0.2, 1) both;
+      animation-delay: calc(var(--rang) * 160ms + 150ms);
+    }
+    .trace::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      top: 0;
+      height: 2px;
+      background: var(--signal);
+      opacity: 0;
+      pointer-events: none;
+      animation: balaye 1.2s cubic-bezier(0.45, 0, 0.2, 1) both;
+      animation-delay: calc(var(--rang) * 160ms + 150ms);
+    }
+  }
+  @keyframes trace {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0); }
+  }
+  @keyframes balaye {
+    0% { top: 0; opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: calc(100% - 2px); opacity: 0; }
+  }
   .liste-projets { list-style: none; padding-block: 0; margin-top: var(--rythme); }
   .liste-projets > li { border-top: 1px solid var(--encre); }
   .liste-projets > li:last-child { border-bottom: 1px solid var(--encre); }

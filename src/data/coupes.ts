@@ -14,6 +14,30 @@ export interface DonneesCoupe {
   liens: Lien[];
 }
 
+/* Coupe de la façon de travailler, pour l'accueil (section « Comment je travaille »). */
+export const boucle: DonneesCoupe = {
+  titre: 'Coupe de la boucle de travail avec un client',
+  resume: "Chaque semaine, un point avec le client permet de noter ses idées et ses besoins. Ils sont traités en adaptant ou en combinant ce qui existe déjà, dans des limites posées avant d'écrire le code. La livraison montre l'état réel, et quand quelque chose casse, la cause est cherchée. Puis la boucle revient au client.",
+  hauteur: 420,
+  cartouche: ['Boucle · Comment je travaille', 'Hebdomadaire'],
+  noeuds: [
+    { x: 20, y: 14, l: 150, h: 56, titre: 'Client', lignes: ['idées, besoins'], ton: 'externe', etape: 1 },
+    { x: 190, y: 14, l: 150, h: 56, titre: 'Point hebdomadaire', lignes: ['besoins notés'], etape: 1 },
+    { x: 20, y: 110, l: 320, h: 72, titre: "Adapter ou combiner l'existant", lignes: ['connaissance du produit', 'et du code'], etape: 2 },
+    { x: 20, y: 222, l: 150, h: 72, titre: 'Limites', lignes: ['posées avant', "d'écrire le code"], ton: 'contrainte', etape: 4 },
+    { x: 190, y: 222, l: 150, h: 72, titre: 'Livraison', lignes: ['état réel,', 'dit tel quel'], etape: 3 },
+    { x: 190, y: 334, l: 150, h: 72, titre: 'Quand ça casse', lignes: ['cause cherchée,', 'pas contournée'], etape: 5 },
+  ],
+  liens: [
+    { points: [[170, 42], [190, 42]], etape: 1 },
+    { points: [[265, 70], [265, 110]], etape: 2 },
+    { points: [[95, 182], [95, 222]], etape: 4 },
+    { points: [[170, 258], [190, 258]], etape: 3 },
+    { points: [[265, 294], [265, 334]], etape: 5, tirets: true },
+    { points: [[215, 294], [215, 314], [8, 314], [8, 42], [20, 42]], etape: 1, flux: true, etiquette: { x: 18, y: 334, texte: 'chaque semaine' } },
+  ],
+};
+
 export const coupes: Record<string, DonneesCoupe> = {
   'plumes-jumelles': {
     titre: "Coupe du parcours d'une abonnée, d'Instagram à la boîte aux lettres",

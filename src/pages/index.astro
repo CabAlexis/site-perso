@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Vignette from '../components/Vignette.astro';
+import Coupe from '../components/Coupe.astro';
+import Etape from '../components/Etape.astro';
 import { projets } from '../data/projets';
-import { coupes } from '../data/coupes';
+import { boucle, coupes } from '../data/coupes';
 ---
 <Base
   titre="Alexis Cabillic"
@@ -28,7 +30,7 @@ import { coupes } from '../data/coupes';
       {projets.map((projet, i) => (
         <li>
           <a class="carte" href={`/${projet.slug}`}>
-            <Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} />
+            <span class="trace" style={`--rang: ${i}`}><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} /></span>
             <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> {projet.titre}</span>
           </a>
         </li>
@@ -36,39 +38,50 @@ import { coupes } from '../data/coupes';
     </ul>
   </header>
 
-  <section class="grille bloc" aria-labelledby="facons">
-    <h2 id="facons" class="intertitre">Comment je travaille</h2>
-    <ul class="facons">
-      <li>
+  <section class="corps grille bloc facons" aria-labelledby="facons">
+    <Coupe id="coupe-boucle" {...boucle} />
+    <div class="prose">
+      <h2 id="facons" class="intertitre">Comment je travaille</h2>
+        <Etape n={1}>
+          <p>
         <strong>J'échange avec le client chaque semaine.</strong> Un point hebdomadaire sert à
         noter ses idées et ses besoins. Je cherche ensuite comment adapter ou combiner ce qui
         existe déjà pour y répondre, avec ce que je connais du produit et du code.
-      </li>
-      <li>
+          </p>
+        </Etape>
+        <Etape n={2}>
+          <p>
         <strong>Je pars de la demande, pas de l'outil.</strong>
         <a href="/plumes-jumelles#evidence">Plumes Jumelles</a> n'était pas une boutique au
         départ : le site a grossi avec les demandes des clientes, et c'est pour ça qu'il est
         développé spécifiquement plutôt que posé sur une plateforme.
-      </li>
-      <li>
+          </p>
+        </Etape>
+        <Etape n={3}>
+          <p>
         <strong>Je dis ce qui ne marche pas.</strong>
         <a href="/dofus-switcher">Dofus Switcher</a> est présenté à l'arrêt.
         <a href="/nutrifollow#evidence">NutriFollow</a> fonctionne, mais le démarchage n'a pas
         été fait, et trois conditions bloquent encore l'accueil de patients réels.
-      </li>
-      <li>
+          </p>
+        </Etape>
+        <Etape n={4}>
+          <p>
         <strong>Je pose les limites avant d'écrire le code.</strong> Pour
         <a href="/dofus-switcher#evidence">Dofus Switcher</a>, la règle « aucune entrée envoyée
         au jeu » a été fixée avant la première ligne, et le lot souris ne devait être écrit que si
         une mesure de latence passait sous un seuil fixé d'avance.
-      </li>
-      <li>
+          </p>
+        </Etape>
+        <Etape n={5}>
+          <p>
         <strong>Quand ça casse, je cherche la cause.</strong> Pour la
         <a href="/dofus-switcher#choix">race condition de Dofus Switcher</a>, deux hypothèses ont
         été écartées avant de trouver la vraie. Après un gel de la machine, c'est l'architecture
         des raccourcis qui a été refaite, pas un contournement.
-      </li>
-    </ul>
+          </p>
+        </Etape>
+    </div>
   </section>
 
   <section class="grille bloc" aria-labelledby="projets">

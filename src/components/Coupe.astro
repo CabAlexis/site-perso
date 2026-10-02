@@ -33,6 +33,8 @@ export interface Lien {
   etiquette?: { x: number; y: number; texte: string; ancre?: 'start' | 'middle' | 'end' };
   fleche?: boolean;
   tirets?: boolean;
+  // Trait qui défile lentement : une boucle, un flux continu.
+  flux?: boolean;
 }
 
 export interface Note {
@@ -83,7 +85,7 @@ const hachures = `${id}-hachures`;
       <g class="coupe-lien" data-etape={lien.etape}>
         <polyline
           points={lien.points.map((p) => p.join(',')).join(' ')}
-          class:list={['coupe-trace', { 'coupe-tirets': lien.tirets }]}
+          class:list={['coupe-trace', { 'coupe-tirets': lien.tirets, 'coupe-flux': lien.flux }]}
         />
         {lien.fleche !== false && <path d={pointe(lien.points)} class="coupe-pointe" />}
         {lien.etiquette && (
