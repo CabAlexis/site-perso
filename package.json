@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev --host 0.0.0.0",
+    "dev": "astro dev --host ::",
     "build": "astro build && node scripts/verifier-todos.mjs",
     "build:brouillon": "astro build",
-    "preview": "astro preview --host 0.0.0.0"
+    "preview": "astro preview --host ::"
   },
   "dependencies": {
     "astro": "^7.3.5"
