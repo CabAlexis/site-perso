@@ -58,7 +58,7 @@ const fiches = [
       {
         libelle: 'Capture',
         valeur: null,
-        todo: "autorisation des clientes pour publier une capture du site (et leurs prénoms)",
+        todo: "capture du site à ajouter ici, une fois l'autorisation des clientes obtenue",
       },
     ],
   },
