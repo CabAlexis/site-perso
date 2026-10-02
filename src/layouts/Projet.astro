@@ -8,6 +8,8 @@ interface Props {
 }
 const { slug } = Astro.props;
 const { projet, numero, precedent, suivant } = projetParSlug(slug);
+const consultables = projet.elements.filter((e) => e.url);
+const declares = projet.elements.filter((e) => !e.url);
 ---
 <Base titre={projet.titre} description={projet.description} type="article">
   <article class="projet">
@@ -27,39 +29,36 @@ const { projet, numero, precedent, suivant } = projetParSlug(slug);
 
         <section aria-labelledby="verifiable">
           <h2 id="verifiable" class="intertitre">Vérifiable</h2>
-          {projet.sansPreuve ? (
-            <>
-              <p>{projet.sansPreuve.motif}</p>
-              {projet.declare && (
-                <>
-                  <p class="etiquette">Chiffres déclarés, non vérifiables de l'extérieur :</p>
-                  <dl class="preuves preuves-declarees">
-                    {projet.declare.map((d) => (
-                      <div>
-                        <dt class="etiquette">{d.libelle}</dt>
-                        <dd>
-                          <span>{d.valeur}</span>
-                          <span class="etiquette preuve-note">{d.note}</span>
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </>
-              )}
-            </>
-          ) : (
+          {projet.sansPreuve && <p>{projet.sansPreuve.motif}</p>}
+          {consultables.length > 0 && (
             <dl class="preuves">
-              {projet.preuves.map((p) => (
+              {consultables.map((e) => (
                 <div>
-                  <dt class="etiquette">{p.libelle}</dt>
+                  <dt class="etiquette">{e.libelle}</dt>
                   <dd>
-                    {p.valeur && (p.url ? <a href={p.url}>{p.valeur}</a> : <span>{p.valeur}</span>)}
-                    {p.note && <span class="etiquette preuve-note">{p.note}</span>}
-                    {p.todo && <Todo note={p.todo} />}
+                    <a href={e.url}>{e.valeur}</a>
+                    {e.note && <span class="etiquette preuve-note">{e.note}</span>}
                   </dd>
                 </div>
               ))}
             </dl>
+          )}
+          {declares.length > 0 && (
+            <>
+              <p class="etiquette">Chiffres déclarés, dépôt privé :</p>
+              <dl class="preuves preuves-declarees">
+                {declares.map((e) => (
+                  <div>
+                    <dt class="etiquette">{e.libelle}</dt>
+                    <dd>
+                      {e.valeur && <span>{e.valeur}</span>}
+                      {e.note && <span class="etiquette preuve-note">{e.note}</span>}
+                      {e.todo && <Todo note={e.todo} />}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </>
           )}
         </section>
       </div>

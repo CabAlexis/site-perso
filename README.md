@@ -28,12 +28,15 @@ Toute information manquante est marquée `<!-- TODO(cabalex): ... -->` (composan
 affichée dans la page pour être visible en relecture. **`make build` échoue tant qu'il en reste un
 dans `dist/`** (`scripts/verifier-todos.mjs`) : aucun trou ne part en production par mégarde.
 
-Les fiches projets (`src/data/projets.ts`) sont validées par un schéma au build : au moins un
-arbitrage et deux à trois éléments vérifiables par projet. Seule exception admise : un projet dont rien
-n'est consultable de l'extérieur (aujourd'hui Dofus Switcher, dépôt privé). Il le déclare
-(`sansPreuve`), le dit sur sa page, et ses chiffres sont affichés comme déclaratifs et datés.
-L'exception est limitée aux slugs listés dans `EXCEPTIONS_PREUVES` : tout autre projet sans preuve
-fait échouer le build.
+Les fiches projets (`src/data/projets.ts`) sont validées par un schéma au build. Tous les dépôts
+étant privés, un élément est soit **consultable** (il porte une URL publique), soit **déclaré** (un
+chiffre sans URL, obligatoirement daté, affiché à part sous « Chiffres déclarés »). Chaque projet
+doit avoir au moins un arbitrage et deux à trois éléments, dont au moins un consultable.
+
+Seule exception : un projet dont rien n'est consultable de l'extérieur (Dofus Switcher, Bot
+Légendes). Il le déclare (`sansPreuve`), le dit sur sa page, et ne garde que des éléments déclarés.
+L'exception est limitée aux slugs de `EXCEPTIONS_PREUVES` : tout autre projet sans élément
+consultable fait échouer le build.
 
 ## La coupe
 
