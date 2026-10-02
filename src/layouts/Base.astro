@@ -5,8 +5,9 @@ interface Props {
   titre: string;
   description: string;
   type?: 'website' | 'article';
+  noindex?: boolean;
 }
-const { titre, description, type = 'website' } = Astro.props;
+const { titre, description, type = 'website', noindex = false } = Astro.props;
 const canonique = new URL(Astro.url.pathname, Astro.site);
 const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis Cabillic`;
 ---
@@ -35,6 +36,7 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
     <meta property="og:image:alt" content="Alexis Cabillic. Quatre projets : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="author" content="Alexis Cabillic" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
   </head>
   <body>
     <a class="saut" href="#contenu">Aller au contenu</a>

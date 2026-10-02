@@ -1,11 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import Vignette from '../components/Vignette.astro';
 import Pile from '../components/Pile.astro';
-import Coupe from '../components/Coupe.astro';
-import Etape from '../components/Etape.astro';
-import { projets } from '../data/projets';
-import { boucle, coupes } from '../data/coupes';
+import SuiteAccueil from '../components/SuiteAccueil.astro';
 
 // Le nom, lettre par lettre, pour la vague de composition au chargement.
 const lettres = [...'Alexis Cabillic'];
@@ -33,74 +29,5 @@ const lettres = [...'Alexis Cabillic'];
     <Pile />
   </header>
 
-  <section class="grille bloc" aria-labelledby="projets">
-    <h2 id="projets" class="intertitre">Quatre projets</h2>
-    <ol class="projets-cartes plein">
-      {projets.map((projet, i) => (
-        <li>
-          <a class="carte" href={`/${projet.slug}`}>
-            <span class="trace"><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} transition={`coupe-${projet.slug}`} /></span>
-            <span class="carte-texte">
-              <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> <span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></span>
-              <span class="carte-angle">{projet.angle}</span>
-              <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
-            </span>
-          </a>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="corps grille bloc facons" aria-labelledby="facons">
-    <Coupe id="coupe-boucle" {...boucle} />
-    <div class="prose">
-      <h2 id="facons" class="intertitre">Comment je travaille</h2>
-        <Etape n={1}>
-          <p>
-        <strong>J'échange avec le client chaque semaine.</strong> Un point hebdomadaire sert à
-        noter ses idées et ses besoins. Je cherche ensuite comment adapter ou combiner ce qui
-        existe déjà pour y répondre, avec ce que je connais du produit et du code.
-          </p>
-        </Etape>
-        <Etape n={2}>
-          <p>
-        <strong>Je pars de la demande, pas de l'outil.</strong>
-        <a href="/plumes-jumelles#evidence">Plumes Jumelles</a> n'était pas une boutique au
-        départ : le site a grossi avec les demandes des clientes, et c'est pour ça qu'il est
-        développé spécifiquement plutôt que posé sur une plateforme.
-          </p>
-        </Etape>
-        <Etape n={3}>
-          <p>
-        <strong>Je dis ce qui ne marche pas.</strong>
-        <a href="/dofus-switcher">Dofus Switcher</a> est présenté à l'arrêt.
-        <a href="/nutrifollow#evidence">NutriFollow</a> fonctionne, mais le démarchage n'a pas
-        été fait, et trois conditions bloquent encore l'accueil de patients réels.
-          </p>
-        </Etape>
-        <Etape n={4}>
-          <p>
-        <strong>Je pose les limites avant d'écrire le code.</strong> Pour
-        <a href="/dofus-switcher#evidence">Dofus Switcher</a>, la règle « aucune entrée envoyée
-        au jeu » a été fixée avant la première ligne, et le lot souris ne devait être écrit que si
-        une mesure de latence passait sous un seuil fixé d'avance.
-          </p>
-        </Etape>
-        <Etape n={5}>
-          <p>
-        <strong>Quand ça casse, je cherche la cause.</strong> Pour la
-        <a href="/dofus-switcher#choix">race condition de Dofus Switcher</a>, deux hypothèses ont
-        été écartées avant de trouver la vraie. Après un gel de la machine, c'est l'architecture
-        des raccourcis qui a été refaite, pas un contournement.
-          </p>
-        </Etape>
-    </div>
-  </section>
-
-  <section class="grille bloc" aria-labelledby="contact">
-    <h2 id="contact" class="intertitre">Contact</h2>
-    <div class="prose">
-      <p><a href="mailto:alexis.cabillic@gmail.com">alexis.cabillic@gmail.com</a></p>
-    </div>
-  </section>
+  <SuiteAccueil />
 </Base>
