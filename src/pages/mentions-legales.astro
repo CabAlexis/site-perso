@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Todo from '../components/Todo.astro';
 ---
 <Base titre="Mentions légales" description="Éditeur, hébergement et données personnelles du site cabalex.dev.">
   <div class="grille bloc">
@@ -17,8 +16,11 @@ import Todo from '../components/Todo.astro';
 
       <section aria-labelledby="hebergement">
         <h2 id="hebergement" class="intertitre">Hébergement</h2>
-        <p>Le site est hébergé sur un serveur privé virtuel loué chez Hostinger.</p>
-        <Todo note="raison sociale, adresse et téléphone de l'hébergeur (Hostinger International Ltd ?) tels qu'indiqués sur ton contrat" />
+        <p>
+          Le site est hébergé sur un serveur privé virtuel situé à Paris, loué auprès de
+          Hostinger International Limited, 61 Lordou Vironos str., 6023 Larnaca, Chypre.
+          Contact : <a href="mailto:compliance@hostinger.com">compliance@hostinger.com</a>.
+        </p>
       </section>
 
       <section aria-labelledby="donnees">
