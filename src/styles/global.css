@@ -87,7 +87,6 @@
   /* Les deux tailles d'affichage sortent de l'échelle et suivent la largeur
      de la fenêtre : ce sont elles qui débordent de la colonne de texte. */
   --t-titre: clamp(3rem, 0.9rem + 9.2vw, 10.5rem);
-  --t-geant: clamp(3rem, 1.9rem + 3.4vw, 5.25rem);
 
   --gouttiere: clamp(1rem, 4vw, 3rem);
   /* En rem et non en ch : la grille doit être la même pour le bandeau en mono
@@ -511,60 +510,105 @@
 
 @layer composants {
   .bloc { margin-top: calc(var(--rythme) * 3); row-gap: calc(var(--rythme) * 0.6); }
-  .accueil-tete {
+  /*
+   * En-tête de l'accueil : l'accroche en typographie cinétique, au premier
+   * plan, posée sur une table à dessin inclinée en perspective qui porte les
+   * quatre coupes, avec leurs paquets de signal.
+   *   - au chargement, chaque ligne de l'accroche s'étire jusqu'à sa largeur
+   *     (axes de la police variable : lisible à chaque instant), puis un trait
+   *     rouge se trace sous la dernière ;
+   *   - au défilement, la table se redresse.
+   * En mouvement réduit : accroche et table fixes.
+   */
+  .tete {
     position: relative;
     isolation: isolate;
     overflow: clip;
-    padding-top: calc(var(--rythme) * 2);
-    padding-bottom: calc(var(--rythme) * 1.5);
-    row-gap: calc(var(--rythme) * 1.5);
+    perspective: 1100px;
+    --sous-texte: clamp(11rem, 24vw, 21rem);
+    padding-top: calc(var(--rythme) * 2.5);
+    padding-bottom: var(--sous-texte);
   }
-  /* Fond de planche : papier millimétré, très léger, qui s'efface vers le bas. */
-  .accueil-tete::before {
+  /* Fondu du bas : la table s'efface dans le papier au lieu d'être coupée net. */
+  .tete::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: auto 0 0;
     z-index: -1;
-    /* Petit carreau de 24 px, grand carreau tous les cinq, plus marqué. */
-    background-image:
-      linear-gradient(color-mix(in oklab, var(--trait) 40%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklab, var(--trait) 40%, transparent) 1px, transparent 1px),
-      linear-gradient(color-mix(in oklab, var(--trait) 85%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklab, var(--trait) 85%, transparent) 1px, transparent 1px);
-    background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
-    background-position: right -1px top -1px;
-    mask-image: linear-gradient(to bottom, black 55%, transparent);
+    height: 40%;
+    background: linear-gradient(to bottom, color-mix(in oklab, var(--papier) 0%, transparent), var(--papier));
     pointer-events: none;
   }
+  .tete-texte { row-gap: calc(var(--rythme) * 1.2); }
+  .tete-titre {
+    display: grid;
+    font-size: clamp(2.4rem, 0.5rem + 7vw, 7.6rem);
+    font-weight: 800;
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    text-wrap: nowrap;
+  }
+  .tete-l1 { font-stretch: 62%; }
+  .tete-l2 { font-stretch: 125%; font-weight: 300; padding-inline-start: 0.6em; }
+  .tete-l3 { font-stretch: 80%; color: var(--signal); justify-self: start; }
+  .tete-l3::after {
+    content: '';
+    display: block;
+    height: 0.07em;
+    margin-top: 0.06em;
+    background: currentColor;
+    transform-origin: left;
+  }
+  .tete-bas { display: grid; gap: 0.8rem; max-width: 46rem; }
+  .tete-bas, .tete-texte > .etiquette { text-shadow: 0 0 14px var(--papier), 0 0 4px var(--papier); }
+  @media (min-width: 68rem) {
+    .tete-bas { grid-template-columns: 1.4fr 1fr; align-items: end; max-width: none; gap: 3rem; }
+  }
 
-  /*
-   * Profondeur, pilotée par le défilement : le petit carreau remonte plus
-   * lentement que le grand. Sans timeline de défilement ou en mouvement
-   * réduit : quadrillage fixe.
-   */
+  .tete-plan {
+    position: absolute;
+    z-index: -1;
+    /* Elle commence sous le texte, dans la réserve du bas : jamais derrière
+       une ligne à lire. */
+    top: calc(100% - var(--sous-texte) - 1.5rem);
+    /* Centrée par ses bords : 150 % de la largeur, plafonnée à 1500 px. */
+    inset-inline: calc(50% - min(750px, 75vw));
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4%;
+    padding: 3% 6% 30%;
+    transform-origin: 50% 0;
+    transform: rotateX(60deg);
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--trait) 55%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--trait) 55%, transparent) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 60%, transparent 100%);
+  }
+  .tete-plan .vignette { width: 100%; height: auto; background: var(--papier); border: 1px solid var(--trait-fort); padding: 6%; }
+  .tete-plan .vignette :is(.coupe-cadre, .coupe-trace, .vignette-titre) { vector-effect: non-scaling-stroke; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .tete-l { animation: etire 1.1s cubic-bezier(0.2, 0.7, 0.15, 1) both; }
+    .tete-l1 { --depart: 125%; --poids: 200; animation-delay: 0.1s; }
+    .tete-l2 { --depart: 62%; --poids: 900; animation-delay: 0.25s; }
+    .tete-l3 { --depart: 125%; --poids: 200; animation-delay: 0.4s; }
+    .tete-l3::after { animation: souligne 0.8s cubic-bezier(0.45, 0, 0.2, 1) 1.2s both; }
+  }
+  @keyframes etire { from { font-stretch: var(--depart); font-weight: var(--poids); } }
+  @keyframes souligne { from { transform: scaleX(0); } }
+
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
-      .accueil-tete::before { animation: profondeur linear both; }
+      .tete-plan { animation: redresse linear both; }
     }
     /* Timeline dans une règle à part, au sélecteur distinct : le minifieur la
        fusionnait sinon dans le raccourci `animation`, où elle est invalide. */
-    :root .accueil-tete::before { animation-timeline: scroll(root); animation-range: 0 100vh; }
+    :root .tete-plan { animation-timeline: scroll(root); animation-range: 0 70vh; }
   }
-  /* Petit carreau : 96 px (4 cases) ; grand : 36 px. */
-  @keyframes profondeur {
-    from { background-position: right -1px top -1px; }
-    to { background-position: right -1px top 95px, right -1px top 95px, right -1px top 35px, right -1px top 35px; }
-  }
-
-  .geant {
-    font-size: var(--t-geant);
-    font-stretch: 62%;
-    font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    margin-inline-start: -0.03em;
-  }
-  .accueil-tete .etiquette { margin-bottom: -0.6rem; }
+  /* Pivot sur le bord haut : en se redressant, la table se déplie vers le bas,
+     jamais vers le texte. */
+  @keyframes redresse { to { transform: rotateX(16deg); } }
 
   /*
    * Les quatre projets en cartes : la vignette (silhouette de la coupe), le
@@ -667,129 +711,13 @@
 }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.3s; }
 
-/* ── Pile (haut de l'accueil) ────────────────────────────────────────── */
-
-@layer composants {
-  .pile { max-width: 28rem; }
-  .pile svg { width: 100%; height: auto; overflow: visible; }
-  .pile figcaption { margin-top: 0.75rem; line-height: 1.5; }
-  .pile-paquet { fill: var(--signal); stroke: var(--papier); stroke-width: 2px; }
-  .pile-paquet { filter: drop-shadow(0 0 5px color-mix(in oklab, var(--signal) 70%, transparent)); }
-
-  @media (min-width: 68rem) {
-    .accueil-tete .pile { grid-column: marge; grid-row: 1 / span 4; align-self: start; }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    /* 1. Construction : les cadres pleins et les liens se tracent ; les
-          cadres tiretés (systèmes externes) apparaissent. Les étiquettes
-          sont là dès le départ. */
-    .pile .coupe-cadre[pathLength], .pile .coupe-trace {
-      stroke-dasharray: 1;
-      stroke-dashoffset: 1;
-      animation: dessine 0.7s cubic-bezier(0.45, 0, 0.2, 1) forwards;
-    }
-    .pile-noeud .coupe-cadre { animation-delay: calc(var(--n) * 0.16s + 0.2s); }
-    .pile-lien .coupe-trace { animation-delay: calc(var(--n) * 0.16s + 0.5s); }
-    .pile .coupe-externe .coupe-cadre, .pile .coupe-pointe {
-      opacity: 0;
-      animation: apparait 0.5s ease-out forwards;
-    }
-    .pile .coupe-externe .coupe-cadre { animation-delay: calc(var(--n) * 0.16s + 0.3s); }
-    .pile-lien .coupe-pointe { animation-delay: calc(var(--n) * 0.16s + 1s); }
-
-    /* 2. Requête en boucle, synchrone avec les animateMotion (4,4 s, départ
-          à 1,8 s) : chaque couche s'allume pendant que le paquet la traverse. */
-    /* Raccourci complet par couche : sans nom, le minifieur réduisait le
-       raccourci à « none » et perdait durée et délai. */
-    .pile-navigateur { animation: requete-navigateur 4.4s linear 1.8s infinite both; }
-    .pile-nginx { animation: requete-nginx 4.4s linear 1.8s infinite both; }
-    .pile-laravel { animation: requete-laravel 4.4s linear 1.8s infinite both; }
-    .pile-mysql { animation: requete-mysql 4.4s linear 1.8s infinite both; }
-    .pile-redis { animation: requete-redis 4.4s linear 1.8s infinite both; }
-    .pile-tiers { animation: requete-tiers 4.4s linear 1.8s infinite both; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .pile-paquet { display: none; }
-  }
-
-  @keyframes dessine { to { stroke-dashoffset: 0; } }
-  @keyframes apparait { to { opacity: 1; } }
-  @keyframes requete-navigateur {
-    0%, 100% { color: var(--signal); stroke-width: 2.5px; }
-    2.0% { color: var(--signal); stroke-width: 2.5px; }
-    3.0% { color: var(--trait-fort); stroke-width: 1.25px; }
-    87.0% { color: var(--trait-fort); stroke-width: 1.25px; }
-    88.0% { color: var(--signal); stroke-width: 2.5px; }
-    99.0% { color: var(--signal); stroke-width: 2.5px; }
-  }
-  @keyframes requete-nginx {
-    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
-    5.4% { color: var(--trait-fort); stroke-width: 1.25px; }
-    6.4% { color: var(--signal); stroke-width: 2.5px; }
-    15.5% { color: var(--signal); stroke-width: 2.5px; }
-    16.5% { color: var(--trait-fort); stroke-width: 1.25px; }
-    73.5% { color: var(--trait-fort); stroke-width: 1.25px; }
-    74.5% { color: var(--signal); stroke-width: 2.5px; }
-    83.5% { color: var(--signal); stroke-width: 2.5px; }
-    84.5% { color: var(--trait-fort); stroke-width: 1.25px; }
-  }
-  @keyframes requete-laravel {
-    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
-    20.9% { color: var(--trait-fort); stroke-width: 1.25px; }
-    21.9% { color: var(--signal); stroke-width: 2.5px; }
-    32.3% { color: var(--signal); stroke-width: 2.5px; }
-    33.3% { color: var(--trait-fort); stroke-width: 1.25px; }
-    56.7% { color: var(--trait-fort); stroke-width: 1.25px; }
-    57.7% { color: var(--signal); stroke-width: 2.5px; }
-    68.1% { color: var(--signal); stroke-width: 2.5px; }
-    69.1% { color: var(--trait-fort); stroke-width: 1.25px; }
-  }
-  @keyframes requete-mysql {
-    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
-    38.0% { color: var(--trait-fort); stroke-width: 1.25px; }
-    39.0% { color: var(--signal); stroke-width: 2.5px; }
-    52.0% { color: var(--signal); stroke-width: 2.5px; }
-    53.0% { color: var(--trait-fort); stroke-width: 1.25px; }
-  }
-  @keyframes requete-redis {
-    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
-    39.7% { color: var(--trait-fort); stroke-width: 1.25px; }
-    40.7% { color: var(--signal); stroke-width: 2.5px; }
-    53.1% { color: var(--signal); stroke-width: 2.5px; }
-    54.1% { color: var(--trait-fort); stroke-width: 1.25px; }
-  }
-  @keyframes requete-tiers {
-    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
-    59.0% { color: var(--trait-fort); stroke-width: 1.25px; }
-    60.0% { color: var(--signal); stroke-width: 2.5px; }
-    70.0% { color: var(--signal); stroke-width: 2.5px; }
-    71.0% { color: var(--trait-fort); stroke-width: 1.25px; }
-  }
-}
-
 /* ── Mouvements d'ambiance ─────────────────────────────────────────── */
 
 @layer composants {
   .vignette-paquet { fill: var(--signal); stroke: var(--papier); stroke-width: 3px; vector-effect: non-scaling-stroke; }
   .carte:not(:hover, :focus-visible) .vignette-paquet { opacity: 0; }
+  .tete-plan .vignette-paquet { opacity: 1; }
 
-  @media (prefers-reduced-motion: no-preference) {
-    /*
-     * Le nom se compose : chaque lettre passe de fine et large à grasse et
-     * étroite, en vague. Il reste lisible à chaque instant : seuls les axes de
-     * la police variable bougent.
-     */
-    .geant .lettre {
-      display: inline-block;
-      animation: compose 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-      animation-delay: calc(var(--i) * 45ms + 100ms);
-    }
-  }
-  @keyframes compose {
-    from { font-weight: 200; font-stretch: 100%; translate: 0 0.06em; }
-    to { font-weight: 800; font-stretch: 62%; translate: 0 0; }
-  }
 
   /*
    * Les intertitres se déploient en entrant dans l'écran : de 62 % à 125 % de

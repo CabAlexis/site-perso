@@ -1,32 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
-import Pile from '../components/Pile.astro';
+import Vignette from '../components/Vignette.astro';
 import SuiteAccueil from '../components/SuiteAccueil.astro';
-
-// Le nom, lettre par lettre, pour la vague de composition au chargement.
-const lettres = [...'Alexis Cabillic'];
+import { projets } from '../data/projets';
+import { coupes } from '../data/coupes';
 ---
 <Base
   titre="Alexis Cabillic"
   description="Développeur web à Pau. Quatre projets décrits en détail : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté."
 >
-  <header class="accueil-tete grille">
-    <p class="etiquette">Développeur · Pau</p>
-    <h1 class="geant" aria-label="Alexis Cabillic">{lettres.map((l, i) => l === ' ' ? ' ' : <span class="lettre" aria-hidden="true" style={`--i: ${i}`}>{l}</span>)}</h1>
-    <div class="prose">
-      <p class="chapeau">
-        Je développe des applications web, de la base de données jusqu'au serveur qui les
-        fait tourner. Freelance à Pau, le plus souvent en Laravel et Vue.
-      </p>
-      <p>
-        Les quatre projets ci-dessous montrent chacun autre chose : un produit livré à des
-        clientes, un SaaS construit seul, un bot conçu pour survivre à ses pannes, un outil
-        qui descend jusqu'aux périphériques d'entrée de Linux. Chaque page dit ce qui a été
-        choisi, ce qui a été refusé, et ce que ça a coûté. Les dépôts sont privés : les
-        chiffres cités sont déclarés et datés, et ce qui ne tourne plus est présenté comme tel.
-      </p>
+  <header class="tete">
+    <div class="tete-plan" aria-hidden="true">
+      {projets.map((p) => <Vignette id={`plan-${p.slug}`} coupe={coupes[p.slug]} />)}
     </div>
-    <Pile />
+    <div class="grille tete-texte">
+      <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
+      <h1 class="tete-titre plein">
+        <span class="tete-l tete-l1">De la base de données</span>
+        <span class="tete-l tete-l2">au serveur</span>
+        <span class="tete-l tete-l3">qui tourne.</span>
+      </h1>
+      <div class="tete-bas plein">
+        <p class="chapeau">
+          Je conçois et je construis des applications web, le plus souvent en Laravel et Vue,
+          et je les mets en production moi-même. Chaque projet ci-dessous dit ce qui a été
+          choisi, ce qui a été refusé, et ce que ça a coûté.
+        </p>
+        <p class="etiquette">
+          Quatre projets : un en production, un fonctionnel, un en service, un à l'arrêt.
+          Dépôts privés : les chiffres cités sont déclarés et datés.
+        </p>
+      </div>
+    </div>
   </header>
 
   <SuiteAccueil />
