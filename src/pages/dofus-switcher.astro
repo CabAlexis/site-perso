@@ -1,0 +1,165 @@
+---
+import Projet from '../layouts/Projet.astro';
+import Coupe from '../components/Coupe.astro';
+import Etape from '../components/Etape.astro';
+import Todo from '../components/Todo.astro';
+---
+<Projet slug="dofus-switcher">
+  <Fragment slot="contexte">
+    <p>
+      Outil de bureau pour jouer plusieurs comptes Dofus Retro sous KDE Plasma 6 / Wayland :
+      il fait passer d'une fenêtre de jeu à l'autre au clavier ou avec les boutons latéraux
+      de la souris. Construit pour mon propre usage en juin 2026, plus utilisé depuis. Le
+      projet est à l'arrêt, en version 0.7.2.
+    </p>
+  </Fragment>
+
+  <Coupe
+    slot="coupe"
+    id="coupe-switcher"
+    titre="Coupe du chemin d'un clic sur un bouton latéral"
+    resume="La souris physique est capturée en exclusivité via evdev. Une boucle relaie tous ses événements vers un périphérique virtuel uinput que KWin voit comme une souris ordinaire, sauf les boutons associés à une action. Ceux-ci déclenchent le cycle, qui lit la fenêtre active et demande à kdotool d'activer la suivante. Aucune entrée n'est jamais envoyée à une fenêtre Dofus."
+    hauteur={520}
+    cartouche={['Coupe · Dofus Switcher', 'v0.7.2']}
+    noeuds={[
+      { x: 20, y: 14, l: 200, h: 56, titre: 'Souris physique', lignes: ['/dev/input/eventN'], ton: 'externe', etape: 2 },
+      { x: 20, y: 108, l: 250, h: 72, titre: 'Boucle de relais', lignes: ['select() · timeout 0,1 s', 'boutons bindés retirés'], etape: 2 },
+      { x: 20, y: 228, l: 155, h: 72, titre: 'Sink uinput', lignes: ['capacités copiées', 'depuis la souris'], etape: 2 },
+      { x: 20, y: 340, l: 155, h: 56, titre: 'KWin', lignes: ['souris ordinaire'], ton: 'externe', etape: 2 },
+      { x: 190, y: 228, l: 155, h: 72, titre: 'Cycle sans état', lignes: ['active → voisine', 'relit ×2 · 15 ms'], etape: 3 },
+      { x: 190, y: 340, l: 155, h: 56, titre: 'kdotool', lignes: ['windowactivate'], ton: 'externe', etape: 1 },
+      { x: 190, y: 436, l: 155, h: 56, titre: 'Fenêtre Dofus', lignes: ['au premier plan'], ton: 'externe', etape: 1 },
+      { x: 20, y: 436, l: 155, h: 72, titre: 'CGU Ankama', lignes: ['aucune entrée', 'vers le jeu'], ton: 'contrainte', etape: 1 },
+    ]}
+    liens={[
+      { points: [[120, 70], [120, 108]], etape: 2, etiquette: { x: 130, y: 93, texte: 'EVIOCGRAB, exclusif' } },
+      { points: [[80, 180], [80, 228]], etape: 2, etiquette: { x: 90, y: 209, texte: 'le reste' } },
+      { points: [[97, 300], [97, 340]], etape: 2 },
+      { points: [[250, 180], [250, 228]], etape: 3, etiquette: { x: 260, y: 209, texte: 'MB4 / MB5' } },
+      { points: [[267, 300], [267, 340]], etape: 1 },
+      { points: [[267, 396], [267, 436]], etape: 1 },
+      { points: [[175, 472], [190, 472]], etape: 1, fleche: false, tirets: true },
+    ]}
+  />
+
+  <section aria-labelledby="probleme">
+    <h2 id="probleme" class="intertitre">Le problème</h2>
+    <p>
+      En combat, chaque personnage joue à son tour : avec plusieurs comptes ouverts, il faut
+      passer d'une fenêtre de jeu à la suivante à chaque tour, sans se tromper d'ordre. Je le
+      faisais avec un script bash et deux raccourcis KDE. Le besoin de départ tenait en une
+      ligne : faire défiler les fenêtres avec les deux boutons latéraux de la souris, que la
+      main a déjà sous les doigts pendant qu'elle joue, en remplaçant le script par une vraie
+      application.
+    </p>
+  </section>
+
+  <section aria-labelledby="evidence">
+    <h2 id="evidence" class="intertitre">Ce qui rendait la solution évidente inutilisable</h2>
+    <Etape n={1}>
+      <p>
+        L'outil le plus évident pour du multi-comptes envoie des clics et des touches aux
+        fenêtres du jeu : une action répétée sur tous les comptes, une macro qui change de
+        fenêtre puis agit. C'est précisément ce que les conditions d'utilisation d'Ankama
+        interdisent, et le risque est la suspension de tous les comptes. La règle a été posée
+        avant la première ligne de code, et rappelée dans la spécification comme non
+        négociable : l'outil ne gère que des fenêtres du système. Il les liste, les ordonne,
+        en active une. Il n'envoie jamais une entrée synthétique à une fenêtre Dofus, ne
+        diffuse rien, n'enchaîne aucune action en jeu.
+      </p>
+      <p>
+        Deuxième obstacle : sous Wayland, une application ne peut pas activer la fenêtre d'une
+        autre, et les outils X11 habituels (<code>xdotool</code>, <code>wmctrl</code>) n'y
+        fonctionnent pas. L'activation passe donc par <code>kdotool</code>, qui passe par KWin, le
+        compositeur de Plasma. C'est ce qui lie l'outil à KDE Plasma 6.
+      </p>
+    </Etape>
+    <p>
+      Pour les boutons de souris, l'outil descend sous le compositeur, au niveau evdev,
+      l'interface du noyau Linux pour les périphériques d'entrée.
+    </p>
+    <Todo note="pourquoi evdev/uinput plutôt qu'une capture plus classique (raccourci KDE sur bouton de souris, input-remapper…) : à confirmer ou corriger avec tes mots" />
+  </section>
+
+  <section aria-labelledby="choix">
+    <h2 id="choix" class="intertitre">Ce qui a été choisi, et ce que ça a coûté</h2>
+    <Etape n={2}>
+      <p>
+        La souris est capturée en exclusivité (<code>EVIOCGRAB</code>) : le compositeur ne voit
+        plus le périphérique physique. Une boucle relaie tous ses événements vers un
+        périphérique virtuel créé avec uinput, dont les capacités sont copiées depuis la souris
+        d'origine ; KWin y voit une souris ordinaire, quelle que soit la marque. Seuls les
+        boutons associés à une action sont retirés du flux, à l'appui comme au relâchement,
+        avec l'événement <code>MSC_SCAN</code> qui les précède. Les supprimer jusqu'au
+        prochain <code>SYN</code> aurait été plus simple, mais aurait aussi avalé les
+        mouvements regroupés dans la même trame.
+      </p>
+      <p>
+        Ce que KWin reçoit est donc le flux de la souris, inchangé, moins les clics bindés.
+        Rien n'est fabriqué, et rien n'atteint le jeu : c'est ce qui rend la capture
+        compatible avec la contrainte du point 1.
+      </p>
+      <p>
+        Relayer chaque événement de la souris ajoute forcément du délai. Avant d'écrire ce lot,
+        une mesure a fixé la règle : p99 sous 3 ms, on continue ; au-delà de 5 ms, on abandonne
+        les binds souris. Le p99 consigné dans le code est d'environ 0,007 ms. Les résultats
+        bruts de la mesure n'ont pas été conservés.
+      </p>
+    </Etape>
+    <p>
+      La capture ne doit jamais survivre au programme : une souris capturée que personne ne
+      relâche, c'est un bureau sans pointeur. La session suit un ordre fixe
+      (résoudre, ouvrir, capturer, relayer) et libère tout dans un bloc <code>finally</code>.
+      Il n'y a volontairement pas de filet <code>atexit</code> pour la souris : le noyau
+      relâche la capture quand le descripteur de fichier meurt, y compris sur un crash.
+      <code>SIGINT</code> et <code>SIGTERM</code> passent par <code>set_wakeup_fd</code> pour
+      fermer proprement la fenêtre Qt. Un thread superviseur recapture la souris après un
+      débranchement, en la retrouvant par son identifiant matériel plutôt que par
+      <code>/dev/input/eventN</code>, qui change d'un démarrage à l'autre.
+    </p>
+    <p>
+      Le prix : l'utilisateur doit appartenir au groupe <code>input</code> et pouvoir écrire
+      dans <code>/dev/uinput</code>. L'autodiagnostic vérifie ces droits deux fois.
+      <code>os.access</code> donne le verdict réel, ACL comprises. <code>getgrouplist</code>
+      distingue deux causes : l'utilisateur n'est pas dans le groupe, ou il y est mais sa
+      session n'a pas été rouverte depuis. Un problème de droits ne fait pas échouer
+      l'autodiagnostic : il sert aussi de test après une mise à jour automatique, et une
+      permission manquante ne doit pas déclencher un retour à la version précédente sans
+      rapport.
+    </p>
+    <Etape n={3}>
+      <p>
+        La race condition corrigée en 0.7.2 se manifestait ainsi : en clics rapides, le cycle
+        revenait parfois au premier personnage au lieu de passer au suivant. Deux hypothèses
+        ont été écartées. La garde anti-rafale était la même pour le clavier et la souris. Et
+        le cycle ne stocke aucun index, puisqu'il relit la fenêtre active à chaque fois.
+        La cause : avec huit clients ouverts et KWin chargé, <code>kdotool
+        getactivewindow</code> renvoyait par moments une chaîne vide. Sans fenêtre active
+        connue, le cycle repartait du début. Le cas était aggravé par une seconde lecture de
+        la fenêtre active, redondante, alors que la première avait déjà été confirmée.
+      </p>
+      <p>
+        Le correctif relit au plus deux fois, à 15 ms d'intervalle, puis abandonne, comme le
+        faisaient déjà depuis la 0.6.5 les deux autres appels à <code>kdotool</code> touchés
+        par le même défaut. La fenêtre active déjà lue est transmise au cycle, ce qui supprime
+        la seconde lecture. Quatre tests couvrent le cas.
+      </p>
+    </Etape>
+    <p>
+      Un arbitrage a été imposé par une panne. Jusqu'à la 0.5, chaque raccourci lançait un
+      processus Python, et chaque appui créait un service systemd transitoire. Sous la
+      répétition automatique du clavier, environ 30 par seconde, cela a saturé
+      <code>systemd --user</code>, DBus et KWin jusqu'au gel de la machine, le 22 juin 2026.
+      Depuis la 0.6, les raccourcis sont enregistrés via DBus (KGlobalAccel) dans le processus
+      de l'interface. Ils ne fonctionnent donc que tant que la fenêtre est ouverte : ni démon,
+      ni démarrage automatique, ni icône dans la zone de notification. C'est moins pratique,
+      et c'était voulu.
+    </p>
+    <p>
+      Les 278 tests tournent sans matériel ni compositeur : evdev, uinput et
+      <code>kdotool</code> sont remplacés par des doublures. La contrepartie se lit dans la
+      couverture : le module qui parle vraiment à evdev n'est couvert qu'à 61 %, et ce chemin
+      réel n'a été validé que par la mesure de latence et l'usage.
+    </p>
+  </section>
+</Projet>
