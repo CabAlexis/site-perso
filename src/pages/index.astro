@@ -5,13 +5,20 @@ import Coupe from '../components/Coupe.astro';
 import Etape from '../components/Etape.astro';
 import { projets } from '../data/projets';
 import { boucle, coupes } from '../data/coupes';
+
+// Ligne de pouls : un battement toutes les 200 unités, sur 2400 de large. Le
+// SVG est en « slice » : sur écran étroit on n'en voit que le début, sans
+// déformer les pics.
+const battement = (x: number) =>
+  `L${x + 60},32 Q${x + 66},25 ${x + 72},32 L${x + 84},32 L${x + 88},39 L${x + 94},6 ` +
+  `L${x + 100},58 L${x + 106},32 L${x + 124},32 Q${x + 134},19 ${x + 144},32 L${x + 200},32`;
+const pouls = 'M0,32 ' + Array.from({ length: 12 }, (_, i) => battement(i * 200)).join(' ');
 ---
 <Base
   titre="Alexis Cabillic"
   description="Développeur web à Pau. Quatre projets décrits en détail : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté."
 >
   <header class="accueil-tete grille">
-    <div class="traceur" aria-hidden="true"><span class="traceur-tete"></span><span class="traceur-coord"></span></div>
     <p class="etiquette">Développeur · Pau</p>
     <h1 class="geant">Alexis Cabillic</h1>
     <div class="prose">
@@ -38,6 +45,11 @@ import { boucle, coupes } from '../data/coupes';
       ))}
     </ul>
   </header>
+
+  <div class="pouls" aria-hidden="true">
+    <svg class="pouls-base" viewBox="0 0 2400 64" preserveAspectRatio="xMinYMid slice"><path d={pouls} /></svg>
+    <svg class="pouls-signal" viewBox="0 0 2400 64" preserveAspectRatio="xMinYMid slice"><path d={pouls} /></svg>
+  </div>
 
   <section class="corps grille bloc facons" aria-labelledby="facons">
     <Coupe id="coupe-boucle" {...boucle} />

@@ -532,131 +532,61 @@
       linear-gradient(color-mix(in oklab, var(--trait) 85%, transparent) 1px, transparent 1px),
       linear-gradient(90deg, color-mix(in oklab, var(--trait) 85%, transparent) 1px, transparent 1px);
     background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
-    /* Alignée depuis le bord droit : la tête de traceur, dans la marge de
-       droite, tombe ainsi exactement sur les lignes. */
     background-position: right -1px top -1px;
     mask-image: linear-gradient(to bottom, black 55%, transparent);
     pointer-events: none;
   }
 
   /*
-   * Deux effets pilotés par le défilement seul (au chargement, ce sont les
-   * vignettes qui se tracent) :
-   *   - profondeur : le petit carreau remonte plus lentement que le grand ;
-   *   - tête de traceur : dans la marge de droite, une croix rouge avec ses
-   *     coordonnées descend en zigzag, une case par cran, calée sur la grille.
-   *     Elle ne passe jamais sur le texte.
-   * Sans timeline de défilement ou en mouvement réduit : quadrillage fixe,
-   * pas de traceur.
+   * Profondeur, pilotée par le défilement : le petit carreau remonte plus
+   * lentement que le grand. Sans timeline de défilement ou en mouvement
+   * réduit : quadrillage fixe.
    */
-  .traceur { display: none; }
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
       .accueil-tete::before { animation: profondeur linear both; }
     }
-    @media (min-width: 100rem) and (prefers-reduced-motion: no-preference) {
-      .traceur {
-        display: block;
-        position: absolute;
-        /* Élément de grille : sans ceci, il serait positionné dans la colonne
-           de texte (.grille > *) au lieu de toute la largeur. */
-        grid-column: plein-start / plein-end;
-        grid-row: auto;
-        z-index: 0;
-        /* Centre sur l'intersection à 4 cases du bord droit, 6 cases du haut. */
-        right: calc(24px * 4 - 1px);
-        top: calc(24px * 6 - 1px);
-        width: 0;
-        height: 0;
-        pointer-events: none;
-        color: var(--signal);
-        animation: avance steps(3, jump-none) both, suit linear both;
-      }
-      /* Guide vertical tireté, sur toute la hauteur de l'en-tête. */
-      .traceur::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: -2000px;
-        height: 4000px;
-        width: 1px;
-        background: repeating-linear-gradient(to bottom, currentColor 0 4px, transparent 4px 9px);
-        opacity: 0.55;
-      }
-      .traceur-tete {
-        position: absolute;
-        left: -14px;
-        top: -14px;
-        width: 28px;
-        height: 28px;
-        background:
-          linear-gradient(currentColor, currentColor) center / 28px 2px no-repeat,
-          linear-gradient(currentColor, currentColor) center / 2px 28px no-repeat,
-          radial-gradient(circle, var(--papier) 5px, currentColor 5.5px, currentColor 7.5px, transparent 8px);
-      }
-      .traceur-coord {
-        position: absolute;
-        right: 12px;
-        top: 12px;
-        padding: 0.15rem 0.35rem;
-        background: var(--papier);
-        border: 1px solid currentColor;
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        line-height: 1.2;
-        white-space: nowrap;
-        counter-reset: cx var(--cx) cy var(--cy);
-        animation: coordonnees steps(3, jump-none) both;
-      }
-      .traceur-coord::before {
-        content: 'X ' counter(cx, decimal-leading-zero) ' · Y ' counter(cy, decimal-leading-zero);
-      }
-    }
-    /*
-     * Timelines dans des règles à part, au sélecteur distinct : le minifieur
-     * les fusionnait sinon dans le raccourci `animation`, où elles sont
-     * invalides, et Chromium rejetait la déclaration.
-     */
+    /* Timeline dans une règle à part, au sélecteur distinct : le minifieur la
+       fusionnait sinon dans le raccourci `animation`, où elle est invalide. */
     :root .accueil-tete::before { animation-timeline: scroll(root); animation-range: 0 100vh; }
-    :root .traceur { animation-timeline: scroll(root), scroll(root); animation-range: 0 100vh, 0 100vh; }
-    :root .traceur-coord { animation-timeline: scroll(root); animation-range: 0 100vh; }
   }
-  @property --cx { syntax: '<integer>'; inherits: true; initial-value: 4; }
-  @property --cy { syntax: '<integer>'; inherits: true; initial-value: 6; }
-  /* Petit carreau : 96 px (4 cases) ; grand : 36 px. Ancrage à droite. */
+  /* Petit carreau : 96 px (4 cases) ; grand : 36 px. */
   @keyframes profondeur {
     from { background-position: right -1px top -1px; }
     to { background-position: right -1px top 95px, right -1px top 95px, right -1px top 35px, right -1px top 35px; }
   }
-  /* La tête suit la dérive du petit carreau pour rester sur ses lignes. */
-  @keyframes suit {
-    from { margin-top: 0; }
-    to { margin-top: 96px; }
+
+  /*
+   * Ligne de pouls : un tracé de moniteur cardiaque en pleine largeur, balayé
+   * en continu par une tête lumineuse qui laisse une traînée. Deux couches du
+   * même tracé : la base, fixe et discrète ; le signal, révélé par un masque
+   * qui avance. Aucun chiffre affiché. En mouvement réduit : la base seule.
+   */
+  .pouls {
+    position: relative;
+    height: 64px;
+    margin-top: calc(var(--rythme) * 2);
+    color: var(--signal);
   }
-  /* Zigzag en huit diagonales de 2 cases : chaque cran (steps(3) par
-     segment, extrémités comprises) tombe sur une intersection, et la tête
-     reste dans la marge de droite. */
-  @keyframes avance {
-    0% { translate: 0px 0px; }
-    12.5% { translate: -48px 48px; }
-    25% { translate: 0px 96px; }
-    37.5% { translate: -48px 144px; }
-    50% { translate: 0px 192px; }
-    62.5% { translate: -48px 240px; }
-    75% { translate: 0px 288px; }
-    87.5% { translate: -48px 336px; }
-    100% { translate: 0px 384px; }
+  .pouls svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pouls path { fill: none; stroke: currentColor; stroke-width: 1.5px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .pouls-base { opacity: 0.22; }
+  .pouls-signal { opacity: 0; }
+  .pouls-signal path { stroke-width: 2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .pouls-signal {
+      opacity: 1;
+      mask-image: linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.15) 40%, black 96%, transparent 100%);
+      mask-size: 38% 100%;
+      mask-repeat: no-repeat;
+      animation: battement 3.6s linear infinite;
+      filter: drop-shadow(0 0 4px color-mix(in oklab, var(--signal) 60%, transparent));
+    }
   }
-  @keyframes coordonnees {
-    0% { --cx: 4; --cy: 6; }
-    12.5% { --cx: 6; --cy: 8; }
-    25% { --cx: 4; --cy: 10; }
-    37.5% { --cx: 6; --cy: 12; }
-    50% { --cx: 4; --cy: 14; }
-    62.5% { --cx: 6; --cy: 16; }
-    75% { --cx: 4; --cy: 18; }
-    87.5% { --cx: 6; --cy: 20; }
-    100% { --cx: 4; --cy: 22; }
+  /* Masque de 38 % : -61 % le cache à gauche, 161 % à droite. */
+  @keyframes battement {
+    from { mask-position: -61% 0; }
+    to { mask-position: 161% 0; }
   }
   .geant {
     font-size: var(--t-geant);
