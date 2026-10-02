@@ -556,38 +556,6 @@
     to { background-position: right -1px top 95px, right -1px top 95px, right -1px top 35px, right -1px top 35px; }
   }
 
-  /*
-   * Ligne de pouls : un tracé de moniteur cardiaque en pleine largeur, balayé
-   * en continu par une tête lumineuse qui laisse une traînée. Deux couches du
-   * même tracé : la base, fixe et discrète ; le signal, révélé par un masque
-   * qui avance. Aucun chiffre affiché. En mouvement réduit : la base seule.
-   */
-  .pouls {
-    position: relative;
-    height: 64px;
-    margin-top: calc(var(--rythme) * 2);
-    color: var(--signal);
-  }
-  .pouls svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .pouls path { fill: none; stroke: currentColor; stroke-width: 1.5px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-  .pouls-base { opacity: 0.22; }
-  .pouls-signal { opacity: 0; }
-  .pouls-signal path { stroke-width: 2px; }
-  @media (prefers-reduced-motion: no-preference) {
-    .pouls-signal {
-      opacity: 1;
-      mask-image: linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.15) 40%, black 96%, transparent 100%);
-      mask-size: 38% 100%;
-      mask-repeat: no-repeat;
-      animation: battement 3.6s linear infinite;
-      filter: drop-shadow(0 0 4px color-mix(in oklab, var(--signal) 60%, transparent));
-    }
-  }
-  /* Masque de 38 % : -61 % le cache à gauche, 161 % à droite. */
-  @keyframes battement {
-    from { mask-position: -61% 0; }
-    to { mask-position: 161% 0; }
-  }
   .geant {
     font-size: var(--t-geant);
     font-stretch: 62%;
@@ -599,19 +567,31 @@
   .accueil-tete .etiquette { margin-bottom: -0.6rem; }
 
   /*
-   * La planche : les quatre coupes en vignettes, l'idée directrice des pages
-   * projet ramenée sur l'accueil. Au survol ou au focus, toute la coupe
-   * s'allume, avec les mêmes couleurs que dans les pages.
+   * Les quatre projets en cartes : la vignette (silhouette de la coupe), le
+   * nom, l'angle, le statut. Au survol ou au focus, la vignette s'allume et
+   * ses paquets de signal circulent ; au clic, elle devient la coupe de la
+   * page projet (transition de vue).
    */
-  .planche {
+  .projets-cartes {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.75rem 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: calc(var(--rythme) * 1.25) 2.5rem;
     list-style: none;
-    padding: 0;
-    align-content: start;
+    padding-block: 0;
+    margin-top: calc(var(--rythme) * 0.6);
   }
-  .carte { display: grid; gap: 0.55rem; text-decoration: none; }
+  @media (min-width: 68rem) {
+    .projets-cartes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .carte {
+    display: grid;
+    grid-template-columns: clamp(5.5rem, 30%, 12rem) minmax(0, 1fr);
+    gap: clamp(0.9rem, 2vw, 1.25rem);
+    align-items: start;
+    padding-top: calc(var(--rythme) * 0.8);
+    border-top: 1px solid var(--encre);
+    text-decoration: none;
+  }
   .carte .vignette {
     width: 100%;
     height: auto;
@@ -620,32 +600,32 @@
     border: 1px solid var(--trait);
     background: var(--papier);
   }
+  .carte-texte { display: grid; gap: 0.6rem; align-content: start; }
   .carte-nom {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.6rem;
     align-items: baseline;
-    font-size: var(--t-1);
+    font-size: var(--t-3);
     font-stretch: 62%;
     font-weight: 800;
-    line-height: 1;
+    line-height: 0.95;
+    transition: font-stretch 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
   }
-  .carte-nom .etiquette { font-stretch: 100%; font-weight: 400; }
-  .carte:hover .carte-nom, .carte:focus-visible .carte-nom { color: var(--signal); }
-  .carte:hover .vignette, .carte:focus-visible .vignette { border-color: var(--signal); }
+  .carte-nom .etiquette { font-size: var(--t--1); font-stretch: 100%; font-weight: 400; }
+  .carte-angle { max-width: var(--mesure); }
+  .carte:is(:hover, :focus-visible) .carte-nom { color: var(--signal); font-stretch: 78%; }
+  .carte:is(:hover, :focus-visible) .vignette { border-color: var(--signal); }
 
   .vignette :is(.coupe-noeud, .coupe-lien) { stroke-width: 1px; transition: color 0.25s ease-out, stroke-width 0.25s ease-out; }
   .vignette .coupe-fond { transition: fill 0.25s ease-out; }
   .carte:is(:hover, :focus-visible) .vignette :is(.coupe-noeud, .coupe-lien) { color: var(--signal); stroke-width: 2px; }
   .carte:is(:hover, :focus-visible) .vignette .coupe-fond { fill: color-mix(in oklab, var(--signal) 9%, var(--papier)); }
   .vignette :is(.coupe-cadre, .coupe-trace, .coupe-hachure, .vignette-titre) { vector-effect: non-scaling-stroke; }
+  .vignette-paquet { opacity: 0; transition: opacity 0.2s; }
+  .carte:is(:hover, :focus-visible) .vignette-paquet { opacity: 1; }
   .vignette-titre { stroke: var(--encre); stroke-width: 2px; }
 
-  @media (min-width: 68rem) {
-    .accueil-tete .planche { grid-column: marge; grid-row: 1 / span 4; }
-  }
-  @media (max-width: 67.99rem) {
-    .planche { max-width: 34rem; }
-  }
 
   .facons .etape { padding-top: calc(var(--rythme) * 0.6); border-top: 1px solid var(--trait); }
   .facons .etape + .etape { margin-top: calc(var(--rythme) * 0.8); }
@@ -653,70 +633,20 @@
   .facons strong { display: block; font-stretch: 92%; font-weight: 700; font-size: var(--t-1); line-height: 1.25; margin-bottom: 0.3rem; }
 
   /*
-   * Tracé de la planche au chargement : chaque vignette se dessine de haut en
-   * bas, une ligne de balayage la parcourt, l'une après l'autre. Décor
-   * uniquement : aucun texte n'attend, et rien ne bouge en mouvement réduit.
+   * Les vignettes se dessinent de haut en bas quand elles entrent dans
+   * l'écran (view timeline). Décor seul : le nom, l'angle et le statut sont
+   * lisibles d'emblée.
    */
-  .trace { position: relative; display: block; }
-  @media (prefers-reduced-motion: no-preference) {
-    .trace .vignette {
-      animation: trace 1.2s cubic-bezier(0.45, 0, 0.2, 1) both;
-      animation-delay: calc(var(--rang) * 160ms + 150ms);
+  .trace { display: block; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .trace .vignette { animation: trace linear both; }
     }
-    .trace::after {
-      content: '';
-      position: absolute;
-      inset-inline: 0;
-      top: 0;
-      height: 2px;
-      background: var(--signal);
-      opacity: 0;
-      pointer-events: none;
-      animation: balaye 1.2s cubic-bezier(0.45, 0, 0.2, 1) both;
-      animation-delay: calc(var(--rang) * 160ms + 150ms);
-    }
+    :root .trace .vignette { animation-timeline: view(); animation-range: entry 0% cover 35%; }
   }
   @keyframes trace {
     from { clip-path: inset(0 0 100% 0); }
     to { clip-path: inset(0); }
-  }
-  @keyframes balaye {
-    0% { top: 0; opacity: 1; }
-    90% { opacity: 1; }
-    100% { top: calc(100% - 2px); opacity: 0; }
-  }
-  .liste-projets { list-style: none; padding-block: 0; margin-top: var(--rythme); }
-  .liste-projets > li { border-top: 1px solid var(--encre); }
-  .liste-projets > li:last-child { border-bottom: 1px solid var(--encre); }
-  .liste-projets a {
-    display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    column-gap: 1rem;
-    row-gap: 0.4rem;
-    padding-block: calc(var(--rythme) * 0.9);
-    text-decoration: none;
-  }
-  .liste-projets .numero { grid-row: span 3; padding-top: 0.45rem; }
-  .liste-projets .nom {
-    font-size: var(--t-3);
-    font-stretch: 62%;
-    font-weight: 800;
-    line-height: 0.95;
-  }
-  .liste-projets .resume { max-width: var(--mesure); }
-  .liste-projets .nom { transition: font-stretch 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s; }
-  .liste-projets a:hover .nom, .liste-projets a:focus-visible .nom {
-    font-stretch: 82%;
-    color: var(--signal);
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
-    text-underline-offset: 0.12em;
-  }
-
-  @media (min-width: 48rem) {
-    .liste-projets a { grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 2rem; }
-    .liste-projets .numero { grid-row: span 2; }
-    .liste-projets .nom { grid-row: span 2; font-size: var(--t-4, calc(var(--t-0) * 3.16)); }
   }
 }
 
@@ -737,10 +667,112 @@
 }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.3s; }
 
+/* ── Pile (haut de l'accueil) ────────────────────────────────────────── */
+
+@layer composants {
+  .pile { max-width: 28rem; }
+  .pile svg { width: 100%; height: auto; overflow: visible; }
+  .pile figcaption { margin-top: 0.75rem; line-height: 1.5; }
+  .pile-paquet { fill: var(--signal); stroke: var(--papier); stroke-width: 2px; }
+  .pile-paquet { filter: drop-shadow(0 0 5px color-mix(in oklab, var(--signal) 70%, transparent)); }
+
+  @media (min-width: 68rem) {
+    .accueil-tete .pile { grid-column: marge; grid-row: 1 / span 4; align-self: start; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* 1. Construction : les cadres pleins et les liens se tracent ; les
+          cadres tiretés (systèmes externes) apparaissent. Les étiquettes
+          sont là dès le départ. */
+    .pile .coupe-cadre[pathLength], .pile .coupe-trace {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: dessine 0.7s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+    }
+    .pile-noeud .coupe-cadre { animation-delay: calc(var(--n) * 0.16s + 0.2s); }
+    .pile-lien .coupe-trace { animation-delay: calc(var(--n) * 0.16s + 0.5s); }
+    .pile .coupe-externe .coupe-cadre, .pile .coupe-pointe {
+      opacity: 0;
+      animation: apparait 0.5s ease-out forwards;
+    }
+    .pile .coupe-externe .coupe-cadre { animation-delay: calc(var(--n) * 0.16s + 0.3s); }
+    .pile-lien .coupe-pointe { animation-delay: calc(var(--n) * 0.16s + 1s); }
+
+    /* 2. Requête en boucle, synchrone avec les animateMotion (4,4 s, départ
+          à 1,8 s) : chaque couche s'allume pendant que le paquet la traverse. */
+    /* Raccourci complet par couche : sans nom, le minifieur réduisait le
+       raccourci à « none » et perdait durée et délai. */
+    .pile-navigateur { animation: requete-navigateur 4.4s linear 1.8s infinite both; }
+    .pile-nginx { animation: requete-nginx 4.4s linear 1.8s infinite both; }
+    .pile-laravel { animation: requete-laravel 4.4s linear 1.8s infinite both; }
+    .pile-mysql { animation: requete-mysql 4.4s linear 1.8s infinite both; }
+    .pile-redis { animation: requete-redis 4.4s linear 1.8s infinite both; }
+    .pile-tiers { animation: requete-tiers 4.4s linear 1.8s infinite both; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pile-paquet { display: none; }
+  }
+
+  @keyframes dessine { to { stroke-dashoffset: 0; } }
+  @keyframes apparait { to { opacity: 1; } }
+  @keyframes requete-navigateur {
+    0%, 100% { color: var(--signal); stroke-width: 2.5px; }
+    2.0% { color: var(--signal); stroke-width: 2.5px; }
+    3.0% { color: var(--trait-fort); stroke-width: 1.25px; }
+    87.0% { color: var(--trait-fort); stroke-width: 1.25px; }
+    88.0% { color: var(--signal); stroke-width: 2.5px; }
+    99.0% { color: var(--signal); stroke-width: 2.5px; }
+  }
+  @keyframes requete-nginx {
+    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
+    5.4% { color: var(--trait-fort); stroke-width: 1.25px; }
+    6.4% { color: var(--signal); stroke-width: 2.5px; }
+    15.5% { color: var(--signal); stroke-width: 2.5px; }
+    16.5% { color: var(--trait-fort); stroke-width: 1.25px; }
+    73.5% { color: var(--trait-fort); stroke-width: 1.25px; }
+    74.5% { color: var(--signal); stroke-width: 2.5px; }
+    83.5% { color: var(--signal); stroke-width: 2.5px; }
+    84.5% { color: var(--trait-fort); stroke-width: 1.25px; }
+  }
+  @keyframes requete-laravel {
+    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
+    20.9% { color: var(--trait-fort); stroke-width: 1.25px; }
+    21.9% { color: var(--signal); stroke-width: 2.5px; }
+    32.3% { color: var(--signal); stroke-width: 2.5px; }
+    33.3% { color: var(--trait-fort); stroke-width: 1.25px; }
+    56.7% { color: var(--trait-fort); stroke-width: 1.25px; }
+    57.7% { color: var(--signal); stroke-width: 2.5px; }
+    68.1% { color: var(--signal); stroke-width: 2.5px; }
+    69.1% { color: var(--trait-fort); stroke-width: 1.25px; }
+  }
+  @keyframes requete-mysql {
+    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
+    38.0% { color: var(--trait-fort); stroke-width: 1.25px; }
+    39.0% { color: var(--signal); stroke-width: 2.5px; }
+    52.0% { color: var(--signal); stroke-width: 2.5px; }
+    53.0% { color: var(--trait-fort); stroke-width: 1.25px; }
+  }
+  @keyframes requete-redis {
+    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
+    39.7% { color: var(--trait-fort); stroke-width: 1.25px; }
+    40.7% { color: var(--signal); stroke-width: 2.5px; }
+    53.1% { color: var(--signal); stroke-width: 2.5px; }
+    54.1% { color: var(--trait-fort); stroke-width: 1.25px; }
+  }
+  @keyframes requete-tiers {
+    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
+    59.0% { color: var(--trait-fort); stroke-width: 1.25px; }
+    60.0% { color: var(--signal); stroke-width: 2.5px; }
+    70.0% { color: var(--signal); stroke-width: 2.5px; }
+    71.0% { color: var(--trait-fort); stroke-width: 1.25px; }
+  }
+}
+
 /* ── Mouvements d'ambiance ─────────────────────────────────────────── */
 
 @layer composants {
   .vignette-paquet { fill: var(--signal); stroke: var(--papier); stroke-width: 3px; vector-effect: non-scaling-stroke; }
+  .carte:not(:hover, :focus-visible) .vignette-paquet { opacity: 0; }
 
   @media (prefers-reduced-motion: no-preference) {
     /*

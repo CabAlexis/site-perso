@@ -1,0 +1,116 @@
+---
+/*
+ * La pile : coupe de la chaîne que je construis, du navigateur à la base de
+ * données, pour le haut de l'accueil. Même dessin que les coupes des pages
+ * projet, avec sa propre chorégraphie (voir global.css, section « Pile ») :
+ *   1. au chargement, les cadres et les liens se tracent autour des
+ *      étiquettes, qui sont lisibles dès le départ ;
+ *   2. ensuite, une requête descend du navigateur à MySQL et remonte, en
+ *      boucle ; chaque couche s'allume à son passage, et un job part vers la
+ *      file Redis puis les services tiers.
+ *
+ * Le paquet suit son chemin en SMIL (animateMotion) ; l'allumage des couches
+ * est en CSS, sur la même durée et le même départ, pour rester synchrone.
+ * Aucun JavaScript. En mouvement réduit : schéma fixe, sans paquet.
+ *
+ * Les briques sont celles de mes projets (Laravel, Inertia, Vue, MySQL, Redis,
+ * Nginx, Forge, Stripe, SMTP, IA) ; aucun chiffre n'est affiché.
+ */
+import { pointe } from '../lib/pointe';
+
+interface Noeud {
+  cle: string;
+  x: number;
+  y: number;
+  l: number;
+  h: number;
+  titre: string;
+  ligne: string;
+  externe?: boolean;
+}
+
+const noeuds: Noeud[] = [
+  { cle: 'navigateur', x: 20, y: 14, l: 320, h: 56, titre: 'Navigateur', ligne: 'Vue 3 · Inertia', externe: true },
+  { cle: 'nginx', x: 20, y: 110, l: 320, h: 56, titre: 'Nginx · VPS', ligne: 'déployé par Laravel Forge' },
+  { cle: 'laravel', x: 20, y: 206, l: 320, h: 64, titre: 'Laravel', ligne: 'contrôleurs, politiques, validation' },
+  { cle: 'mysql', x: 190, y: 318, l: 150, h: 56, titre: 'MySQL', ligne: 'données' },
+  { cle: 'redis', x: 20, y: 318, l: 150, h: 56, titre: 'Redis · file', ligne: 'jobs asynchrones' },
+  { cle: 'tiers', x: 20, y: 414, l: 150, h: 56, titre: 'Services tiers', ligne: 'Stripe, SMTP, IA', externe: true },
+];
+
+// La requête descend à droite (x = 320) et le job à x = 158 : les deux
+// chemins passent à côté des étiquettes, jamais dessus.
+const liens: [number, number][][] = [
+  [[320, 70], [320, 110]],
+  [[320, 166], [320, 206]],
+  [[320, 270], [320, 318]],
+  [[158, 270], [158, 318]],
+  [[158, 374], [158, 414]],
+];
+
+const hauteur = 484;
+---
+<figure class="pile" aria-labelledby="pile-legende">
+  <svg viewBox={`0 0 360 ${hauteur}`} role="img" aria-labelledby="pile-titre pile-resume">
+    <title id="pile-titre">Coupe de la pile, du navigateur à la base de données</title>
+    <desc id="pile-resume">
+      Une requête part du navigateur (Vue 3 et Inertia), passe par Nginx sur un VPS déployé par
+      Laravel Forge, atteint Laravel puis MySQL, et remonte. Laravel confie aussi des jobs à une
+      file Redis, qui appelle les services tiers : Stripe, SMTP, IA.
+    </desc>
+
+    <path class="coupe-repere" d={`M0.5,12 V0.5 H12 M348,0.5 H359.5 V12 M359.5,${hauteur - 12} V${hauteur - 0.5} H348 M12,${hauteur - 0.5} H0.5 V${hauteur - 12}`} />
+
+    {liens.map((points, i) => (
+      <g class="coupe-lien pile-lien" style={`--n: ${i}`}>
+        <polyline points={points.map((p) => p.join(',')).join(' ')} class="coupe-trace" pathLength="1" />
+        <path d={pointe(points)} class="coupe-pointe" />
+      </g>
+    ))}
+
+    {noeuds.map((n, i) => (
+      <g class:list={['coupe-noeud', 'pile-noeud', `pile-${n.cle}`, n.externe && 'coupe-externe']} style={`--n: ${i}`}>
+        <rect x={n.x} y={n.y} width={n.l} height={n.h} class="coupe-fond" />
+        <rect x={n.x} y={n.y} width={n.l} height={n.h} class="coupe-cadre" pathLength={n.externe ? undefined : 1} />
+        <text x={n.x + 12} y={n.y + 22} class="coupe-titre">{n.titre}</text>
+        <text x={n.x + 12} y={n.y + 40} class="coupe-detail">{n.ligne}</text>
+      </g>
+    ))}
+
+    {/* Requête : descend à MySQL, marque une pause, remonte au navigateur. */}
+    <circle r="6" class="pile-paquet">
+      <animateMotion
+        path="M320,70 V318"
+        keyPoints="0;1;1;0;0"
+        keyTimes="0;0.4;0.5;0.9;1"
+        calcMode="linear"
+        dur="4.4s"
+        begin="1.8s"
+        repeatCount="indefinite"
+      />
+    </circle>
+    {/* Job asynchrone : part de Laravel vers Redis puis les services tiers. */}
+    <circle r="5" class="pile-paquet pile-job" opacity="0">
+      <animateMotion
+        path="M158,270 V414"
+        keyPoints="0;0;1;1"
+        keyTimes="0;0.3;0.62;1"
+        calcMode="linear"
+        dur="4.4s"
+        begin="1.8s"
+        repeatCount="indefinite"
+      />
+      <animate
+        attributeName="opacity"
+        values="0;0;1;1;0;0"
+        keyTimes="0;0.29;0.3;0.62;0.63;1"
+        dur="4.4s"
+        begin="1.8s"
+        repeatCount="indefinite"
+      />
+    </circle>
+  </svg>
+  <figcaption id="pile-legende" class="etiquette">
+    Ce que je construis, de la base de données jusqu'au serveur : une requête traverse la pile.
+  </figcaption>
+</figure>

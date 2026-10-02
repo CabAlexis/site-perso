@@ -91,15 +91,6 @@ const hachures = `${id}-hachures`;
           class:list={['coupe-trace', { 'coupe-tirets': lien.tirets, 'coupe-flux': lien.flux }]}
         />
         {lien.fleche !== false && <path d={pointe(lien.points)} class="coupe-pointe" />}
-        {lien.flux && (
-          <circle r="6" class="coupe-paquet">
-            <animateMotion
-              dur="4.5s"
-              repeatCount="indefinite"
-              path={`M${lien.points.map((p) => p.join(',')).join(' L')}`}
-            />
-          </circle>
-        )}
         {lien.etiquette && (
           <text
             x={lien.etiquette.x}
