@@ -399,7 +399,7 @@
     stroke-width: calc(1.25px + var(--actif) * 1.25px);
   }
   .coupe-externe .coupe-cadre { stroke-dasharray: 5 4; }
-  .coupe-hachure { stroke: var(--trait); stroke-width: 1.2; }
+  .coupe-hachure { stroke: var(--trait); stroke-width: 1; }
   .coupe-titre {
     fill: var(--encre);
     font-family: var(--sans);
