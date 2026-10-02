@@ -704,7 +704,9 @@
     line-height: 0.95;
   }
   .liste-projets .resume { max-width: var(--mesure); }
+  .liste-projets .nom { transition: font-stretch 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s; }
   .liste-projets a:hover .nom, .liste-projets a:focus-visible .nom {
+    font-stretch: 82%;
     color: var(--signal);
     text-decoration: underline;
     text-decoration-thickness: 3px;
@@ -735,8 +737,47 @@
 }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.3s; }
 
+/* ── Mouvements d'ambiance ─────────────────────────────────────────── */
+
+@layer composants {
+  .vignette-paquet { fill: var(--signal); stroke: var(--papier); stroke-width: 3px; vector-effect: non-scaling-stroke; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /*
+     * Le nom se compose : chaque lettre passe de fine et large à grasse et
+     * étroite, en vague. Il reste lisible à chaque instant : seuls les axes de
+     * la police variable bougent.
+     */
+    .geant .lettre {
+      display: inline-block;
+      animation: compose 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(var(--i) * 45ms + 100ms);
+    }
+  }
+  @keyframes compose {
+    from { font-weight: 200; font-stretch: 100%; translate: 0 0.06em; }
+    to { font-weight: 800; font-stretch: 62%; translate: 0 0; }
+  }
+
+  /*
+   * Les intertitres se déploient en entrant dans l'écran : de 62 % à 125 % de
+   * largeur. Toujours lisibles, jamais masqués.
+   */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .intertitre { animation: deploie linear both; }
+    }
+    /* Timeline à part : le minifieur la fusionnerait dans le raccourci. */
+    :root .intertitre { animation-timeline: view(); animation-range: entry 10% cover 35%; }
+  }
+  @keyframes deploie {
+    from { font-stretch: 62%; letter-spacing: 0; }
+    to { font-stretch: 125%; letter-spacing: 0.01em; }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .coupe-paquet { display: none; }
+  .coupe-paquet, .vignette-paquet { display: none; }
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;

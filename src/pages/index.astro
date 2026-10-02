@@ -13,6 +13,9 @@ const battement = (x: number) =>
   `L${x + 60},32 Q${x + 66},25 ${x + 72},32 L${x + 84},32 L${x + 88},39 L${x + 94},6 ` +
   `L${x + 100},58 L${x + 106},32 L${x + 124},32 Q${x + 134},19 ${x + 144},32 L${x + 200},32`;
 const pouls = 'M0,32 ' + Array.from({ length: 12 }, (_, i) => battement(i * 200)).join(' ');
+
+// Le nom, lettre par lettre, pour la vague de composition au chargement.
+const lettres = [...'Alexis Cabillic'];
 ---
 <Base
   titre="Alexis Cabillic"
@@ -20,7 +23,7 @@ const pouls = 'M0,32 ' + Array.from({ length: 12 }, (_, i) => battement(i * 200)
 >
   <header class="accueil-tete grille">
     <p class="etiquette">Développeur · Pau</p>
-    <h1 class="geant">Alexis Cabillic</h1>
+    <h1 class="geant" aria-label="Alexis Cabillic">{lettres.map((l, i) => l === ' ' ? ' ' : <span class="lettre" aria-hidden="true" style={`--i: ${i}`}>{l}</span>)}</h1>
     <div class="prose">
       <p class="chapeau">
         Je développe des applications web, de la base de données jusqu'au serveur qui les

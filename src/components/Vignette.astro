@@ -14,6 +14,18 @@ interface Props {
 }
 const { id, coupe, transition } = Astro.props;
 const hachures = `${id}-hachures`;
+
+// Paquets de signal : un par lien, vitesse constante (≈ 90 unités/s), départs
+// décalés pour que la planche ait l'air de tourner sans clignoter en bloc.
+const longueur = (pts: [number, number][]) =>
+  pts.slice(1).reduce((t, [x, y], i) => t + Math.hypot(x - pts[i][0], y - pts[i][1]), 0);
+const paquets = coupe.liens
+  .filter((l) => l.points.length > 1)
+  .map((l, i) => ({
+    chemin: `M${l.points.map((p) => p.join(',')).join(' L')}`,
+    duree: Math.max(0.9, longueur(l.points) / 90).toFixed(2),
+    depart: ((i * 0.37) % 2.2).toFixed(2),
+  }));
 ---
 <svg class="vignette" style={transition ? `view-transition-name: ${transition}` : undefined} viewBox={`0 0 360 ${coupe.hauteur}`} aria-hidden="true" focusable="false">
   <defs>
@@ -26,6 +38,11 @@ const hachures = `${id}-hachures`;
       <polyline points={lien.points.map((p) => p.join(',')).join(' ')} class:list={['coupe-trace', { 'coupe-tirets': lien.tirets }]} />
       {lien.fleche !== false && <path d={pointe(lien.points, 14, 0.5)} class="coupe-pointe" />}
     </g>
+  ))}
+  {paquets.map((p) => (
+    <circle r="9" class="vignette-paquet">
+      <animateMotion path={p.chemin} dur={`${p.duree}s`} begin={`${p.depart}s`} repeatCount="indefinite" />
+    </circle>
   ))}
   {coupe.noeuds.map((n) => (
     <g class:list={['coupe-noeud', n.ton && `coupe-${n.ton}`]} data-etape={n.etape ?? 0}>
