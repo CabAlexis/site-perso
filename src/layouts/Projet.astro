@@ -27,18 +27,40 @@ const { projet, numero, precedent, suivant } = projetParSlug(slug);
 
         <section aria-labelledby="verifiable">
           <h2 id="verifiable" class="intertitre">Vérifiable</h2>
-          <dl class="preuves">
-            {projet.preuves.map((p) => (
-              <div>
-                <dt class="etiquette">{p.libelle}</dt>
-                <dd>
-                  {p.valeur && (p.url ? <a href={p.url}>{p.valeur}</a> : <span>{p.valeur}</span>)}
-                  {p.note && <span class="etiquette preuve-note">{p.note}</span>}
-                  {p.todo && <Todo note={p.todo} />}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          {projet.sansPreuve ? (
+            <>
+              <p>{projet.sansPreuve.motif}</p>
+              {projet.declare && (
+                <>
+                  <p class="etiquette">Chiffres déclarés, non vérifiables de l'extérieur :</p>
+                  <dl class="preuves preuves-declarees">
+                    {projet.declare.map((d) => (
+                      <div>
+                        <dt class="etiquette">{d.libelle}</dt>
+                        <dd>
+                          <span>{d.valeur}</span>
+                          <span class="etiquette preuve-note">{d.note}</span>
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </>
+              )}
+            </>
+          ) : (
+            <dl class="preuves">
+              {projet.preuves.map((p) => (
+                <div>
+                  <dt class="etiquette">{p.libelle}</dt>
+                  <dd>
+                    {p.valeur && (p.url ? <a href={p.url}>{p.valeur}</a> : <span>{p.valeur}</span>)}
+                    {p.note && <span class="etiquette preuve-note">{p.note}</span>}
+                    {p.todo && <Todo note={p.todo} />}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </section>
       </div>
     </div>

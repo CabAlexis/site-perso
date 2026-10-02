@@ -313,6 +313,9 @@
   .preuves > div { display: grid; gap: 0.15rem; padding-top: 0.6rem; border-top: 1px solid var(--trait); }
   .preuves dd { font-size: var(--t-1); font-stretch: 90%; font-weight: 600; line-height: 1.3; }
   .preuve-note { display: block; margin-top: 0.2rem; font-stretch: 100%; }
+  /* Déclaré n'est pas prouvé : même grille, graisse normale, filet tireté. */
+  .preuves-declarees > div { border-top-style: dashed; }
+  .preuves-declarees dd { font-weight: 450; }
   .preuves .trou { margin-top: 0.4rem; font-stretch: 100%; font-weight: 400; }
 
   .suite { margin-top: calc(var(--rythme) * 4); }

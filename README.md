@@ -29,7 +29,11 @@ affichée dans la page pour être visible en relecture. **`make build` échoue t
 dans `dist/`** (`scripts/verifier-todos.mjs`) : aucun trou ne part en production par mégarde.
 
 Les fiches projets (`src/data/projets.ts`) sont validées par un schéma au build : au moins un
-arbitrage et deux à trois éléments vérifiables par projet.
+arbitrage et deux à trois éléments vérifiables par projet. Seule exception admise : un projet dont rien
+n'est consultable de l'extérieur (aujourd'hui Dofus Switcher, dépôt privé). Il le déclare
+(`sansPreuve`), le dit sur sa page, et ses chiffres sont affichés comme déclaratifs et datés.
+L'exception est limitée aux slugs listés dans `EXCEPTIONS_PREUVES` : tout autre projet sans preuve
+fait échouer le build.
 
 ## La coupe
 
