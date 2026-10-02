@@ -1,0 +1,137 @@
+---
+import Projet from '../layouts/Projet.astro';
+import Coupe from '../components/Coupe.astro';
+import Etape from '../components/Etape.astro';
+import Todo from '../components/Todo.astro';
+---
+<Projet slug="bot-legendes">
+  <Fragment slot="contexte">
+    <p>
+      Bot Discord de l'alliance Dofus « Faut Y Songer » : collection des Légendes des Songes,
+      giveaways, candidatures d'entrée sur le serveur, organisation des runs. En service, dans
+      un conteneur podman sur mon VPS.
+    </p>
+  </Fragment>
+
+  <Coupe
+    slot="coupe"
+    id="coupe-bot"
+    titre="Coupe de ce qui survit à un arrêt du bot"
+    resume="Le bot tourne dans un conteneur podman relancé en cas de plantage. Tout l'état utile est dans une base SQLite. Au démarrage, il replanifie les giveaways et tire ceux dont l'échéance est passée. Au tirage, il lit les réactions via l'API REST de Discord. La porte d'entrée du serveur ne dépend pas de lui : elle est verrouillée par les permissions Discord."
+    hauteur={450}
+    cartouche={['Coupe · Bot Légendes', 'discord.js · SQLite']}
+    noeuds={[
+      { x: 20, y: 14, l: 320, h: 56, titre: 'Discord', lignes: ['passerelle (événements) · API REST'], ton: 'externe' },
+      { x: 20, y: 118, l: 320, h: 180, titre: 'Conteneur podman', lignes: ['--restart=unless-stopped'], etape: 2 },
+      { x: 36, y: 180, l: 138, h: 102, titre: 'Au démarrage', lignes: ['giveaways', 'replanifiés ;', 'échéance passée', 'tirée aussitôt'], etape: 2 },
+      { x: 188, y: 180, l: 138, h: 102, titre: 'Au tirage', lignes: ['réactions lues', 'en REST, par', 'pages de 100'], etape: 3 },
+      { x: 20, y: 340, l: 160, h: 72, titre: 'SQLite · WAL', lignes: ['état durable', 'aucun état en RAM'], etape: 1 },
+      { x: 195, y: 340, l: 150, h: 96, titre: "Porte d'entrée", lignes: ['verrou dans les', 'permissions ;', 'bot en panne :', 'serveur fermé'], ton: 'contrainte', etape: 4 },
+    ]}
+    liens={[
+      { points: [[60, 70], [60, 118]], etiquette: { x: 70, y: 99, texte: "événements" } },
+      { points: [[257, 180], [257, 70]], etape: 3, etiquette: { x: 247, y: 99, texte: 'GET réactions', ancre: 'end' } },
+      { points: [[100, 298], [100, 340]], etape: 1, etiquette: { x: 110, y: 324, texte: 'synchrone' } },
+    ]}
+  />
+
+  <section aria-labelledby="probleme">
+    <h2 id="probleme" class="intertitre">Le problème</h2>
+    <p>
+      L'alliance compte quelques dizaines de membres, et le bot porte une part de sa vie
+      quotidienne : qui possède quelles Légendes des Songes (trente ressources à collectionner),
+      les giveaways, l'entrée des nouveaux membres sur le serveur, les inscriptions aux runs.
+      La charge est faible. Ce qui compte, c'est ce qui se passe quand le bot s'arrête :
+      plantage, mise à jour, redémarrage de la machine. Un tirage prévu pendant l'arrêt ne doit
+      pas être perdu, un panneau publié la veille doit encore répondre, et une panne ne doit
+      laisser entrer personne.
+    </p>
+  </section>
+
+  <section aria-labelledby="evidence">
+    <h2 id="evidence" class="intertitre">Ce qui rendait la solution évidente inutilisable</h2>
+    <Etape n={1}>
+      <p>
+        La façon évidente d'écrire un bot Discord garde l'état en mémoire : un
+        <code>setTimeout</code> par giveaway, des participants comptés au fil des réactions
+        reçues, l'avancement d'une candidature en plusieurs pages dans une variable. Tout cela
+        disparaît au premier redémarrage. Les minuteurs n'existent plus, les réactions posées
+        pendant l'arrêt n'ont jamais été vues, et les boutons des anciens messages ne mènent
+        plus nulle part.
+      </p>
+      <p>
+        Ici, tout ce qui doit survivre est en base : SQLite via <code>better-sqlite3</code>, en
+        mode WAL, synchrone. Il n'y a pas de serveur de base de données à faire tourner à côté,
+        pas de pool, pas de <code>await</code> dans chaque commande, et le volume s'y prête : le
+        code le dit, quelques dizaines de membres. Les panneaux ne gardent rien en mémoire :
+        l'identifiant de chaque bouton porte de quoi retrouver son contexte en base. Un panneau
+        publié avant un redémarrage répond comme avant.
+      </p>
+    </Etape>
+  </section>
+
+  <section aria-labelledby="choix">
+    <h2 id="choix" class="intertitre">Ce qui a été choisi, et ce que ça a coûté</h2>
+    <Etape n={2}>
+      <p>
+        Le bot tourne dans un conteneur podman lancé avec <code>--restart=unless-stopped</code> :
+        s'il plante, podman le relance. Au démarrage, il replanifie tous les giveaways en cours ;
+        un tirage dont l'échéance est passée pendant l'arrêt a lieu aussitôt. Il nettoie les
+        salons vocaux temporaires et la file d'attente, et publie l'info du jour s'il l'a
+        manquée, dans la limite de trois heures de retard. Les réactions posées sur
+        des messages antérieurs au redémarrage sont reçues aussi, grâce aux <em>partials</em> de
+        discord.js.
+      </p>
+      <p>
+        La limite est connue : <code>unless-stopped</code> relance le conteneur après un
+        plantage, pas après un redémarrage de la machine. Pour cela, il faut que le service
+        <code>podman-restart</code> soit actif.
+      </p>
+      <Todo note="le service podman-restart est-il activé sur le VPS ? (sinon le bot ne revient pas après un reboot)" />
+    </Etape>
+    <Etape n={3}>
+      <p>
+        Les participants d'un giveaway ne sont pas suivis en direct. Au moment du tirage, le bot
+        lit la liste des réactions 🎉 par l'API REST, par pages de 100, puis tire au sort
+        (Fisher-Yates). Le résultat ne dépend d'aucun événement reçu pendant que le bot tournait :
+        une réaction posée pendant une panne compte quand même. Le bouton « J'ai reçu ma
+        légende » ne crédite le gagnant qu'une fois.
+      </p>
+      <p>
+        Écrit ainsi, le module des giveaways n'avait besoin d'aucun intent Discord. Le bot a
+        depuis activé l'intent des réactions, qui n'est pas privilégié, pour son système
+        d'expérience. Il ne demande toujours aucun intent privilégié par défaut : la liste des
+        membres est une option désactivée d'office, et le contenu des messages n'est jamais lu.
+      </p>
+    </Etape>
+    <Etape n={4}>
+      <p>
+        La porte d'entrée n'est pas gardée par le bot. Le verrou est dans les permissions du
+        serveur : <code>@everyone</code> ne voit que le salon des règles. Le bot se contente
+        d'ouvrir, une fois la candidature acceptée par les administrateurs. S'il est en panne, le
+        serveur reste fermé au lieu de s'ouvrir. Le coût est assumé : pendant une panne, un
+        nouveau venu attend. Un refus vaut une exclusion, pas un bannissement, pour que la
+        personne puisse retenter plus tard.
+      </p>
+    </Etape>
+    <p>
+      La machine vit en UTC. Pour publier l'info du jour à 11 h, heure de Paris, le bot ne
+      calcule pas de décalage : il demande chaque minute l'heure qu'il est à Paris
+      (<code>Intl.DateTimeFormat</code>, fuseau <code>Europe/Paris</code>). Un décalage calculé
+      à la main se trompe deux fois par an, aux changements d'heure.
+    </p>
+    <p>
+      Le schéma de la base n'a pas de numéro de version. Au démarrage, le bot lit le schéma réel
+      (<code>PRAGMA table_info</code>) et ajoute les colonnes absentes, avec reprise des données
+      quand il le faut. Le prix : aucun retour arrière automatique. Les
+      sauvegardes passent par <code>VACUUM INTO</code>, qui produit un instantané cohérent même
+      pendant que le WAL est actif. L'archivage des candidatures suit la même logique
+      prudente : la copie d'abord, l'original ensuite. Au pire un doublon, jamais un dossier
+      perdu.
+    </p>
+    <p>
+      Le bot n'est pas seul à tourner : j'administre aussi des serveurs de jeu, Valheim moddé
+      avec BepInEx et Enshrouded, sur un VPS Hostinger sous Debian 13, via CubeCoders AMP.
+    </p>
+  </section>
+</Projet>
