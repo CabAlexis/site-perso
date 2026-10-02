@@ -19,7 +19,8 @@ make install    # npm ci
 make dev        # http://localhost:4321
 make brouillon  # build sans garde-fou, pour relire les pages avec leurs trous
 make build      # build de production dans dist/
-make preview    # sert dist/
+make preview    # construit puis sert dist/ (relançable, remplace le précédent)
+make stop       # arrête dev ou preview
 ```
 
 ## Garde-fou des TODO
