@@ -64,14 +64,16 @@
 
   /* Deux palettes pensées séparément : le sombre n'est pas l'inverse du
      clair. Tout ce qui porte du texte est ≥ 4,5:1 sur --papier, dans les deux
-     modes ; --trait est purement décoratif (filets). */
-  --papier: light-dark(#f2efe7, #13120f);
-  --papier-2: light-dark(#e8e3d8, #1c1a16);
-  --encre: light-dark(#17140f, #ece7dc);
-  --encre-2: light-dark(#4a453c, #ada697);
-  --trait: light-dark(#bdb5a6, #3b3730);
-  --trait-fort: light-dark(#6f695e, #8a8376);
-  --signal: light-dark(#b3301a, #ff7e52);
+     modes ; --trait est purement décoratif (filets).
+     Media query plutôt que light-dark() : dans des @keyframes, Chromium résout
+     light-dark() sans le mode de la page et retombait sur la valeur claire. */
+  --papier: #f2efe7;
+  --papier-2: #e8e3d8;
+  --encre: #17140f;
+  --encre-2: #4a453c;
+  --trait: #bdb5a6;
+  --trait-fort: #6f695e;
+  --signal: #b3301a;
 
   --sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
@@ -92,6 +94,18 @@
      et pour le corps. 38rem ≈ 70 caractères du corps. */
   --mesure: 38rem;
   --rythme: calc(var(--t-0) * 1.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papier: #13120f;
+    --papier-2: #1c1a16;
+    --encre: #ece7dc;
+    --encre-2: #ada697;
+    --trait: #3b3730;
+    --trait-fort: #8a8376;
+    --signal: #ff7e52;
+  }
 }
 
 /* ── Reset ─────────────────────────────────────────────────────────── */
