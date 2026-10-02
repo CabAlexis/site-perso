@@ -367,12 +367,13 @@
 
 /* ── Coupe ─────────────────────────────────────────────────────────── */
 
-@property --actif {
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
-
+/*
+ * Aucune variable personnalisée animée ici : on anime directement color,
+ * fill et stroke-width. Une variable enregistrée (@property) injectée dans
+ * color-mix() pour des couleurs SVG s'affichait en noir pendant la transition
+ * dans Chromium (constaté sous Brave), alors que les valeurs calculées étaient
+ * justes. Les propriétés standard n'ont pas ce problème.
+ */
 @layer composants {
   .coupe { max-width: 26rem; }
   .coupe svg { width: 100%; height: auto; overflow: visible; }
@@ -386,23 +387,10 @@
     }
   }
 
-  :is(.coupe, .vignette) [data-etape], .repere {
-    /* --actif vaut 0 au repos, 1 quand l'étape est lue. */
-    color: color-mix(in oklab, var(--signal) calc(var(--actif) * 100%), var(--trait-fort));
-  }
-  .repere {
-    border-color: currentColor;
-    background: color-mix(in oklab, var(--signal) calc(var(--actif) * 100%), transparent);
-    color: color-mix(in oklab, var(--papier) calc(var(--actif) * 100%), var(--encre-2));
-  }
-
-  .coupe-noeud, .coupe-lien { color: var(--trait-fort); }
-  .coupe-fond { fill: color-mix(in oklab, var(--signal) calc(var(--actif) * 9%), var(--papier)); }
-  .coupe-cadre {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: calc(1.25px + var(--actif) * 1.25px);
-  }
+  /* Couleur et épaisseur sont posées sur le groupe et héritées par les tracés. */
+  .coupe-noeud, .coupe-lien { color: var(--trait-fort); stroke-width: 1.25px; }
+  .coupe-fond { fill: var(--papier); }
+  .coupe-cadre { fill: none; stroke: currentColor; }
   .coupe-externe .coupe-cadre { stroke-dasharray: 5 4; }
   .coupe-hachure { stroke: var(--trait); stroke-width: 1; }
   .coupe-titre {
@@ -420,21 +408,12 @@
   .coupe-etiquette { fill: var(--encre-2); }
   .coupe-note { fill: currentColor; font-weight: 500; }
   .coupe-note:not([data-etape]) { fill: var(--encre-2); font-weight: 400; }
-  .coupe-trace {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: calc(1.25px + var(--actif) * 1.25px);
-    stroke-linejoin: round;
-  }
+  .coupe-trace { fill: none; stroke: currentColor; stroke-linejoin: round; }
   .coupe-tirets { stroke-dasharray: 5 4; }
   .coupe-pointe { fill: currentColor; }
-  .coupe-pastille circle {
-    fill: color-mix(in oklab, var(--signal) calc(var(--actif) * 100%), var(--papier));
-    stroke: currentColor;
-    stroke-width: 1.5px;
-  }
+  .coupe-pastille circle { fill: var(--papier); stroke: currentColor; stroke-width: 1.5px; }
   .coupe-pastille text {
-    fill: color-mix(in oklab, var(--papier) calc(var(--actif) * 100%), currentColor);
+    fill: currentColor;
     font-family: var(--mono);
     font-size: 11px;
     font-weight: 500;
@@ -448,9 +427,12 @@
    * nommée (--e1…--e6), restreinte à une bande de lecture entre 30 % et 55 %
    * de la hauteur de fenêtre. timeline-scope remonte ces noms jusqu'au conteneur
    * commun, ce qui permet à la coupe, voisine du texte, de s'y abonner.
-   * Seule une couleur et une épaisseur de trait changent : rien ne se déplace,
+   * Seules des couleurs et une épaisseur de trait changent : rien ne se déplace,
    * aucun texte n'apparaît ni ne disparaît. Hors grand écran, sans support ou
    * avec prefers-reduced-motion, la coupe reste un schéma statique complet.
+   *
+   * Propriétés longues plutôt que le raccourci `animation`, qui remettrait
+   * animation-timeline à auto.
    */
   @supports (animation-timeline: view()) and (timeline-scope: --e1) {
     @media (min-width: 68rem) and (min-height: 44rem) and (prefers-reduced-motion: no-preference) {
@@ -463,22 +445,45 @@
       [data-etape-texte='5'] { view-timeline-name: --e5; }
       [data-etape-texte='6'] { view-timeline-name: --e6; }
 
-      .coupe [data-etape], .repere {
-        animation: allume linear both;
+      .coupe [data-etape] { animation-name: allume; }
+      .coupe [data-etape] .coupe-fond { animation-name: allume-fond; }
+      .coupe [data-etape] .coupe-pastille circle { animation-name: allume-pastille; }
+      .coupe [data-etape] .coupe-pastille text { animation-name: allume-chiffre; }
+      .etape > .repere { animation-name: allume-repere; }
+
+      :is(.coupe [data-etape], .coupe [data-etape] :is(.coupe-fond, .coupe-pastille circle, .coupe-pastille text), .etape > .repere) {
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-range: cover 0% cover 100%;
       }
-      .coupe [data-etape='1'], [data-etape-texte='1'] > .repere { animation-timeline: --e1; }
-      .coupe [data-etape='2'], [data-etape-texte='2'] > .repere { animation-timeline: --e2; }
-      .coupe [data-etape='3'], [data-etape-texte='3'] > .repere { animation-timeline: --e3; }
-      .coupe [data-etape='4'], [data-etape-texte='4'] > .repere { animation-timeline: --e4; }
-      .coupe [data-etape='5'], [data-etape-texte='5'] > .repere { animation-timeline: --e5; }
-      .coupe [data-etape='6'], [data-etape-texte='6'] > .repere { animation-timeline: --e6; }
+      :is(.coupe [data-etape='1'], .coupe [data-etape='1'] *, [data-etape-texte='1'] > .repere) { animation-timeline: --e1; }
+      :is(.coupe [data-etape='2'], .coupe [data-etape='2'] *, [data-etape-texte='2'] > .repere) { animation-timeline: --e2; }
+      :is(.coupe [data-etape='3'], .coupe [data-etape='3'] *, [data-etape-texte='3'] > .repere) { animation-timeline: --e3; }
+      :is(.coupe [data-etape='4'], .coupe [data-etape='4'] *, [data-etape-texte='4'] > .repere) { animation-timeline: --e4; }
+      :is(.coupe [data-etape='5'], .coupe [data-etape='5'] *, [data-etape-texte='5'] > .repere) { animation-timeline: --e5; }
+      :is(.coupe [data-etape='6'], .coupe [data-etape='6'] *, [data-etape-texte='6'] > .repere) { animation-timeline: --e6; }
     }
   }
 
   @keyframes allume {
-    0%, 100% { --actif: 0; }
-    6%, 94% { --actif: 1; }
+    0%, 100% { color: var(--trait-fort); stroke-width: 1.25px; }
+    6%, 94% { color: var(--signal); stroke-width: 2.5px; }
+  }
+  @keyframes allume-fond {
+    0%, 100% { fill: var(--papier); }
+    6%, 94% { fill: color-mix(in oklab, var(--signal) 9%, var(--papier)); }
+  }
+  @keyframes allume-pastille {
+    0%, 100% { fill: var(--papier); }
+    6%, 94% { fill: var(--signal); }
+  }
+  @keyframes allume-chiffre {
+    0%, 100% { fill: var(--trait-fort); }
+    6%, 94% { fill: var(--papier); }
+  }
+  @keyframes allume-repere {
+    0%, 100% { background-color: transparent; color: var(--encre-2); border-color: var(--trait-fort); }
+    6%, 94% { background-color: var(--signal); color: var(--papier); border-color: var(--signal); }
   }
 }
 
@@ -500,7 +505,7 @@
   /*
    * La planche : les quatre coupes en vignettes, l'idée directrice des pages
    * projet ramenée sur l'accueil. Au survol ou au focus, toute la coupe
-   * s'allume, par la même variable --actif que dans les pages.
+   * s'allume, avec les mêmes couleurs que dans les pages.
    */
   .planche {
     display: grid;
@@ -532,10 +537,11 @@
   .carte:hover .carte-nom, .carte:focus-visible .carte-nom { color: var(--signal); }
   .carte:hover .vignette, .carte:focus-visible .vignette { border-color: var(--signal); }
 
-  .vignette [data-etape] { --actif: 0; transition: --actif 0.25s ease-out; }
-  .carte:hover .vignette [data-etape], .carte:focus-visible .vignette [data-etape] { --actif: 1; }
+  .vignette :is(.coupe-noeud, .coupe-lien) { stroke-width: 1px; transition: color 0.25s ease-out, stroke-width 0.25s ease-out; }
+  .vignette .coupe-fond { transition: fill 0.25s ease-out; }
+  .carte:is(:hover, :focus-visible) .vignette :is(.coupe-noeud, .coupe-lien) { color: var(--signal); stroke-width: 2px; }
+  .carte:is(:hover, :focus-visible) .vignette .coupe-fond { fill: color-mix(in oklab, var(--signal) 9%, var(--papier)); }
   .vignette :is(.coupe-cadre, .coupe-trace, .coupe-hachure, .vignette-titre) { vector-effect: non-scaling-stroke; }
-  .vignette .coupe-cadre, .vignette .coupe-trace { stroke-width: calc(1px + var(--actif) * 1px); }
   .vignette-titre { stroke: var(--encre); stroke-width: 2px; }
 
   @media (min-width: 68rem) {
