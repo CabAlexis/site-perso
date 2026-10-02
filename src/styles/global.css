@@ -514,6 +514,7 @@
   .accueil-tete {
     position: relative;
     isolation: isolate;
+    overflow: clip;
     padding-top: calc(var(--rythme) * 2);
     padding-bottom: calc(var(--rythme) * 1.5);
     row-gap: calc(var(--rythme) * 1.5);
@@ -524,53 +525,79 @@
     position: absolute;
     inset: 0;
     z-index: -1;
+    /* Petit carreau de 24 px, grand carreau tous les cinq, plus marqué. */
     background-image:
-      linear-gradient(color-mix(in oklab, var(--trait) 45%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklab, var(--trait) 45%, transparent) 1px, transparent 1px);
-    background-size: 24px 24px;
+      linear-gradient(color-mix(in oklab, var(--trait) 40%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--trait) 40%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in oklab, var(--trait) 85%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--trait) 85%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
     background-position: -1px -1px;
     mask-image: linear-gradient(to bottom, black 55%, transparent);
     pointer-events: none;
   }
 
   /*
-   * Le quadrillage sort du traceur : il s'imprime de haut en bas, balayé par
-   * une ligne rouge sur toute la largeur, en même temps que les vignettes se
-   * dessinent. Puis, au défilement, il remonte plus lentement que le contenu
-   * (timeline de défilement, sans JS). Le texte, lui, ne bouge jamais.
+   * Deux effets pilotés par le défilement seul (aucun au chargement, où les
+   * vignettes se tracent déjà) :
+   *   - profondeur : le petit carreau remonte plus lentement que le grand,
+   *     comme deux plans à des distances différentes ;
+   *   - réticule : une croix rouge, calée sur les lignes du quadrillage, avance
+   *     d'une case en diagonale à chaque cran (steps), tête de traceur qui se
+   *     positionne. Elle passe sous les vignettes et derrière le texte.
+   * Sans timeline de défilement ou en mouvement réduit : quadrillage fixe,
+   * pas de réticule.
    */
-  @media (prefers-reduced-motion: no-preference) {
-    .accueil-tete::before { animation: imprime 1.3s cubic-bezier(0.45, 0, 0.2, 1) both; }
-    .accueil-tete::after {
-      content: '';
-      position: absolute;
-      inset-inline: 0;
-      top: 0;
-      z-index: -1;
-      height: 2px;
-      background: var(--signal);
-      box-shadow: 0 0 18px 2px color-mix(in oklab, var(--signal) 35%, transparent);
-      opacity: 0;
-      pointer-events: none;
-      animation: balaye 1.3s cubic-bezier(0.45, 0, 0.2, 1) both;
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .accueil-tete::before { animation: profondeur linear both; }
     }
-    @supports (animation-timeline: scroll()) {
-      .accueil-tete::before {
-        animation:
-          imprime 1.3s cubic-bezier(0.45, 0, 0.2, 1) both,
-          derive linear both;
-        animation-timeline: auto, scroll(root);
-        animation-range: normal, 0 100vh;
+    @media (min-width: 68rem) and (prefers-reduced-motion: no-preference) {
+      .accueil-tete::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.8;
+        background-image:
+          linear-gradient(var(--signal), var(--signal)),
+          linear-gradient(var(--signal), var(--signal)),
+          radial-gradient(circle, transparent 4px, var(--signal) 4.5px, var(--signal) 6px, transparent 6.5px);
+        background-size: 100% 1px, 1px 100%, 16px 16px;
+        background-repeat: no-repeat;
+        mask-image: linear-gradient(to bottom, black 55%, transparent);
+        /* Crans d'une case, plus la même dérive que le petit carreau : la croix
+           reste calée sur ses lignes pendant tout le défilement. */
+        animation: reticule steps(17, jump-none) both, suit linear both;
       }
     }
+    /*
+     * Timeline posée dans une règle à part, au sélecteur distinct : le
+     * minifieur fusionnait sinon animation-timeline dans le raccourci
+     * `animation`, où elle est invalide, et Chromium rejetait la déclaration.
+     */
+    :root .accueil-tete::before {
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+    :root .accueil-tete::after {
+      animation-timeline: scroll(root), scroll(root);
+      animation-range: 0 100vh, 0 100vh;
+    }
   }
-  @keyframes imprime {
-    from { clip-path: inset(0 0 100% 0); }
-    to { clip-path: inset(0); }
+  /* Positions multiples de 24 px, décalées de -1 px comme les lignes. */
+  @keyframes profondeur {
+    from { background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px; }
+    to { background-position: -1px 95px, -1px 95px, -1px 35px, -1px 35px; }
   }
-  @keyframes derive {
-    from { background-position: -1px -1px; }
-    to { background-position: -1px 119px; }
+  @keyframes suit {
+    from { translate: 0 0; }
+    to { translate: 0 96px; }
+  }
+  @keyframes reticule {
+    from { background-position: 0 143px, 527px 0, 520px 136px; }
+    to { background-position: 0 527px, 911px 0, 904px 520px; }
   }
   .geant {
     font-size: var(--t-geant);
