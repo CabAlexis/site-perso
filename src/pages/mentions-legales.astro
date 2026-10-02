@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Todo from '../components/Todo.astro';
+---
+<Base titre="Mentions légales" description="Éditeur, hébergement et données personnelles du site cabalex.dev.">
+  <div class="grille bloc">
+    <h1 class="affiche plein">Mentions légales</h1>
+    <div class="prose">
+      <section aria-labelledby="editeur">
+        <h2 id="editeur" class="intertitre">Éditeur</h2>
+        <p>
+          Le site cabalex.dev est édité par Alexis Cabillic, à Pau, directeur de la publication.
+        </p>
+        <Todo note="adresse e-mail de contact de l'éditeur" />
+        <Todo note="statut de l'éditeur (particulier, micro-entreprise, société) et, le cas échéant, SIREN et adresse professionnelle" />
+      </section>
+
+      <section aria-labelledby="hebergement">
+        <h2 id="hebergement" class="intertitre">Hébergement</h2>
+        <p>Le site est hébergé sur un serveur privé virtuel loué chez Hostinger.</p>
+        <Todo note="raison sociale, adresse et téléphone de l'hébergeur (Hostinger International Ltd ?) tels qu'indiqués sur ton contrat" />
+      </section>
+
+      <section aria-labelledby="donnees">
+        <h2 id="donnees" class="intertitre">Données personnelles</h2>
+        <p>
+          Le site ne dépose aucun cookie, ne contient aucun outil de mesure d'audience et ne
+          charge aucune ressource chez un tiers : les polices sont servies depuis ce serveur.
+          Il ne contient aucun formulaire.
+        </p>
+        <p>
+          Comme tout serveur web, Nginx consigne des journaux d'accès techniques : adresse IP,
+          date, page demandée, navigateur.
+        </p>
+        <Todo note="durée de conservation des journaux Nginx sur le VPS (rotation logrotate)" />
+      </section>
+
+      <section aria-labelledby="credits">
+        <h2 id="credits" class="intertitre">Crédits</h2>
+        <p>
+          Polices Archivo (The Archivo Project Authors) et IBM Plex Mono (IBM Corp.), sous licence SIL Open Font
+          License 1.1. Site généré avec Astro.
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>

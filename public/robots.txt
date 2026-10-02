@@ -1,2 +1,4 @@
 User-agent: *
-Disallow: /contact
+Allow: /
+
+Sitemap: https://cabalex.dev/sitemap.xml
