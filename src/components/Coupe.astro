@@ -1,8 +1,8 @@
 ---
 /*
  * Coupe : le schéma du mécanisme réel d'un projet, dessiné comme une vue en
- * coupe de dessin technique. Les données (nœuds, liens, notes) sont décrites
- * dans chaque page ; ce composant ne fait que les tracer.
+ * coupe de dessin technique. Les données (nœuds, liens) sont décrites
+ * dans src/data/coupes.ts ; ce composant ne fait que les tracer.
  *
  * Chaque élément peut porter un numéro d'étape. Le même numéro marque un
  * passage du texte (composant Etape) : sans CSS récent, c'est la seule
@@ -37,14 +37,6 @@ export interface Lien {
   flux?: boolean;
 }
 
-export interface Note {
-  x: number;
-  y: number;
-  texte: string;
-  etape?: number;
-  ancre?: 'start' | 'middle' | 'end';
-}
-
 interface Props {
   id: string;
   titre: string;
@@ -52,7 +44,6 @@ interface Props {
   hauteur: number;
   noeuds: Noeud[];
   liens: Lien[];
-  notes?: Note[];
   cartouche: [string, string];
   // Nom de transition de vue : relie la vignette de l'accueil à cette coupe.
   transition?: string;
@@ -60,7 +51,7 @@ interface Props {
 
 import { pointe } from '../lib/pointe';
 
-const { id, titre, resume, hauteur, noeuds, liens, notes = [], cartouche, transition } = Astro.props;
+const { id, titre, resume, hauteur, noeuds, liens, cartouche, transition } = Astro.props;
 const largeur = 360;
 const hauteurTotale = hauteur + 52;
 
@@ -122,15 +113,6 @@ const hachures = `${id}-hachures`;
       </g>
     ))}
 
-    {notes.map((note) => (
-      <text
-        x={note.x}
-        y={note.y}
-        text-anchor={note.ancre ?? 'start'}
-        class="coupe-note"
-        data-etape={note.etape}
-      >{note.texte}</text>
-    ))}
 
     <g class="coupe-cartouche">
       <line x1="0" y1={hauteur + 8} x2={largeur} y2={hauteur + 8} />

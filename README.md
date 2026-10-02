@@ -6,7 +6,7 @@ ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté.
 ## Stack
 
 - [Astro](https://astro.build), seule dépendance. Le site généré ne contient aucun JavaScript.
-- CSS écrit à la main (`@layer`, custom properties, `light-dark()`), sans framework.
+- CSS écrit à la main (`@layer`, custom properties, timelines de défilement), sans framework.
 - Polices auto-hébergées : Archivo variable (graisse et largeur) et IBM Plex Mono, licence OFL.
 
 ## Commandes
@@ -54,18 +54,46 @@ n'apparaît.
 Sans support du navigateur, sur mobile ou avec `prefers-reduced-motion`, la coupe reste un schéma
 statique complet, et les numéros suffisent à faire le lien avec le texte.
 
+## L'accueil
+
+L'en-tête pose l'accroche en typographie cinétique : chaque ligne a sa propre largeur de police et
+s'étire jusqu'à sa place au chargement. Dessous, une table à dessin inclinée en perspective porte
+les quatre coupes en vignettes (`Vignette.astro`), avec leurs paquets de signal ; elle se redresse
+au défilement, sans jamais passer derrière le texte.
+
+Viennent ensuite les projets en cartes : la vignette se dessine à l'entrée dans l'écran, s'allume
+au survol, et au clic devient la coupe de la page projet (transition de vue entre documents, CSS
+seul). Puis « Comment je travaille », avec sa propre coupe.
+
+## Pièges rencontrés
+
+- **Palette** : définie en clair puis redéfinie sous `@media (prefers-color-scheme: dark)`, et non
+  avec `light-dark()`. Dans des `@keyframes`, Chromium résout `light-dark()` sans le mode de la
+  page et retombe sur la valeur claire.
+- **Minifieur** : il fusionne les propriétés d'animation dans le raccourci `animation`. Une
+  `animation-timeline` y devient invalide, et un raccourci sans nom devient `none`. Les timelines
+  sont donc posées dans des règles à part (`:root .selecteur { animation-timeline: … }`), et chaque
+  raccourci porte son nom.
+- **SVG** : pas de variable personnalisée animée injectée dans `color-mix()` pour une couleur SVG
+  (rendu noir sous Brave). On anime directement `color`, `fill`, `stroke-width`.
+
 ## Structure
 
 ```
-src/data/projets.ts         Fiches projets (statut, arbitrages, preuves), validées au build
-src/layouts/Base.astro      Squelette HTML, métadonnées Open Graph, bandeau et pied de page
-src/layouts/Projet.astro    Gabarit d'une page projet
-src/components/Coupe.astro  Schéma du mécanisme (l'élément signature)
-src/components/Etape.astro  Passage du texte lié à une étape de la coupe
-src/components/Todo.astro   Trou signalé
-src/pages/                  Accueil, quatre projets, mentions légales, 404, sitemap.xml
-src/styles/global.css       Système typographique, palettes, grille, coupe
-scripts/verifier-todos.mjs  Garde-fou de production
+src/data/projets.ts             Fiches projets (statut, arbitrages, éléments), validées au build
+src/data/coupes.ts              Données des coupes (nœuds, liens), y compris la boucle de l'accueil
+src/layouts/Base.astro          Squelette HTML, métadonnées Open Graph, bandeau et pied de page
+src/layouts/Projet.astro        Gabarit d'une page projet
+src/components/Coupe.astro      Schéma du mécanisme (l'élément signature)
+src/components/Vignette.astro   Silhouette d'une coupe, pour l'accueil
+src/components/Etape.astro      Passage du texte lié à une étape de la coupe
+src/components/SuiteAccueil.astro  Projets en cartes, « Comment je travaille », contact
+src/components/Todo.astro       Trou signalé
+src/lib/pointe.ts               Pointe de flèche orientée, partagée par Coupe et Vignette
+src/pages/                      Accueil, quatre projets, mentions légales, 404, sitemap.xml
+src/styles/global.css           Système typographique, palettes, grille, coupe, accueil
+scripts/verifier-todos.mjs      Garde-fou de production
+scripts/og/                     Source et génération de l'image Open Graph
 ```
 
 ## Image Open Graph

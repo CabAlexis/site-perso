@@ -68,7 +68,6 @@
      Media query plutôt que light-dark() : dans des @keyframes, Chromium résout
      light-dark() sans le mode de la page et retombait sur la valeur claire. */
   --papier: #f2efe7;
-  --papier-2: #e8e3d8;
   --encre: #17140f;
   --encre-2: #4a453c;
   --trait: #bdb5a6;
@@ -98,7 +97,6 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --papier: #13120f;
-    --papier-2: #1c1a16;
     --encre: #ece7dc;
     --encre-2: #ada697;
     --trait: #3b3730;
@@ -158,7 +156,7 @@
     border-radius: 1px;
   }
 
-  code, kbd, samp, .mono {
+  code, kbd, samp {
     font-family: var(--mono);
     font-size: 0.86em;
     font-variant-numeric: normal;
@@ -414,20 +412,17 @@
     font-stretch: 84%;
     font-weight: 700;
   }
-  .coupe-detail, .coupe-etiquette, .coupe-note, .coupe-cartouche text {
+  .coupe-detail, .coupe-etiquette, .coupe-cartouche text {
     font-family: var(--mono);
     font-size: 11.5px;
   }
   .coupe-detail { fill: var(--encre-2); }
   .coupe-etiquette { fill: var(--encre-2); }
-  .coupe-note { fill: currentColor; font-weight: 500; }
-  .coupe-note:not([data-etape]) { fill: var(--encre-2); font-weight: 400; }
   .coupe-trace { fill: none; stroke: currentColor; stroke-linejoin: round; }
   .coupe-tirets { stroke-dasharray: 5 4; }
   /* Flux : la boucle tourne, lentement. Le temps, pas le défilement, la pilote. */
   .coupe-flux { stroke-dasharray: 6 5; animation: flux 1.6s linear infinite; }
   .coupe .coupe-lien .coupe-flux { animation-timeline: auto; }
-  .coupe-paquet { fill: var(--signal); stroke: var(--papier); stroke-width: 2px; }
   @keyframes flux { to { stroke-dashoffset: -11; } }
   .coupe-pointe { fill: currentColor; }
   .coupe-pastille circle { fill: var(--papier); stroke: currentColor; stroke-width: 1.5px; }
@@ -737,7 +732,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .coupe-paquet, .vignette-paquet { display: none; }
+  .vignette-paquet { display: none; }
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;

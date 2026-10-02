@@ -1,8 +1,9 @@
 ---
 /*
- * Vignette d'une coupe pour l'accueil : la silhouette du mécanisme, sans
- * texte (illisible à cette taille). Purement décorative : le lien qui la
- * contient porte le nom du projet.
+ * Vignette d'une coupe pour l'accueil (cartes des projets et table de
+ * l'en-tête) : la silhouette du mécanisme, sans texte (illisible à cette
+ * taille). Purement décorative : le lien qui la contient porte le nom du
+ * projet.
  */
 import type { DonneesCoupe } from '../data/coupes';
 import { pointe } from '../lib/pointe';
@@ -16,7 +17,7 @@ const { id, coupe, transition } = Astro.props;
 const hachures = `${id}-hachures`;
 
 // Paquets de signal : un par lien, vitesse constante (≈ 90 unités/s), départs
-// décalés pour que la planche ait l'air de tourner sans clignoter en bloc.
+// décalés pour que les schémas aient l'air de tourner sans clignoter en bloc.
 const longueur = (pts: [number, number][]) =>
   pts.slice(1).reduce((t, [x, y], i) => t + Math.hypot(x - pts[i][0], y - pts[i][1]), 0);
 const paquets = coupe.liens
