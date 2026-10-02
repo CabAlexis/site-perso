@@ -544,7 +544,9 @@
     text-wrap: nowrap;
   }
   .tete-l1 { font-stretch: 62%; }
-  .tete-l2 { font-stretch: 125%; font-weight: 300; padding-inline-start: 0.6em; }
+  /* 100 % et non 125 % : « à la mise en ligne, » est long ; à 125 % elle
+     débordait sur mobile et écrasait les deux autres lignes. */
+  .tete-l2 { font-stretch: 100%; font-weight: 300; padding-inline-start: 0.4em; }
   .tete-l3 { font-stretch: 80%; color: var(--signal); justify-self: start; }
   .tete-l3::after {
     content: '';
