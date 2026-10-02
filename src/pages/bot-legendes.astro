@@ -1,6 +1,7 @@
 ---
 import Projet from '../layouts/Projet.astro';
 import Coupe from '../components/Coupe.astro';
+import { coupes } from '../data/coupes';
 import Etape from '../components/Etape.astro';
 ---
 <Projet slug="bot-legendes">
@@ -12,27 +13,7 @@ import Etape from '../components/Etape.astro';
     </p>
   </Fragment>
 
-  <Coupe
-    slot="coupe"
-    id="coupe-bot"
-    titre="Coupe de ce qui survit à un arrêt du bot"
-    resume="Le bot tourne comme démon supervisord, lancé au démarrage de la machine et relancé s'il s'arrête. Tout l'état utile est dans une base SQLite. Au démarrage, il replanifie les giveaways et tire ceux dont l'échéance est passée. Au tirage, il lit les réactions via l'API REST de Discord. La porte d'entrée du serveur ne dépend pas de lui : elle est verrouillée par les permissions Discord."
-    hauteur={450}
-    cartouche={['Coupe · Bot Légendes', 'discord.js · SQLite']}
-    noeuds={[
-      { x: 20, y: 14, l: 320, h: 56, titre: 'Discord', lignes: ['passerelle (événements) · API REST'], ton: 'externe' },
-      { x: 20, y: 118, l: 320, h: 180, titre: 'Démon supervisord (Forge)', lignes: ['autostart · autorestart'], etape: 2 },
-      { x: 36, y: 180, l: 138, h: 102, titre: 'Au démarrage', lignes: ['giveaways', 'replanifiés ;', 'échéance passée', 'tirée aussitôt'], etape: 2 },
-      { x: 188, y: 180, l: 138, h: 102, titre: 'Au tirage', lignes: ['réactions lues', 'en REST, par', 'pages de 100'], etape: 3 },
-      { x: 20, y: 340, l: 160, h: 72, titre: 'SQLite · WAL', lignes: ['état durable', 'aucun état en RAM'], etape: 1 },
-      { x: 195, y: 340, l: 150, h: 96, titre: "Porte d'entrée", lignes: ['verrou dans les', 'permissions ;', 'bot en panne :', 'serveur fermé'], ton: 'contrainte', etape: 4 },
-    ]}
-    liens={[
-      { points: [[60, 70], [60, 118]], etiquette: { x: 70, y: 99, texte: "événements" } },
-      { points: [[257, 180], [257, 70]], etape: 3, etiquette: { x: 247, y: 99, texte: 'GET réactions', ancre: 'end' } },
-      { points: [[100, 298], [100, 340]], etape: 1, etiquette: { x: 110, y: 324, texte: 'synchrone' } },
-    ]}
-  />
+  <Coupe slot="coupe" id="coupe-bot" {...coupes['bot-legendes']} />
 
   <section aria-labelledby="probleme">
     <h2 id="probleme" class="intertitre">Le problème</h2>

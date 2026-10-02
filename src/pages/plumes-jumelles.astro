@@ -1,6 +1,7 @@
 ---
 import Projet from '../layouts/Projet.astro';
 import Coupe from '../components/Coupe.astro';
+import { coupes } from '../data/coupes';
 import Etape from '../components/Etape.astro';
 ---
 <Projet slug="plumes-jumelles">
@@ -12,34 +13,7 @@ import Etape from '../components/Etape.astro';
     </p>
   </Fragment>
 
-  <Coupe
-    slot="coupe"
-    id="coupe-plumes"
-    titre="Coupe du parcours d'une abonnée, d'Instagram à la boîte aux lettres"
-    resume="L'audience vient d'Instagram vers le site Laravel, qui gère comptes, abonnements et boutique. Le paiement passe par Stripe Checkout, dont les webhooks mettent à jour l'état local. Les créatrices pilotent commandes et abonnées dans un back-office dont elles exportent les adresses pour l'envoi postal. Les mails transactionnels partent par le SMTP de Brevo depuis un domaine authentifié DKIM."
-    hauteur={535}
-    cartouche={['Coupe · Plumes Jumelles', 'Laravel 13']}
-    noeuds={[
-      { x: 20, y: 14, l: 200, h: 56, titre: 'Instagram', lignes: ['audience non possédée'], ton: 'externe', etape: 1 },
-      { x: 20, y: 110, l: 320, h: 72, titre: 'plumes-jumelles.fr · Laravel 13', lignes: ['abonnement, boutique, comptes'], etape: 1 },
-      { x: 20, y: 222, l: 150, h: 88, titre: 'Back-office', lignes: ['commandes, stock,', 'univers, abonnées'], etape: 4 },
-      { x: 190, y: 222, l: 150, h: 72, titre: 'Stripe Checkout', lignes: ['prix de référence', 'webhooks'], ton: 'externe', etape: 3 },
-      { x: 20, y: 350, l: 150, h: 56, titre: 'Export CSV', lignes: ['adresses'], etape: 4 },
-      { x: 190, y: 334, l: 150, h: 72, titre: 'SMTP Brevo', lignes: ['domaine signé', 'DKIM'], etape: 2 },
-      { x: 20, y: 446, l: 150, h: 56, titre: 'Courrier', lignes: ['goodies + histoire'], ton: 'externe', etape: 4 },
-      { x: 190, y: 446, l: 150, h: 72, titre: "Boîte de l'abonnée", lignes: ['confirmation,', 'expédition'], ton: 'externe', etape: 2 },
-    ]}
-    liens={[
-      { points: [[95, 70], [95, 110]], etape: 1 },
-      { points: [[95, 182], [95, 222]], etape: 4 },
-      { points: [[265, 182], [265, 222]], etape: 3 },
-      { points: [[340, 258], [352, 258], [352, 150], [340, 150]], etape: 3 },
-      { points: [[95, 310], [95, 350]], etape: 4 },
-      { points: [[95, 406], [95, 446]], etape: 4 },
-      { points: [[170, 266], [180, 266], [180, 370], [190, 370]], etape: 2, etiquette: { x: 188, y: 324, texte: '« Expédiée »' } },
-      { points: [[265, 406], [265, 446]], etape: 2 },
-    ]}
-  />
+  <Coupe slot="coupe" id="coupe-plumes" {...coupes['plumes-jumelles']} />
 
   <section aria-labelledby="probleme">
     <h2 id="probleme" class="intertitre">Le problème</h2>

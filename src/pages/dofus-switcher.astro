@@ -1,6 +1,7 @@
 ---
 import Projet from '../layouts/Projet.astro';
 import Coupe from '../components/Coupe.astro';
+import { coupes } from '../data/coupes';
 import Etape from '../components/Etape.astro';
 ---
 <Projet slug="dofus-switcher">
@@ -13,33 +14,7 @@ import Etape from '../components/Etape.astro';
     </p>
   </Fragment>
 
-  <Coupe
-    slot="coupe"
-    id="coupe-switcher"
-    titre="Coupe du chemin d'un clic sur un bouton latéral"
-    resume="La souris physique est capturée en exclusivité via evdev. Une boucle relaie tous ses événements vers un périphérique virtuel uinput que KWin voit comme une souris ordinaire, sauf les boutons associés à une action. Ceux-ci déclenchent le cycle, qui lit la fenêtre active et demande à kdotool d'activer la suivante. Aucune entrée n'est jamais envoyée à une fenêtre Dofus."
-    hauteur={520}
-    cartouche={['Coupe · Dofus Switcher', 'v0.7.2']}
-    noeuds={[
-      { x: 20, y: 14, l: 200, h: 56, titre: 'Souris physique', lignes: ['/dev/input/eventN'], ton: 'externe', etape: 2 },
-      { x: 20, y: 108, l: 250, h: 72, titre: 'Boucle de relais', lignes: ['select() · timeout 0,1 s', 'boutons bindés retirés'], etape: 2 },
-      { x: 20, y: 228, l: 155, h: 72, titre: 'Sink uinput', lignes: ['capacités copiées', 'depuis la souris'], etape: 2 },
-      { x: 20, y: 340, l: 155, h: 56, titre: 'KWin', lignes: ['souris ordinaire'], ton: 'externe', etape: 2 },
-      { x: 190, y: 228, l: 155, h: 72, titre: 'Cycle sans état', lignes: ['active → voisine', 'relit ×2 · 15 ms'], etape: 3 },
-      { x: 190, y: 340, l: 155, h: 56, titre: 'kdotool', lignes: ['windowactivate'], ton: 'externe', etape: 1 },
-      { x: 190, y: 436, l: 155, h: 56, titre: 'Fenêtre Dofus', lignes: ['au premier plan'], ton: 'externe', etape: 1 },
-      { x: 20, y: 436, l: 155, h: 72, titre: 'CGU Ankama', lignes: ['aucune entrée', 'vers le jeu'], ton: 'contrainte', etape: 1 },
-    ]}
-    liens={[
-      { points: [[120, 70], [120, 108]], etape: 2, etiquette: { x: 130, y: 93, texte: 'EVIOCGRAB, exclusif' } },
-      { points: [[80, 180], [80, 228]], etape: 2, etiquette: { x: 90, y: 209, texte: 'le reste' } },
-      { points: [[97, 300], [97, 340]], etape: 2 },
-      { points: [[250, 180], [250, 228]], etape: 3, etiquette: { x: 260, y: 209, texte: 'MB4 / MB5' } },
-      { points: [[267, 300], [267, 340]], etape: 1 },
-      { points: [[267, 396], [267, 436]], etape: 1 },
-      { points: [[175, 472], [190, 472]], etape: 1, fleche: false, tirets: true },
-    ]}
-  />
+  <Coupe slot="coupe" id="coupe-switcher" {...coupes['dofus-switcher']} />
 
   <section aria-labelledby="probleme">
     <h2 id="probleme" class="intertitre">Le problème</h2>
