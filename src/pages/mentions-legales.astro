@@ -9,10 +9,10 @@ import Todo from '../components/Todo.astro';
       <section aria-labelledby="editeur">
         <h2 id="editeur" class="intertitre">Éditeur</h2>
         <p>
-          Le site cabalex.dev est édité par Alexis Cabillic, à Pau, directeur de la publication.
+          Le site cabalex.dev est édité à titre personnel par Alexis Cabillic, particulier non
+          immatriculé, à Pau, directeur de la publication.
         </p>
-        <Todo note="adresse e-mail de contact de l'éditeur" />
-        <Todo note="statut de l'éditeur (particulier, micro-entreprise, société) et, le cas échéant, SIREN et adresse professionnelle" />
+        <p>Contact : <a href="mailto:alexis.cabillic@gmail.com">alexis.cabillic@gmail.com</a></p>
       </section>
 
       <section aria-labelledby="hebergement">
@@ -30,9 +30,9 @@ import Todo from '../components/Todo.astro';
         </p>
         <p>
           Comme tout serveur web, Nginx consigne des journaux d'accès techniques : adresse IP,
-          date, page demandée, navigateur.
+          date, page demandée, navigateur. Ils tournent chaque jour et sont conservés quatorze
+          jours, puis supprimés.
         </p>
-        <Todo note="durée de conservation des journaux Nginx sur le VPS (rotation logrotate)" />
       </section>
 
       <section aria-labelledby="credits">
