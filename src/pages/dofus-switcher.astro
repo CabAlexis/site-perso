@@ -2,7 +2,6 @@
 import Projet from '../layouts/Projet.astro';
 import Coupe from '../components/Coupe.astro';
 import Etape from '../components/Etape.astro';
-import Todo from '../components/Todo.astro';
 ---
 <Projet slug="dofus-switcher">
   <Fragment slot="contexte">
@@ -76,9 +75,11 @@ import Todo from '../components/Todo.astro';
     </Etape>
     <p>
       Pour les boutons de souris, l'outil descend sous le compositeur, au niveau evdev,
-      l'interface du noyau Linux pour les périphériques d'entrée.
+      l'interface du noyau Linux pour les périphériques d'entrée. La capture exclusive y donne
+      deux choses à la fois : l'outil voit les clics des boutons latéraux quelle que soit la
+      fenêtre au premier plan, et il peut les retirer du flux avant que le compositeur ne les
+      reçoive, donc avant qu'ils n'atteignent le jeu.
     </p>
-    <Todo note="pourquoi evdev/uinput plutôt qu'une capture plus classique (raccourci KDE sur bouton de souris, input-remapper…) : à confirmer ou corriger avec tes mots" />
   </section>
 
   <section aria-labelledby="choix">
