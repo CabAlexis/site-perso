@@ -1,3 +1,52 @@
 ---
+import Base from '../layouts/Base.astro';
+import Todo from '../components/Todo.astro';
+import { projets } from '../data/projets';
 ---
-<p>cabalex.dev</p>
+<Base
+  titre="Alexis Cabillic"
+  description="Développeur web à Pau. Quatre projets décrits en détail : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté."
+>
+  <header class="accueil-tete grille">
+    <h1 class="geant plein"><span>Alexis</span> <span>Cabillic</span></h1>
+    <div class="prose">
+      <p class="chapeau">
+        Je développe des applications web, de la base de données jusqu'au serveur qui les
+        fait tourner. Freelance à Pau, le plus souvent en Laravel et Vue.
+      </p>
+      <p>
+        Les quatre projets ci-dessous montrent chacun autre chose : un produit livré à des
+        clientes, un SaaS construit seul, un bot conçu pour survivre à ses pannes, un outil
+        qui descend jusqu'aux périphériques d'entrée de Linux. Chaque page dit ce qui a été
+        choisi, ce qui a été refusé, et ce que ça a coûté. Les chiffres sont datés ; ce qui
+        ne tourne plus est présenté comme tel.
+      </p>
+      <p>
+        J'écris le code avec Claude Code ; les commits le mentionnent.
+      </p>
+    </div>
+  </header>
+
+  <section class="grille bloc" aria-labelledby="projets">
+    <h2 id="projets" class="intertitre">Quatre projets</h2>
+    <ol class="liste-projets plein">
+      {projets.map((projet, i) => (
+        <li>
+          <a href={`/${projet.slug}`}>
+            <span class="numero etiquette">{String(i + 1).padStart(2, '0')}</span>
+            <span class="nom">{projet.titre}</span>
+            <span class="resume">{projet.angle}</span>
+            <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="contact">
+    <h2 id="contact" class="intertitre">Contact</h2>
+    <div class="prose">
+      <Todo note="adresse e-mail de contact à afficher (contact@cabalex.dev existe-t-elle ?)" />
+    </div>
+  </section>
+</Base>

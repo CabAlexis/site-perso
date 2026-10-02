@@ -1,0 +1,14 @@
+---
+/*
+ * Trou signalé. Émet le marqueur <!-- TODO(cabalex): ... --> exigé par le
+ * garde-fou de build, et l'affiche dans la page pour qu'il se voie en relecture.
+ */
+interface Props {
+  note: string;
+  enLigne?: boolean;
+}
+const { note, enLigne = false } = Astro.props;
+const Balise = enLigne ? 'span' : 'p';
+const commentaire = `<!-- TODO(cabalex): ${note.replaceAll('--', '—')} -->`;
+---
+<Fragment set:html={commentaire} /><Balise class="trou">{note}</Balise>
