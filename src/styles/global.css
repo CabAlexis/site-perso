@@ -551,6 +551,9 @@
     .planche { max-width: 34rem; }
   }
 
+  .facons { list-style: none; padding: 0; display: grid; gap: calc(var(--rythme) * 0.8); }
+  .facons li { padding-top: calc(var(--rythme) * 0.6); border-top: 1px solid var(--trait); }
+  .facons strong { display: block; font-stretch: 92%; font-weight: 700; font-size: var(--t-1); line-height: 1.25; margin-bottom: 0.3rem; }
   .liste-projets { list-style: none; padding-block: 0; margin-top: var(--rythme); }
   .liste-projets > li { border-top: 1px solid var(--encre); }
   .liste-projets > li:last-child { border-bottom: 1px solid var(--encre); }
