@@ -8,7 +8,10 @@ interface Props {
   noindex?: boolean;
 }
 const { titre, description, type = 'website', noindex = false } = Astro.props;
-const canonique = new URL(Astro.url.pathname, Astro.site);
+// En sortie « fichier », le chemin vaut /nutrifollow.html ou /index.html : on
+// retire l'extension pour retomber sur les URL publiques (/nutrifollow, /).
+const chemin = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
+const canonique = new URL(chemin, Astro.site);
 const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis Cabillic`;
 ---
 <!doctype html>

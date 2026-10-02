@@ -8,4 +8,8 @@ export default defineConfig({
   // ligne (« crash.<code>SIGINT</code> ») : le gain ne vaut pas le risque.
   compressHTML: false,
   devToolbar: { enabled: false },
+  // Pages en fichiers (nutrifollow.html) et URL sans barre finale : liens,
+  // URL canoniques et fichiers concordent, Nginx sert sans redirection.
+  build: { format: 'file' },
+  trailingSlash: 'never',
 });
