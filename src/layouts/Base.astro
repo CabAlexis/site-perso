@@ -29,7 +29,11 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
     <meta property="og:title" content={titreComplet} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonique} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Alexis Cabillic. Quatre projets : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté." />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="author" content="Alexis Cabillic" />
   </head>
   <body>

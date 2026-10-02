@@ -1,0 +1,51 @@
+<!doctype html>
+<!--
+  Source de public/og.png (1200 × 630), l'image Open Graph unique du site.
+  Rendue une fois par scripts/og/generer.sh ; le site ne sert que le PNG.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'Archivo'; src: url('../../public/fonts/archivo-latin-wdth-normal.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
+  @font-face { font-family: 'Plex'; src: url('../../public/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: #f2efe7; color: #17140f; font-family: 'Archivo';
+    display: grid; grid-template-columns: 1fr 330px; gap: 56px;
+    padding: 64px 72px; position: relative;
+  }
+  h1 { font-size: 196px; font-stretch: 62%; font-weight: 850; line-height: 0.84; letter-spacing: -0.015em; align-self: end; }
+  h1 span { display: block; }
+  h1 span + span { padding-left: 0.42em; }
+  aside { display: flex; flex-direction: column; justify-content: space-between; }
+  p { font-size: 27px; line-height: 1.32; font-stretch: 92%; font-weight: 450; }
+  .mono { font-family: 'Plex'; font-size: 21px; color: #4a453c; letter-spacing: 0.02em; }
+  svg { width: 100%; height: auto; }
+  .r { position: absolute; width: 20px; height: 20px; border: 0 solid #6f695e; }
+  .r1 { top: 28px; left: 28px; border-top-width: 1.5px; border-left-width: 1.5px; }
+  .r2 { top: 28px; right: 28px; border-top-width: 1.5px; border-right-width: 1.5px; }
+  .r3 { bottom: 28px; left: 28px; border-bottom-width: 1.5px; border-left-width: 1.5px; }
+  .r4 { bottom: 28px; right: 28px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+</style>
+</head>
+<body>
+  <i class="r r1"></i><i class="r r2"></i><i class="r r3"></i><i class="r r4"></i>
+  <h1><span>Alexis</span><span>Cabillic</span></h1>
+  <aside>
+    <svg viewBox="0 0 330 190" fill="none" stroke-width="2">
+      <defs><pattern id="h" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#bdb5a6" stroke-width="1.2"/></pattern></defs>
+      <rect x="1" y="1" width="200" height="46" stroke="#6f695e" stroke-dasharray="6 5"/>
+      <line x1="100" y1="47" x2="100" y2="78" stroke="#6f695e"/>
+      <rect x="1" y="78" width="328" height="46" stroke="#b3301a" stroke-width="3" fill="#ead3c6"/>
+      <line x1="60" y1="124" x2="60" y2="144" stroke="#6f695e"/>
+      <line x1="250" y1="124" x2="250" y2="144" stroke="#6f695e"/>
+      <rect x="1" y="144" width="150" height="44" stroke="#6f695e"/>
+      <rect x="179" y="144" width="150" height="44" fill="url(#h)" stroke="#6f695e"/>
+    </svg>
+    <p>Quatre projets : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté.</p>
+    <span class="mono">cabalex.dev</span>
+  </aside>
+</body>
+</html>

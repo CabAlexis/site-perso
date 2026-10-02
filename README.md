@@ -60,6 +60,12 @@ src/styles/global.css       Système typographique, palettes, grille, coupe
 scripts/verifier-todos.mjs  Garde-fou de production
 ```
 
+## Image Open Graph
+
+Une seule image pour tout le site, `public/og.png` (1200 × 630), statique. Sa source est
+`scripts/og/og.html` ; `scripts/og/generer.sh` la régénère avec le Chromium de l'image Playwright,
+sans dépendance ajoutée au projet.
+
 ## Déploiement
 
 Site statique : `make build` produit `dist/`, à servir par Nginx. Sur Forge, il suffit d'un site
