@@ -1,0 +1,115 @@
+---
+import Projet from '../layouts/Projet.astro';
+import Coupe from '../components/Coupe.astro';
+import { coupes } from '../data/coupes';
+import Etape from '../components/Etape.astro';
+---
+<Projet slug="patchoumio">
+  <Fragment slot="contexte">
+    <p>
+      Bot Discord du serveur Warframe francophone du youtubeur Patchoumio : des fiches rivens
+      (prix du marché, stats à viser) et des liens de builds, servis à qui tape un nom dans le
+      bon salon. Le contenu se gère dans un panel web d'administration. Bot, panel et
+      déploiement : conçus et développés seul.
+    </p>
+  </Fragment>
+
+  <Coupe slot="coupe" id="coupe-patchoumio" {...coupes['patchoumio']} transition="coupe-patchoumio" />
+
+  <section aria-labelledby="probleme">
+    <h2 id="probleme" class="intertitre">Le problème</h2>
+    <p>
+      Dans le salon rivens, un membre tape le nom d'une arme et reçoit une fiche : le prix de
+      base des rivens, et les stats positives et négatives qui comptent, chacune avec un emoji
+      d'appréciation et une explication. Dans le salon builds, il tape le nom d'une frame, d'une
+      arme ou d'un compagnon et reçoit les liens de builds et leurs images. Ce contenu n'est pas
+      écrit par un développeur : il est tenu par les membres qui ont le rôle d'accès au panel,
+      et chaque réglage doit atteindre le bot sans redémarrage.
+    </p>
+  </section>
+
+  <section aria-labelledby="evidence">
+    <h2 id="evidence" class="intertitre">Ce qui rendait la solution évidente inutilisable</h2>
+    <Etape n={1}>
+      <p>
+        La façon évidente d'écrire un bot Discord passe par des commandes slash : elles n'ont
+        besoin d'aucun accès au texte des messages. Mais ici, on tape juste un nom, sans
+        commande. Pour le lire, le bot demande l'intent <code>MessageContent</code>, qui est
+        privilégié et doit être activé à la main dans le portail développeur de Discord.
+      </p>
+      <p>
+        Cet accès est borné dans le code : le bot ne regarde que les salons choisis dans le
+        panel et ignore tout message de plus de 40 caractères. Un nom d'arme y tient ; une
+        conversation, non. Un mot sans correspondance, comme « salut », ne reçoit pas de
+        réponse.
+      </p>
+    </Etape>
+    <Etape n={2}>
+      <p>
+        Une recherche exacte ne suffit pas : les joueurs écrivent « zénit » pour Zénith,
+        « rubico prime » ou « karak kuva ». Le nom est d'abord normalisé (minuscules, accents
+        et ponctuation retirés), puis comparé aux noms et aux alias. Les variantes (Prime, Kuva,
+        Vandal, Tenet…) sont des alias de l'arme de base, dans les deux ordres. Sans
+        correspondance exacte, Fuse.js propose jusqu'à trois suggestions en boutons, avec un
+        seuil de 0,25 calibré sur les 420 armes réelles. Une arme peut aussi avoir des onglets
+        (« Crit », « Statut »…), affichés en boutons sous sa fiche.
+      </p>
+    </Etape>
+  </section>
+
+  <section aria-labelledby="choix">
+    <h2 id="choix" class="intertitre">Ce qui a été choisi, et ce que ça a coûté</h2>
+    <Etape n={3}>
+      <p>
+        Le prix vient de warframe.market. La recherche d'enchères de rivens n'existe que dans
+        la version 1 de son API, la version 2 ne fournit que les référentiels : le bot dépend
+        donc d'une API ancienne, et l'appel est isolé dans un seul module de chaque côté pour
+        le jour où elle disparaîtra. Aucune limite de débit n'est publiée. Le bot s'en tient à
+        une requête à la fois, au plus une par seconde, avec un cache de 10 minutes par arme ;
+        deux demandes simultanées pour la même arme ne déclenchent qu'un appel. L'API ne filtre
+        pas les vendeurs connectés : le filtre est fait côté bot. En cas d'échec, la fiche
+        affiche le prix manuel saisi dans le panel, sinon « Prix indisponible ».
+      </p>
+    </Etape>
+    <Etape n={4}>
+      <p>
+        Le panel Laravel et le bot partagent un seul fichier SQLite, en mode WAL. Le panel gère
+        le schéma et il est le seul à écrire ; le bot ouvre la base en lecture seule et la relit
+        toutes les 30 secondes. Un réglage fait dans le panel arrive donc sur Discord sans
+        redémarrage, et il n'y a ni API entre les deux ni serveur de base de données à faire
+        tourner.
+      </p>
+      <p>
+        Le prix : les deux doivent tourner sur la même machine et voir le même fichier. Sous
+        SELinux, le dossier de la base est monté en <code>:z</code>, étiquette partagée, et
+        jamais en <code>:Z</code>. Avec <code>:Z</code>, chaque conteneur réétiquette le
+        dossier pour lui seul, les verrous WAL ne sont plus partagés, et les lectures du bot
+        échouent pendant les écritures du panel. Constaté en test, puis corrigé et mesuré :
+        aucune erreur avec <code>:z</code>.
+      </p>
+    </Etape>
+    <Etape n={5}>
+      <p>
+        Chaque catégorie d'armes (Fusil, Mêlée…) définit, pour chaque stat, l'emoji,
+        l'explication et la visibilité ; une arme en hérite et ne stocke que ce qu'elle
+        surcharge. Une chaîne vide est une vraie valeur, « pas d'explication », distincte de
+        l'absence de valeur, « hérite ». Cette règle est écrite deux fois, en PHP pour le panel
+        et en JavaScript pour le bot, et les deux implémentations sont testées sur le même
+        fichier de cas, avec Pest et Vitest. Le code JavaScript partagé sert aussi au format des
+        fiches : l'aperçu en direct du panel est rendu par le même code que l'embed envoyé sur
+        Discord.
+      </p>
+    </Etape>
+    <p>
+      Les 420 armes à riven et les builds (frames, armes, compagnons) sont importés
+      automatiquement depuis warframe.market et les données de la communauté. L'import se
+      relance sans doublon : un nom, une catégorie, un prix ou une image modifiés dans le panel
+      sont conservés. Les emojis et les messages du bot se modifient aussi dans le panel.
+    </p>
+    <p>
+      Le bot est écrit en TypeScript, exécuté directement par Node 24, qui retire les types à
+      la volée : il n'y a pas d'étape de build. Le panel est en Laravel 12, Inertia, Vue 3 et
+      Tailwind 4. L'ensemble se lance avec Docker ou Podman Compose.
+    </p>
+  </section>
+</Projet>

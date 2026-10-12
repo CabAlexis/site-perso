@@ -1,7 +1,7 @@
 import { z } from 'astro/zod';
 
 /*
- * Fiches des quatre projets. Le schéma est vérifié au chargement du module,
+ * Fiches des projets. Le schéma est vérifié au chargement du module,
  * donc au build : une fiche sans arbitrage, ou qui ne respecte pas la règle
  * des éléments vérifiables, fait échouer la génération du site.
  *
@@ -31,7 +31,7 @@ const element = z.object({
   message: 'Un élément déclaré (sans URL) doit porter sa date dans sa note.',
 });
 
-export const EXCEPTIONS_PREUVES = ['dofus-switcher', 'bot-legendes'] as const;
+export const EXCEPTIONS_PREUVES = ['dofus-switcher', 'bot-legendes', 'patchoumio'] as const;
 
 const projet = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
@@ -128,6 +128,27 @@ const fiches = [
     ],
     sansPreuve: {
       motif: "Le dépôt est privé et le serveur Discord de l'alliance est réservé à ses membres : rien n'est consultable de l'extérieur.",
+    },
+  },
+  {
+    slug: 'patchoumio',
+    titre: 'Patchoumio',
+    angle: "Un bot Discord qui répond aux joueurs avec des fiches rivens (prix du marché, stats à viser) et des liens de builds, géré depuis un panel web d'administration.",
+    statut: { code: 'service', libelle: 'En service · serveur Discord de Patchoumio' },
+    description:
+      'Bot Discord d’un serveur Warframe francophone : fiches rivens au prix de warframe.market, '
+      + 'liens de builds, panel Laravel. Base SQLite partagée.',
+    arbitrages: [
+      'Pas de commande : le bot lit le texte des messages, ce qui exige un intent privilégié, borné par salon et par longueur.',
+      "Le bot n'écrit jamais : il lit la base du panel en lecture seule et la relit toutes les 30 secondes.",
+      "Une seule règle d'héritage, écrite en PHP et en JavaScript, testée sur les mêmes cas.",
+      'Prix lus dans l’API v1 de warframe.market, seule à exposer les enchères : une requête par seconde au plus.',
+    ],
+    elements: [
+      { libelle: 'Données', valeur: '420 armes à riven importées', note: 'depuis warframe.market, au 12 octobre 2026' },
+    ],
+    sansPreuve: {
+      motif: "Le dépôt est privé, et le bot ne se voit qu'en rejoignant le serveur Discord de Patchoumio : rien n'est consultable directement.",
     },
   },
   {

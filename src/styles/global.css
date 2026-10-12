@@ -508,7 +508,7 @@
   /*
    * En-tête de l'accueil : l'accroche en typographie cinétique, au premier
    * plan, posée sur une table à dessin inclinée en perspective qui porte les
-   * quatre coupes, avec leurs paquets de signal.
+   * cinq coupes, avec leurs paquets de signal.
    *   - au chargement, chaque ligne de l'accroche s'étire jusqu'à sa largeur
    *     (axes de la police variable : lisible à chaque instant), puis un trait
    *     rouge se trace sous la dernière ;
@@ -571,7 +571,7 @@
     /* Centrée par ses bords : 150 % de la largeur, plafonnée à 1500 px. */
     inset-inline: calc(50% - min(750px, 75vw));
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 4%;
     padding: 3% 6% 30%;
     transform-origin: 50% 0;
@@ -608,7 +608,7 @@
   @keyframes redresse { to { transform: rotateX(16deg); } }
 
   /*
-   * Les quatre projets en cartes : la vignette (silhouette de la coupe), le
+   * Les cinq projets en cartes : la vignette (silhouette de la coupe), le
    * nom, l'angle, le statut. Au survol ou au focus, la vignette s'allume et
    * ses paquets de signal circulent ; au clic, elle devient la coupe de la
    * page projet (transition de vue).

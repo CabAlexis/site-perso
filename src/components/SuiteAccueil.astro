@@ -1,6 +1,6 @@
 ---
 /*
- * Suite de l'accueil, sous l'en-tête : les quatre projets en cartes, « Comment
+ * Suite de l'accueil, sous l'en-tête : les cinq projets en cartes, « Comment
  * je travaille », le contact.
  */
 import Vignette from './Vignette.astro';
@@ -10,7 +10,7 @@ import { projets } from '../data/projets';
 import { boucle, coupes } from '../data/coupes';
 ---
   <section class="grille bloc" aria-labelledby="projets">
-    <h2 id="projets" class="intertitre">Quatre projets</h2>
+    <h2 id="projets" class="intertitre">Cinq projets</h2>
     <ol class="projets-cartes plein">
       {projets.map((projet, i) => (
         <li>

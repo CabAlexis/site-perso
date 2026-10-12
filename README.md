@@ -35,7 +35,7 @@ chiffre sans URL, obligatoirement daté, affiché à part sous « Chiffres décl
 doit avoir au moins un arbitrage et deux à trois éléments, dont au moins un consultable.
 
 Seule exception : un projet dont rien n'est consultable de l'extérieur (Dofus Switcher, Bot
-Légendes). Il le déclare (`sansPreuve`), le dit sur sa page, et ne garde que des éléments déclarés.
+Légendes, Patchoumio). Il le déclare (`sansPreuve`), le dit sur sa page, et ne garde que des éléments déclarés.
 L'exception est limitée aux slugs de `EXCEPTIONS_PREUVES` : tout autre projet sans élément
 consultable fait échouer le build.
 
@@ -58,7 +58,7 @@ statique complet, et les numéros suffisent à faire le lien avec le texte.
 
 L'en-tête pose l'accroche en typographie cinétique : chaque ligne a sa propre largeur de police et
 s'étire jusqu'à sa place au chargement. Dessous, une table à dessin inclinée en perspective porte
-les quatre coupes en vignettes (`Vignette.astro`), avec leurs paquets de signal ; elle se redresse
+les cinq coupes en vignettes (`Vignette.astro`), avec leurs paquets de signal ; elle se redresse
 au défilement, sans jamais passer derrière le texte.
 
 Viennent ensuite les projets en cartes : la vignette se dessine à l'entrée dans l'écran, s'allume
@@ -90,7 +90,7 @@ src/components/Etape.astro      Passage du texte lié à une étape de la coupe
 src/components/SuiteAccueil.astro  Projets en cartes, « Comment je travaille », contact
 src/components/Todo.astro       Trou signalé
 src/lib/pointe.ts               Pointe de flèche orientée, partagée par Coupe et Vignette
-src/pages/                      Accueil, quatre projets, mentions légales, 404, sitemap.xml
+src/pages/                      Accueil, cinq projets, mentions légales, 404, sitemap.xml
 src/styles/global.css           Système typographique, palettes, grille, coupe, accueil
 scripts/verifier-todos.mjs      Garde-fou de production
 scripts/og/                     Source et génération de l'image Open Graph
