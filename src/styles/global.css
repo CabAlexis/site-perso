@@ -673,11 +673,13 @@
     font-stretch: 62%;
     font-weight: 800;
     line-height: 0.95;
-    transition: font-stretch 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
+    transition: color 0.2s;
   }
   .carte-nom .etiquette { font-size: var(--t--1); font-stretch: 100%; font-weight: 400; }
   .carte-angle { max-width: var(--mesure); }
-  .carte:is(:hover, :focus-visible) .carte-nom { color: var(--signal); font-stretch: 78%; }
+  /* Couleur seule : élargir la police au survol renvoyait les titres longs à
+     la ligne et faisait sauter la carte. */
+  .carte:is(:hover, :focus-visible) .carte-nom { color: var(--signal); }
   .carte:is(:hover, :focus-visible) .vignette { border-color: var(--signal); }
 
   .vignette :is(.coupe-noeud, .coupe-lien) { stroke-width: 1px; transition: color 0.25s ease-out, stroke-width 0.25s ease-out; }
