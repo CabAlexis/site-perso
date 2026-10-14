@@ -1,17 +1,34 @@
 ---
 import Base from '../layouts/Base.astro';
+import Todo from '../components/Todo.astro';
+import { contact } from '../data/offre';
 ---
-<Base titre="Mentions légales" description="Éditeur, hébergement et données personnelles du site cabalex.dev.">
+<Base titre="Mentions légales" description="Éditeur, conditions de vente, hébergement et données personnelles du site cabalex.dev.">
   <div class="grille bloc">
     <h1 class="affiche plein">Mentions légales</h1>
     <div class="prose">
       <section aria-labelledby="editeur">
         <h2 id="editeur" class="intertitre">Éditeur</h2>
+        <p>Le site cabalex.dev est édité par une société par actions simplifiée unipersonnelle (SASU).</p>
+        <ul>
+          <li>Dénomination sociale : <Todo note="dénomination sociale" enLigne /></li>
+          <li>Capital social : <Todo note="montant du capital social" enLigne /></li>
+          <li>Siège social : <Todo note="adresse du siège social" enLigne /></li>
+          <li>Immatriculation : <Todo note="RCS (ville du greffe) et numéro SIREN" enLigne /></li>
+          <li>SIRET : <Todo note="numéro SIRET" enLigne /></li>
+          <li>TVA intracommunautaire : <Todo note="numéro de TVA, ou mention de franchise (art. 293 B du CGI)" enLigne /></li>
+          <li>Président et directeur de la publication : Alexis Cabillic</li>
+        </ul>
         <p>
-          Le site cabalex.dev est édité à titre personnel par Alexis Cabillic, particulier non
-          immatriculé, à Pau, directeur de la publication.
+          Contact : <a href={`mailto:${contact.email}`}>{contact.email}</a> ·
+          <Todo note="numéro de téléphone professionnel" enLigne />
         </p>
-        <p>Contact : <a href="mailto:alexis.cabillic@gmail.com">alexis.cabillic@gmail.com</a></p>
+      </section>
+
+      <section aria-labelledby="cgv">
+        <h2 id="cgv" class="intertitre">Conditions générales de vente</h2>
+        <Todo note="Lien vers les conditions générales de vente (en cours de rédaction)." />
+        <Todo note="CGV, clause de propriété : le client reçoit une copie complète et utilisable de son site ; les briques techniques communes à mes sites restent ma propriété (licence d'utilisation, pas de cession exclusive)." />
       </section>
 
       <section aria-labelledby="hebergement">

@@ -1,7 +1,8 @@
 # cabalex.dev
 
-Site personnel d'Alexis Cabillic : une page d'accueil et une page par projet. Chaque page projet dit
-ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté.
+Site d'Alexis Cabillic, développeur web freelance à Pau : l'accueil, la page de l'offre (`/offre`) et
+une page par projet. Chaque page projet dit ce qui a été choisi, ce qui a été refusé, et ce que ça a
+coûté. Les prix et conditions de l'offre ont une seule source, `src/data/offre.ts`.
 
 ## Stack
 
@@ -90,7 +91,8 @@ src/components/Etape.astro      Passage du texte lié à une étape de la coupe
 src/components/SuiteAccueil.astro  Projets en cartes, « Comment je travaille », contact
 src/components/Todo.astro       Trou signalé
 src/lib/pointe.ts               Pointe de flèche orientée, partagée par Coupe et Vignette
-src/pages/                      Accueil, cinq projets, mentions légales, 404, sitemap.xml
+src/data/offre.ts               Formules, prix HT, conditions, contact (seule source des prix)
+src/pages/                      Accueil, offre, cinq projets, mentions légales, 404, sitemap.xml
 src/styles/global.css           Système typographique, palettes, grille, coupe, accueil
 scripts/verifier-todos.mjs      Garde-fou de production
 scripts/og/                     Source et génération de l'image Open Graph

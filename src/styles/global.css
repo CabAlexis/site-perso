@@ -760,6 +760,49 @@
   .vav-externe > p:not(.etiquette) { font-weight: 450; }
   .services > li { display: grid; gap: 0.4rem; align-content: start; padding-top: 0.7rem; border-top: 2px solid var(--encre); }
   .services h3 { font-size: var(--t-2); font-stretch: 62%; font-weight: 800; line-height: 1; }
+  .services ul { padding-left: 1.2em; }
+  .services ul li + li { margin-top: 0.4em; }
+  .services ul li::marker { color: var(--trait-fort); }
+
+  .offre-tete { padding-top: calc(var(--rythme) * 2.5); margin-top: 0; row-gap: calc(var(--rythme) * 1.2); }
+
+  /*
+   * Tableau comparatif. Sur petit écran, lui seul défile de côté, jamais la
+   * page ; la région est focalisable pour défiler au clavier.
+   */
+  .tableau { overflow-x: auto; margin-top: calc(var(--rythme) * 0.4); }
+  .tableau table { width: 100%; min-width: 36rem; border-collapse: collapse; font-size: var(--t--1); line-height: 1.4; }
+  .tableau caption { caption-side: bottom; text-align: start; padding-top: 0.6rem; }
+  .tableau :is(th, td) { padding: 0.55rem 1rem 0.55rem 0; text-align: start; vertical-align: top; border-bottom: 1px solid var(--trait); }
+  .tableau thead th { font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1; border-bottom: 2px solid var(--encre); }
+  .tableau thead td { border-bottom: 2px solid var(--encre); }
+  /* Le libellé de la ligne reste visible pendant le défilement latéral. */
+  .tableau tbody th { position: sticky; left: 0; width: 30%; background: var(--papier); font-weight: 600; font-stretch: 92%; }
+
+  /* Questions fréquentes : <details> natifs, aucun script. */
+  .faq { display: grid; }
+  .faq details { border-top: 1px solid var(--trait); }
+  .faq details:last-child { border-bottom: 1px solid var(--trait); }
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+    min-height: 2.75rem;
+    padding-block: 0.7rem;
+    font-size: var(--t-1);
+    font-stretch: 92%;
+    font-weight: 700;
+    line-height: 1.25;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; content: '+' / ''; font-family: var(--mono); font-weight: 400; color: var(--signal); }
+  .faq details[open] summary::after { content: '−'; content: '−' / ''; }
+  .faq summary:hover { color: var(--signal); }
+  .faq details > :not(summary) { margin-bottom: var(--rythme); }
+
   .deroulement {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));

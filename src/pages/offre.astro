@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import Formules from '../components/Formules.astro';
+import Deroulement from '../components/Deroulement.astro';
+import Todo from '../components/Todo.astro';
+import { formules, socle, conditions, prestations, contact, euros, prixAnnuel } from '../data/offre';
+
+const majuscule = (t: string) => t.replace(/^./, (c) => c.toUpperCase());
+const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
+---
+<Base
+  titre="L'offre"
+  description={`Site vitrine et espace d'administration offerts, puis un abonnement où je gère tout. Trois formules de ${euros(formules[0].prixMensuel)} à ${euros(formules[2].prixMensuel)} HT par mois.`}
+>
+  <div class="grille bloc offre-tete">
+    <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
+    <h1 class="affiche plein">L'offre</h1>
+    <p class="chapeau">
+      Je crée votre site et son espace d'administration, puis je m'en occupe chaque mois :
+      hébergement, nom de domaine, adresses mail, maintenance, sauvegardes, modifications. La
+      création est offerte ; vous payez un abonnement, et vous n'avez plus à vous en occuper.
+    </p>
+  </div>
+
+  <section class="grille bloc" aria-labelledby="formules">
+    <h2 id="formules" class="intertitre">Trois formules</h2>
+    <Formules />
+  </section>
+
+  <section class="grille bloc" aria-labelledby="comparatif">
+    <h2 id="comparatif" class="intertitre">Comparer les formules</h2>
+    <div class="tableau plein" role="region" aria-label="Tableau comparatif, défilable" tabindex="0">
+      <table>
+        <caption class="etiquette">Prix hors taxes. Sur petit écran, le tableau défile de côté.</caption>
+        <thead>
+          <tr>
+            <td></td>
+            {formules.map((f) => <th scope="col">{f.nom}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Prix par mois</th>
+            {formules.map((f) => <td>{euros(f.prixMensuel)} HT</td>)}
+          </tr>
+          <tr>
+            <th scope="row">Prix par an, un mois offert</th>
+            {formules.map((f) => <td>{euros(prixAnnuel(f))} HT</td>)}
+          </tr>
+          <tr>
+            <th scope="row">Pour qui</th>
+            {formules.map((f) => <td>{f.pourQui}</td>)}
+          </tr>
+          <tr>
+            <th scope="row">Création du site et espace d'administration</th>
+            {formules.map(() => <td>Offerte</td>)}
+          </tr>
+          <tr>
+            <th scope="row">Mise en service</th>
+            {formules.map(() => <td>{miseEnService}</td>)}
+          </tr>
+          {socle.map((element) => (
+            <tr>
+              <th scope="row">{majuscule(element)}</th>
+              {formules.map(() => <td>Inclus</td>)}
+            </tr>
+          ))}
+          <tr>
+            <th scope="row">Modifications</th>
+            {formules.map((f) => <td>{f.evolutions}</td>)}
+          </tr>
+          <tr>
+            <th scope="row">Point régulier</th>
+            {formules.map((f) => <td>{f.point}</td>)}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="inclus">
+    <h2 id="inclus" class="intertitre">Ce qui est inclus, ce qui ne l'est pas</h2>
+    <ul class="services plein" role="list">
+      <li>
+        <h3>Inclus</h3>
+        <ul>
+          <li>La création du site et de son espace d'administration.</li>
+          <li>L'hébergement, le nom de domaine et jusqu'à 3&nbsp;adresses mail.</li>
+          <li>La maintenance, la sécurité et les sauvegardes.</li>
+          <li>Le temps de modifications de votre formule, chaque mois.</li>
+          <li>Une réponse sous 48&nbsp;h ouvrées.</li>
+        </ul>
+      </li>
+      <li>
+        <h3>Pas inclus</h3>
+        <ul>
+          <li>La mise en service&nbsp;: {miseEnService}.</li>
+          <li>Les modules spécifiques (réservation, catalogue, outils internes…)&nbsp;: sur devis.</li>
+          <li>Les adresses mail au-delà de 3&nbsp;: sur devis.</li>
+          <li>Le report du temps de modifications&nbsp;: ce qui n'est pas utilisé dans le mois est perdu.</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="engagement">
+    <h2 id="engagement" class="intertitre">Engagement et propriété</h2>
+    <div class="prose">
+      <ul>
+        <li>
+          <strong>{conditions.engagementMois} mois d'engagement</strong>, puis sans engagement :
+          vous arrêtez quand vous voulez, avec un préavis d'un mois.
+        </li>
+        <li>
+          Si vous partez avant la fin des {conditions.engagementMois} mois, les mois restants
+          jusqu'à la fin de l'engagement sont dus.
+        </li>
+        <li>
+          <strong>Le nom de domaine et les contenus vous appartiennent</strong>, toujours. À la
+          fin des {conditions.engagementMois} mois d'engagement, vous recevez une copie complète
+          et utilisable de votre site.
+        </li>
+        <li>Paiement mensuel, ou annuel avec un mois offert.</li>
+      </ul>
+      <Todo note="Lien vers les conditions générales de vente (en cours de rédaction)." />
+      <Todo note="CGV, clause de propriété : le client reçoit une copie complète et utilisable de son site ; les briques techniques communes à mes sites restent ma propriété (licence d'utilisation, pas de cession exclusive)." />
+    </div>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="deroulement">
+    <h2 id="deroulement" class="intertitre">Comment ça se passe</h2>
+    <Deroulement />
+  </section>
+
+  <section class="grille bloc" aria-labelledby="autres">
+    <h2 id="autres" class="intertitre">Bots Discord et projets sur mesure</h2>
+    <ul class="services plein" role="list">
+      <li>
+        <h3>Bots Discord</h3>
+        <p class="formule-prix">
+          <span class="etiquette">à partir de</span>
+          <span class="formule-montant">{euros(prestations.bot.aPartirDe)}</span>
+          <span class="etiquette">HT</span>
+        </p>
+        <p class="etiquette">puis {euros(prestations.bot.mensuel)} HT par mois</p>
+        <p>
+          Pour les streamers, les communautés et les serveurs de jeu. L'abonnement couvre
+          l'hébergement et la maintenance ; il est sans engagement, avec un préavis d'un mois.
+          Deux exemples en service&nbsp;: <a href="/bot-legendes">Bot Légendes</a> et
+          <a href="/patchoumio">Patchoumio</a>.
+        </p>
+      </li>
+      <li>
+        <h3>Applications métier</h3>
+        <p class="formule-prix">
+          <span class="etiquette">à partir de</span>
+          <span class="formule-montant">{euros(prestations.surMesure.aPartirDe)}</span>
+          <span class="etiquette">HT</span>
+        </p>
+        <p class="etiquette">sur devis</p>
+        <p>
+          Un outil conçu pour votre façon de travailler, quand un site ne suffit plus. Exemple
+          en production&nbsp;: <a href="/plumes-jumelles">Plumes Jumelles</a>, avec abonnements,
+          boutique et gestion des commandes.
+        </p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="faq">
+    <h2 id="faq" class="intertitre">Questions fréquentes</h2>
+    <div class="faq">
+      <details>
+        <summary>Pourquoi la création est-elle offerte&nbsp;?</summary>
+        <p>
+          Parce que je me rémunère sur l'abonnement&nbsp;: le temps passé à créer votre site est
+          couvert par les {conditions.engagementMois} mois d'engagement. Vous n'avez pas de grosse
+          somme à avancer au départ. Seuls des frais de mise en service sont facturés&nbsp;:
+          {euros(conditions.miseEnService)} HT, une seule fois.
+        </p>
+      </details>
+      <details>
+        <summary>Que se passe-t-il après 12&nbsp;mois&nbsp;?</summary>
+        <p>
+          L'abonnement continue, sans engagement&nbsp;: vous pouvez l'arrêter à tout moment avec un
+          mois de préavis. Vous recevez une copie complète et utilisable de votre site ; le nom
+          de domaine et les contenus vous appartiennent déjà.
+        </p>
+      </details>
+      <details>
+        <summary>Et si je veux partir&nbsp;?</summary>
+        <p>
+          Pendant les {conditions.engagementMois} premiers mois, les mois restants jusqu'à la fin
+          de l'engagement sont dus. À la fin de votre engagement, vous pouvez partir avec un mois
+          de préavis. Je vous
+          remets une copie complète du site, l'export de vos contenus et les accès nécessaires.
+          Votre nom de domaine est transféré vers le prestataire de votre choix, et je vous aide
+          à récupérer vos e-mails. Tout est fait dans les 30&nbsp;jours suivant la fin du
+          contrat, sans frais.
+        </p>
+      </details>
+      <details>
+        <summary>Quelle différence avec un créateur de site en ligne&nbsp;?</summary>
+        <p>
+          Avec un créateur de site en ligne, vous louez un outil et vous faites tout vous-même.
+          Ici, un seul interlocuteur s'occupe de tout, et au bout de
+          {conditions.engagementMois} mois vous recevez une copie complète de votre site.
+        </p>
+      </details>
+      <details>
+        <summary>Le temps de modifications non utilisé est-il reporté&nbsp;?</summary>
+        <p>Non&nbsp;: il vaut pour le mois en cours.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="contact">
+    <h2 id="contact" class="intertitre">Parlons de votre projet</h2>
+    <div class="prose">
+      <p class="chapeau">
+        Dites-moi en quelques lignes ce que vous faites et ce que vous attendez de votre site.
+      </p>
+      <p class="appels">
+        <a class="appel" href={contact.mailto}>Écrire à {contact.email}</a>
+      </p>
+      <p class="etiquette">{contact.zone}.</p>
+    </div>
+  </section>
+</Base>
