@@ -691,6 +691,152 @@
   }
 }
 
+/* ── Offre ───────────────────────────────────────────────────────── */
+
+/*
+ * Les parties destinées aux clients : services, déroulement, formules, appel
+ * à l'action, labo, coordonnées. Même vocabulaire que le reste : filets,
+ * largeurs de police, étiquettes en mono. Aucun mouvement ajouté.
+ */
+@layer composants {
+  /* Services : titre court en largeur étroite, comme les noms des formules ;
+     deux colonnes fixes (2 × 2 pour quatre services, jamais 3 + 1). */
+  .services {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: calc(var(--rythme) * 1.1) 2rem;
+    margin-block: calc(var(--rythme) * 0.4);
+    padding-block: 0;
+    list-style: none;
+  }
+  @media (min-width: 40rem) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /*
+   * « Vous, votre métier. / Moi, tout le reste. » : l'argument en typographie
+   * d'affichage, sur le modèle de l'accroche de l'en-tête (une largeur de
+   * police par ligne). Au défilement, chaque ligne s'étire jusqu'à sa largeur.
+   */
+  .partage {
+    display: grid;
+    margin-block: calc(var(--rythme) * 0.3) calc(var(--rythme) * 0.6);
+    font-size: clamp(2.1rem, 0.6rem + 5.4vw, 5.6rem);
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+  }
+  .partage-l1 { font-stretch: 100%; font-weight: 300; }
+  .partage-l2 { font-stretch: 62%; font-weight: 800; color: var(--signal); padding-inline-start: 0.6em; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .partage-l1 { animation: partage-1 linear both; }
+      .partage-l2 { animation: partage-2 linear both; }
+    }
+    :root .partage span { animation-timeline: view(); animation-range: entry 0% cover 40%; }
+  }
+  @keyframes partage-1 { from { font-stretch: 62%; font-weight: 800; } }
+  @keyframes partage-2 { from { font-stretch: 125%; font-weight: 300; } }
+
+  /*
+   * Vis-à-vis : le code des coupes. Tireté et hachures pour le site à faire
+   * soi-même,
+   * trait plein et rouge pour ce que je prends en charge.
+   */
+  .vis-a-vis {
+    display: grid;
+    gap: 1rem 2rem;
+    margin-top: calc(var(--rythme) * 1.2);
+  }
+  @media (min-width: 40rem) { .vis-a-vis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .vav { display: grid; gap: 0.5rem; align-content: start; padding: 1rem 1.25rem 1.2rem; }
+  .vav-externe {
+    border: 1.5px dashed var(--trait-fort);
+    color: var(--encre-2);
+    background:
+      repeating-linear-gradient(-45deg, var(--trait) 0 1px, transparent 1px 7px) top / 100% 0.7rem no-repeat;
+    padding-top: 1.5rem;
+  }
+  .vav-moi { border: 2px solid var(--signal); }
+  .vav-moi > .etiquette:first-child { color: var(--signal); font-weight: 500; }
+  .vav > p:not(.etiquette) { font-size: var(--t-1); font-stretch: 92%; font-weight: 600; line-height: 1.3; }
+  .vav-externe > p:not(.etiquette) { font-weight: 450; }
+  .services > li { display: grid; gap: 0.4rem; align-content: start; padding-top: 0.7rem; border-top: 2px solid var(--encre); }
+  .services h3 { font-size: var(--t-2); font-stretch: 62%; font-weight: 800; line-height: 1; }
+  .deroulement {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--rythme) 2rem;
+    margin-top: calc(var(--rythme) * 0.6);
+    padding-block: 0;
+    list-style: none;
+  }
+  .deroulement li { display: grid; gap: 0.3rem; align-content: start; padding-top: 0.6rem; border-top: 1px solid var(--trait); }
+  .deroulement strong { font-size: var(--t-1); font-stretch: 92%; font-weight: 700; line-height: 1.25; }
+
+  /*
+   * Formules : sur grand écran, les cartes partagent leurs rangées (subgrid),
+   * si bien que prix, cible et chaque ligne du détail s'alignent d'une carte
+   * à l'autre et se comparent d'un coup d'œil. Sans subgrid, chaque carte
+   * reste une simple pile.
+   */
+  .formules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: calc(var(--rythme) * 1.25) 2rem;
+    margin-block: calc(var(--rythme) * 0.6);
+    padding-block: 0;
+    list-style: none;
+  }
+  .formule { display: grid; gap: 0.5rem; align-content: start; padding-top: 0.8rem; border-top: 2px solid var(--encre); }
+  .formule-nom { font-size: var(--t-2); font-stretch: 62%; font-weight: 800; line-height: 1; }
+  .formule-prix { display: flex; flex-wrap: wrap; gap: 0.2rem 0.6rem; align-items: baseline; }
+  .formule-montant {
+    font-size: var(--t-3);
+    font-stretch: 62%;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .formule-cible { font-stretch: 92%; font-weight: 600; line-height: 1.35; }
+  .formule-lignes { display: grid; gap: 0.5rem; margin-top: 0.3rem; }
+  .formule-lignes > div { display: grid; gap: 0.1rem; align-content: start; padding-top: 0.4rem; border-top: 1px solid var(--trait); }
+  .formule-lignes dd { line-height: 1.45; }
+  @supports (grid-template-rows: subgrid) {
+    .formules { row-gap: 0; }
+    .formule { grid-row: span 8; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }
+    .formule-lignes { grid-row: span 4; grid-template-rows: subgrid; }
+  }
+
+  /* Appel à l'action : le seul aplat du site. Cible tactile de 44 px ; la
+     bordure transparente le garde visible en couleurs forcées. */
+  .appels { display: flex; flex-wrap: wrap; gap: 1rem 1.75rem; align-items: center; }
+  .appel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.55rem 1.2rem;
+    border: 1px solid transparent;
+    background: var(--encre);
+    color: var(--papier);
+    font-stretch: 92%;
+    font-weight: 650;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  .appel::after { content: '→'; content: '→' / ''; margin-inline-start: 0.6em; }
+  .appel:hover { background: var(--signal); color: var(--papier); text-decoration: none; }
+
+  /* Labo : le filet tireté dit « à côté », comme pour les chiffres déclarés. */
+  .prose .labo { padding-left: 0; list-style: none; }
+  .labo li { display: grid; gap: 0.2rem; padding-top: 0.6rem; border-top: 1px dashed var(--trait-fort); }
+  .prose .labo li + li { margin-top: calc(var(--rythme) * 0.6); }
+  .labo a { font-size: var(--t-1); font-stretch: 92%; font-weight: 700; line-height: 1.25; }
+
+  .coordonnees { display: grid; gap: calc(var(--rythme) * 0.6); }
+  .coordonnees > div { display: grid; gap: 0.15rem; padding-top: 0.6rem; border-top: 1px solid var(--trait); }
+  .coordonnees dd { font-size: var(--t-1); font-stretch: 90%; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+  .coordonnees .trou { font-stretch: 100%; font-weight: 400; }
+}
+
 /* ── Transitions entre pages ─────────────────────────────────────────── */
 
 /*

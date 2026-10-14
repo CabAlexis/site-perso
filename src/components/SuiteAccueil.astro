@@ -1,18 +1,105 @@
 ---
 /*
- * Suite de l'accueil, sous l'en-tête : les cinq projets en cartes, « Comment
- * je travaille », le contact.
+ * Suite de l'accueil, sous l'en-tête. D'abord pour le client : ce que je fais,
+ * comment ça se passe, les formules. Puis les réalisations en cartes,
+ * « Comment je travaille », le labo (projets personnels) et le contact.
  */
 import Vignette from './Vignette.astro';
 import Coupe from './Coupe.astro';
 import Etape from './Etape.astro';
-import { projets } from '../data/projets';
+import Formules from './Formules.astro';
+import Deroulement from './Deroulement.astro';
+import Todo from './Todo.astro';
+import { realisations, labo } from '../data/projets';
 import { boucle, coupes } from '../data/coupes';
+import { contact, conditions, prestations, euros } from '../data/offre';
 ---
-  <section class="grille bloc" aria-labelledby="projets">
-    <h2 id="projets" class="intertitre">Cinq projets</h2>
+  <section class="grille bloc" aria-labelledby="services">
+    <h2 id="services" class="intertitre">Ce que je fais pour vous</h2>
+    <p class="partage plein">
+      <span class="partage-l1">Vous, votre métier.</span>
+      <span class="partage-l2">Moi, tout le reste.</span>
+    </p>
+    <ul class="services plein" role="list">
+      <li>
+        <h3>Création</h3>
+        <p>
+          Je crée votre site, avec un espace d'administration simple. Vous modifiez vous-même vos
+          textes, horaires et actualités, en quelques clics.
+        </p>
+      </li>
+      <li>
+        <h3>Hébergement</h3>
+        <p>
+          Je l'héberge, je gère votre nom de domaine et vos adresses mail. Le nom de domaine et
+          les contenus restent à vous.
+        </p>
+      </li>
+      <li>
+        <h3>Entretien</h3>
+        <p>Je le maintiens, je le sécurise, je le sauvegarde. C'est mon travail, pas le vôtre.</p>
+      </li>
+      <li>
+        <h3>Modifications</h3>
+        <p>Vous m'écrivez, je vous réponds sous 48&nbsp;h ouvrées.</p>
+      </li>
+    </ul>
+    <div class="vis-a-vis plein">
+      <div class="vav vav-externe">
+        <p class="etiquette">Site à faire soi-même</p>
+        <p>
+          Vous louez un outil et vous faites tout vous-même&nbsp;: le site, les mises à jour, et
+          un support que vous ne connaissez pas.
+        </p>
+      </div>
+      <div class="vav vav-moi">
+        <p class="etiquette">Avec moi</p>
+        <p>
+          Rien à installer ni à mettre à jour. Un seul interlocuteur s'occupe de tout, et vous
+          le joignez directement.
+        </p>
+        <p class="etiquette">Pau et alentours, et à distance partout en France</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="deroulement">
+    <h2 id="deroulement" class="intertitre">Comment ça se passe</h2>
+    <Deroulement />
+  </section>
+
+  <section class="grille bloc" aria-labelledby="formules">
+    <h2 id="formules" class="intertitre">Trois formules</h2>
+    <p>
+      Dans les trois, la création du site est offerte ; seule la mise en service est facturée,
+      {euros(conditions.miseEnService)} HT une seule fois. Ensuite, vous payez un abonnement
+      mensuel, et je gère tout.
+    </p>
+    <Formules />
+    <div class="prose">
+      <p>
+        Engagement de {conditions.engagementMois} mois, puis sans engagement, avec un préavis
+        d'un mois. À la fin des {conditions.engagementMois} mois, vous recevez une copie complète et
+        utilisable de votre site.
+        Les besoins particuliers (réservation, catalogue, outils internes…) sont sur devis.
+      </p>
+      <p>
+        Aussi : des bots Discord sur mesure pour les streamers, les communautés et les
+        serveurs de jeu, à partir de {euros(prestations.bot.aPartirDe)} HT puis
+        {euros(prestations.bot.mensuel)} HT par mois ; des applications métier sur mesure, à
+        partir de {euros(prestations.surMesure.aPartirDe)} HT.
+      </p>
+      <p class="appels">
+        <a class="appel" href={contact.mailto}>Parlons de votre projet</a>
+        <a href="/offre">Tout le détail de l'offre</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="realisations">
+    <h2 id="realisations" class="intertitre">Réalisations</h2>
     <ol class="projets-cartes plein">
-      {projets.map((projet, i) => (
+      {realisations.map((projet, i) => (
         <li>
           <a class="carte" href={`/${projet.slug}`}>
             <span class="trace"><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} transition={`coupe-${projet.slug}`} /></span>
@@ -73,9 +160,42 @@ import { boucle, coupes } from '../data/coupes';
     </div>
   </section>
 
+  <section class="grille bloc" aria-labelledby="labo">
+    <h2 id="labo" class="intertitre">Labo</h2>
+    <div class="prose">
+      <p>Mes projets personnels : là où j'expérimente et j'apprends.</p>
+      <ul class="labo" role="list">
+        {labo.map((projet) => (
+          <li>
+            <a href={`/${projet.slug}`}>{projet.titre}</a>
+            <span>{projet.angle}</span>
+            <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <section class="grille bloc" aria-labelledby="contact">
     <h2 id="contact" class="intertitre">Contact</h2>
     <div class="prose">
-      <p><a href="mailto:alexis.cabillic@gmail.com">alexis.cabillic@gmail.com</a></p>
+      <p class="chapeau">
+        Dites-moi en quelques lignes ce que vous faites et ce que vous attendez de votre site.
+      </p>
+      <p class="appels"><a class="appel" href={contact.mailto}>Parlons de votre projet</a></p>
+      <dl class="coordonnees">
+        <div>
+          <dt class="etiquette">Mail</dt>
+          <dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
+        </div>
+        <div>
+          <dt class="etiquette">Téléphone</dt>
+          <dd><Todo note="Numéro de téléphone professionnel (lien tel:)." enLigne /></dd>
+        </div>
+        <div>
+          <dt class="etiquette">Où</dt>
+          <dd>{contact.zone}</dd>
+        </div>
+      </dl>
     </div>
   </section>

@@ -1,0 +1,45 @@
+---
+/*
+ * Les trois formules en cartes comparables : mêmes lignes, dans le même ordre,
+ * d'une carte à l'autre. Partagé par l'accueil et /offre. Le niveau de titre
+ * des cartes suit celui de la section qui les accueille.
+ */
+import { formules, socle, conditions, euros, prixAnnuel } from '../data/offre';
+
+interface Props {
+  niveau?: 3 | 4;
+}
+const { niveau = 3 } = Astro.props;
+const Titre = `h${niveau}`;
+---
+<ul class="formules plein" role="list">
+  {formules.map((f) => (
+    <li class="formule">
+      <Titre class="formule-nom" id={`formule-${f.id}`}>{f.nom}</Titre>
+      <p class="formule-prix">
+        <span class="formule-montant">{euros(f.prixMensuel)}</span>
+        <span class="etiquette">HT par mois</span>
+      </p>
+      <p class="etiquette">ou {euros(prixAnnuel(f))} HT par an, un mois offert</p>
+      <p class="formule-cible">{f.pourQui}</p>
+      <dl class="formule-lignes">
+        <div>
+          <dt class="etiquette">Création du site</dt>
+          <dd>Offerte, avec son espace d'administration. Mise en service : {euros(conditions.miseEnService)} HT, une seule fois.</dd>
+        </div>
+        <div>
+          <dt class="etiquette">Compris</dt>
+          <dd>{socle.join(', ').replace(/^./, (c) => c.toUpperCase())}</dd>
+        </div>
+        <div>
+          <dt class="etiquette">Modifications</dt>
+          <dd>{f.evolutions}</dd>
+        </div>
+        <div>
+          <dt class="etiquette">Point régulier</dt>
+          <dd>{f.point}</dd>
+        </div>
+      </dl>
+    </li>
+  ))}
+</ul>

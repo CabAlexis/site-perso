@@ -36,6 +36,9 @@ export const EXCEPTIONS_PREUVES = ['dofus-switcher', 'bot-legendes', 'patchoumio
 const projet = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
   titre: z.string().min(1),
+  // Réalisations : en vitrine sur l'accueil. Labo : projets personnels, sans
+  // client, dans un bloc compact en bas de l'accueil.
+  rubrique: z.enum(['realisations', 'labo']),
   // Ce que la page montre, en une ligne, pour l'accueil.
   angle: z.string().min(1),
   statut: z.object({
@@ -75,6 +78,7 @@ export type Projet = z.infer<typeof projet>;
 const fiches = [
   {
     slug: 'plumes-jumelles',
+    rubrique: 'realisations',
     titre: 'Plumes Jumelles',
     angle: "Un site d'abonnement et une boutique, livrés à deux créatrices qui n'avaient qu'une page Instagram.",
     statut: { code: 'production', libelle: 'En production depuis le 4 septembre 2026' },
@@ -93,25 +97,8 @@ const fiches = [
     ],
   },
   {
-    slug: 'nutrifollow',
-    titre: 'NutriFollow',
-    angle: 'Un SaaS pour diététiciens, conçu, construit et sécurisé seul, de la base de données au serveur.',
-    statut: { code: 'fonctionnel', libelle: 'Fonctionnel · migration HDS requise avant mise en service' },
-    description:
-      'SaaS de suivi diététique construit seul en Laravel : deux interfaces, temps réel, IA '
-      + 'asynchrone, audit interne. Fonctionnel, migration HDS requise.',
-    arbitrages: [
-      "Le rattachement d'un compte existant par son e-mail, pratique, était une prise de contrôle de compte.",
-      "Pas d'API REST ni d'application native : une seule application Inertia, l'interface patient en PWA.",
-      "Le service worker ne met plus aucune donnée médicale en cache : pas de hors-ligne pour ces pages.",
-    ],
-    elements: [
-      { libelle: 'Tests', valeur: '184 Pest · 44 Vitest · 70 Dusk', note: 'au 2 octobre 2026' },
-      { libelle: 'Site', valeur: 'nutrifollow.fr', url: 'https://nutrifollow.fr' },
-    ],
-  },
-  {
     slug: 'bot-legendes',
+    rubrique: 'realisations',
     titre: 'Bot Légendes',
     angle: "Un bot Discord pensé pour qu'une panne ne fasse rien perdre et n'ouvre rien.",
     statut: { code: 'service', libelle: 'En service · démon supervisord' },
@@ -132,6 +119,7 @@ const fiches = [
   },
   {
     slug: 'patchoumio',
+    rubrique: 'realisations',
     titre: 'Patchoumio',
     angle: "Un bot Discord qui répond aux joueurs avec des fiches rivens (prix du marché, stats à viser) et des liens de builds, géré depuis un panel web d'administration.",
     statut: { code: 'service', libelle: 'En service · serveur Discord de Patchoumio' },
@@ -152,7 +140,27 @@ const fiches = [
     },
   },
   {
+    slug: 'nutrifollow',
+    rubrique: 'labo',
+    titre: 'NutriFollow',
+    angle: 'Un SaaS pour diététiciens, conçu, construit et sécurisé seul, de la base de données au serveur.',
+    statut: { code: 'fonctionnel', libelle: 'Fonctionnel · migration HDS requise avant mise en service' },
+    description:
+      'SaaS de suivi diététique construit seul en Laravel : deux interfaces, temps réel, IA '
+      + 'asynchrone, audit interne. Fonctionnel, migration HDS requise.',
+    arbitrages: [
+      "Le rattachement d'un compte existant par son e-mail, pratique, était une prise de contrôle de compte.",
+      "Pas d'API REST ni d'application native : une seule application Inertia, l'interface patient en PWA.",
+      "Le service worker ne met plus aucune donnée médicale en cache : pas de hors-ligne pour ces pages.",
+    ],
+    elements: [
+      { libelle: 'Tests', valeur: '184 Pest · 44 Vitest · 70 Dusk', note: 'au 2 octobre 2026' },
+      { libelle: 'Site', valeur: 'nutrifollow.fr', url: 'https://nutrifollow.fr' },
+    ],
+  },
+  {
     slug: 'dofus-switcher',
+    rubrique: 'labo',
     titre: 'Dofus Switcher',
     angle: 'Un outil de bureau KDE Plasma 6 / Wayland qui intercepte la souris au niveau evdev, sans jamais toucher au jeu.',
     statut: { code: 'arret', libelle: "À l'arrêt · dernière version le 27 juin 2026" },
@@ -175,14 +183,20 @@ const fiches = [
 ] satisfies Projet[];
 
 export const projets: Projet[] = fiches.map((fiche) => projet.parse(fiche));
+export const realisations = projets.filter((p) => p.rubrique === 'realisations');
+export const labo = projets.filter((p) => p.rubrique === 'labo');
 
-export function projetParSlug(slug: string): { projet: Projet; numero: number; precedent?: Projet; suivant?: Projet } {
-  const index = projets.findIndex((p) => p.slug === slug);
-  if (index === -1) throw new Error(`Projet inconnu : ${slug}`);
+// Numérotation et précédent/suivant restent à l'intérieur de la rubrique.
+export function projetParSlug(slug: string): { projet: Projet; numero: number; total: number; precedent?: Projet; suivant?: Projet } {
+  const trouve = projets.find((p) => p.slug === slug);
+  if (!trouve) throw new Error(`Projet inconnu : ${slug}`);
+  const liste = trouve.rubrique === 'labo' ? labo : realisations;
+  const index = liste.indexOf(trouve);
   return {
-    projet: projets[index],
+    projet: trouve,
     numero: index + 1,
-    precedent: projets[index - 1],
-    suivant: projets[index + 1],
+    total: liste.length,
+    precedent: liste[index - 1],
+    suivant: liste[index + 1],
   };
 }

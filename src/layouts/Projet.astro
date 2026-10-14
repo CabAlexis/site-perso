@@ -1,13 +1,13 @@
 ---
 import Base from './Base.astro';
 import Todo from '../components/Todo.astro';
-import { projets, projetParSlug } from '../data/projets';
+import { projetParSlug } from '../data/projets';
 
 interface Props {
   slug: string;
 }
 const { slug } = Astro.props;
-const { projet, numero, precedent, suivant } = projetParSlug(slug);
+const { projet, numero, total, precedent, suivant } = projetParSlug(slug);
 const consultables = projet.elements.filter((e) => e.url);
 const declares = projet.elements.filter((e) => !e.url);
 ---
@@ -15,7 +15,7 @@ const declares = projet.elements.filter((e) => !e.url);
   <article class="projet">
     <header class="projet-tete grille">
       <p class="etiquette projet-repere">
-        <span>{String(numero).padStart(2, '0')} / {String(projets.length).padStart(2, '0')}</span>
+        <span>{projet.rubrique === 'labo' && 'Labo · '}{String(numero).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
         <span class:list={['statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
       </p>
       <h1 class="affiche plein"><span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></h1>

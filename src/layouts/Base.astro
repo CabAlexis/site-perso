@@ -36,7 +36,7 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
     <meta property="og:image" content={new URL('/og.png', Astro.site)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Alexis Cabillic. Cinq projets : ce qui a été choisi, ce qui a été refusé, et ce que ça a coûté." />
+    <meta property="og:image:alt" content="Alexis Cabillic, développeur web à Pau. Je crée votre site, puis je m'en occupe." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="author" content="Alexis Cabillic" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -46,8 +46,9 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
     <header class="bandeau grille">
       <nav class="plein" aria-label="Navigation principale">
         <a class="accueil" href="/">Alexis Cabillic</a>
-        <a href="/#projets">Projets</a>
-        <a href="https://github.com/CabAlexis">GitHub</a>
+        <a href="/offre">Offre</a>
+        <a href="/#realisations">Réalisations</a>
+        <a href="/#contact">Contact</a>
       </nav>
     </header>
 
@@ -57,10 +58,10 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
 
     <footer class="pied grille">
       <div class="plein">
-        <p>Alexis Cabillic, développeur à Pau.</p>
+        <p>Alexis Cabillic, développeur web à Pau. <a href="mailto:alexis@cabalex.dev">alexis@cabalex.dev</a></p>
         <ul>
-          <li><a href="https://github.com/CabAlexis">github.com/CabAlexis</a></li>
           <li><a href="/mentions-legales">Mentions légales</a></li>
+          <li><a href="https://github.com/CabAlexis/site-perso">Code source de ce site</a></li>
         </ul>
         <p>Ni cookie, ni mesure d'audience, ni ressource chargée chez un tiers : pas même les polices.</p>
       </div>

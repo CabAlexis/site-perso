@@ -1,0 +1,33 @@
+---
+/*
+ * « Comment ça se passe » : les quatre étapes, du premier échange au suivi,
+ * chacune en une phrase.
+ */
+const etapes = [
+  {
+    titre: 'Premier échange',
+    resume: 'On parle de votre activité et de ce que le site doit vous apporter. Gratuit et sans engagement.',
+  },
+  {
+    titre: 'Maquette',
+    resume: 'Je vous montre une première version, et on l’ajuste jusqu’à ce qu’elle vous ressemble.',
+  },
+  {
+    titre: 'Mise en ligne',
+    resume: 'Je m’occupe de tout : nom de domaine, adresses mail, hébergement.',
+  },
+  {
+    titre: 'Suivi',
+    resume: 'Une question, une modification ? Vous m’écrivez, je m’en occupe.',
+  },
+];
+---
+<ol class="deroulement plein" role="list">
+  {etapes.map((e, i) => (
+    <li>
+      <span class="etiquette" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+      <strong>{e.titre}</strong>
+      <span>{e.resume}</span>
+    </li>
+  ))}
+</ol>
