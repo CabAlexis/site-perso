@@ -135,6 +135,28 @@ export const coupes: Record<string, DonneesCoupe> = {
       { points: [[340, 402], [352, 402], [352, 210], [150, 210], [150, 198]], etape: 5 },
     ],
   },
+  'dofintendant': {
+    titre: "Coupe d'un serveur de guilde équipé de DofIntendant",
+    resume: "Sur le serveur Discord de la guilde, les membres utilisent des commandes et des boutons. Le bot n'active que les modules choisis par le serveur : métiers, Almanax, accueil, groupes de donjon, XP. L'Almanax vient de l'API communautaire dofusdude. Les administrateurs règlent le bot avec /setup ou depuis le tableau de bord web, avec les mêmes droits. Le bot n'a pas accès au contenu des messages. Quand il est retiré, les données du serveur sont effacées 30 jours plus tard.",
+    hauteur: 486,
+    cartouche: ['Coupe · DofIntendant', 'Discord · 5 modules'],
+    noeuds: [
+      { x: 20, y: 14, l: 320, h: 56, titre: 'Discord · serveur de la guilde', lignes: ['commandes, boutons'], ton: 'externe', etape: 1 },
+      { x: 20, y: 110, l: 150, h: 88, titre: 'DofIntendant', lignes: ['modules activés', 'serveur par', 'serveur'], etape: 1 },
+      { x: 190, y: 110, l: 150, h: 88, titre: 'Tableau de bord', lignes: ['connexion Discord,', 'mêmes droits', 'que /setup'], etape: 2 },
+      { x: 20, y: 238, l: 150, h: 104, titre: 'Modules', lignes: ['métiers · Almanax', 'accueil', 'donjons · XP'], etape: 1 },
+      { x: 190, y: 238, l: 150, h: 72, titre: 'API dofusdude', lignes: ['Almanax du jour'], ton: 'externe', etape: 1 },
+      { x: 20, y: 382, l: 150, h: 88, titre: 'Messages', lignes: ['contenu jamais lu,', 'seulement', 'qui écrit et où'], ton: 'contrainte', etape: 3 },
+      { x: 190, y: 382, l: 150, h: 88, titre: 'Bot retiré', lignes: ['données effacées', '30 jours après'], ton: 'contrainte', etape: 4 },
+    ],
+    liens: [
+      { points: [[95, 70], [95, 110]], etape: 1 },
+      { points: [[190, 154], [170, 154]], etape: 2 },
+      { points: [[95, 198], [95, 238]], etape: 1 },
+      { points: [[190, 274], [170, 274]], etape: 1 },
+      { points: [[95, 342], [95, 382]], etape: 3, fleche: false, tirets: true },
+    ],
+  },
   'dofus-switcher': {
     titre: "Coupe du chemin d'un clic sur un bouton latéral",
     resume: "La souris physique est capturée en exclusivité via evdev. Une boucle relaie tous ses événements vers un périphérique virtuel uinput que KWin voit comme une souris ordinaire, sauf les boutons associés à une action. Ceux-ci déclenchent le cycle, qui lit la fenêtre active et demande à kdotool d'activer la suivante. Aucune entrée n'est jamais envoyée à une fenêtre Dofus.",

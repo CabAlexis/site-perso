@@ -32,10 +32,12 @@ const element = z.object({
 });
 
 // L'encadré « En bref », en langage simple, en tête de chaque page projet.
-// Une réalisation parle de son client ; un projet du labo n'en a pas.
+// Une réalisation parle de son client ; un projet du labo n'en a pas ; un
+// produit public (`produit`), sans client unique, parle de ceux qui l'utilisent.
 const TERMES_EN_BREF = {
   realisations: ['Le client', 'Son besoin', 'Le résultat'],
   labo: ['Le projet', 'Le besoin visé', 'Où il en est'],
+  produit: ['Le projet', 'Pour qui', 'Où il en est'],
 } as const;
 
 export const EXCEPTIONS_PREUVES = ['dofus-switcher', 'bot-legendes', 'patchoumio'] as const;
@@ -46,6 +48,8 @@ const projet = z.object({
   // Réalisations : en vitrine sur l'accueil. Labo : projets personnels, sans
   // client, dans un bloc compact en bas de l'accueil.
   rubrique: z.enum(['realisations', 'labo']),
+  // Réalisation sans client unique : un produit public, installable par tous.
+  produit: z.boolean().optional(),
   // Ce que la page montre, en une ligne, pour l'accueil.
   angle: z.string().min(1),
   statut: z.object({
@@ -60,7 +64,7 @@ const projet = z.object({
   elements: z.array(element).min(1).max(3),
   sansPreuve: z.object({ motif: z.string().min(20) }).optional(),
 }).superRefine((p, ctx) => {
-  const attendus = TERMES_EN_BREF[p.rubrique];
+  const attendus = TERMES_EN_BREF[p.produit ? 'produit' : p.rubrique];
   if (p.enBref.some((e, i) => e.terme !== attendus[i])) {
     ctx.addIssue({ code: 'custom', message: `${p.slug} : l'encadré « En bref » attend ${attendus.join(', ')}.` });
   }
@@ -165,6 +169,31 @@ const fiches = [
     sansPreuve: {
       motif: "Le dépôt est privé, et le bot ne se voit qu'en rejoignant le serveur Discord de Patchoumio : rien n'est consultable directement.",
     },
+  },
+  {
+    slug: 'dofintendant',
+    rubrique: 'realisations',
+    produit: true,
+    titre: 'DofIntendant',
+    angle: "Un bot Discord gratuit pour les guildes Dofus, module par module, qui ne lit jamais le contenu des messages.",
+    statut: { code: 'service', libelle: 'En service · public et gratuit' },
+    description:
+      'Bot Discord gratuit et modulaire pour les guildes et alliances Dofus : métiers, Almanax, '
+      + 'accueil, groupes de donjon, XP. Sans accès au contenu des messages.',
+    enBref: [
+      { terme: "Le projet", texte: "Un bot Discord gratuit qui aide les guildes Dofus à s'organiser, module par module (métiers, Almanax, accueil des recrues, groupes de donjon, XP)." },
+      { terme: "Pour qui", texte: "Les guildes et alliances Dofus, qui activent seulement les modules dont elles ont besoin." },
+      { terme: "Où il en est", texte: "En service sur 3 serveurs au 15 octobre 2026, installable par n'importe quel serveur, gratuit." },
+    ],
+    arbitrages: [
+      "Aucun accès au contenu des messages : le module XP compte qui écrit et où, jamais ce qui est écrit.",
+      "Accueil des recrues sans intent privilégié : tout part du clic de la recrue.",
+      'Données du serveur effacées 30 jours après le retrait du bot, pour pouvoir le réinviter sans perte.',
+    ],
+    elements: [
+      { libelle: 'Site', valeur: 'dofintendant.cabalex.dev', url: 'https://dofintendant.cabalex.dev' },
+      { libelle: 'Données', valeur: 'Politique de confidentialité', url: 'https://dofintendant.cabalex.dev/confidentialite' },
+    ],
   },
   {
     slug: 'nutrifollow',

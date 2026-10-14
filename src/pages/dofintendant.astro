@@ -1,0 +1,97 @@
+---
+import Projet from '../layouts/Projet.astro';
+import Coupe from '../components/Coupe.astro';
+import { coupes } from '../data/coupes';
+import Etape from '../components/Etape.astro';
+---
+<Projet slug="dofintendant">
+  <Fragment slot="contexte">
+    <p>
+      Bot Discord gratuit pour les guildes et alliances Dofus : métiers, Almanax, accueil des
+      recrues, groupes de donjon, XP. Chaque serveur active seulement les modules dont il a
+      besoin. En service, installable depuis
+      <a href="https://dofintendant.cabalex.dev">dofintendant.cabalex.dev</a>. Conçu et
+      développé seul.
+    </p>
+  </Fragment>
+
+  <Coupe slot="coupe" id="coupe-dofintendant" {...coupes['dofintendant']} transition="coupe-dofintendant" />
+
+  <section aria-labelledby="fait">
+    <h2 id="fait" class="intertitre">Ce qu'il fait</h2>
+    <Etape n={1}>
+      <p>
+        Chaque serveur choisit ses modules, et leurs commandes n'apparaissent que là où ils sont
+        actifs.
+      </p>
+      <ul>
+        <li>
+          <strong>Métiers</strong> : les membres déclarent leurs métiers et leurs niveaux. Une
+          demande pour un métier et un niveau ne mentionne que les membres qui conviennent, et un
+          artisan « pas dispo » n'est pas dérangé.
+        </li>
+        <li>
+          <strong>Almanax</strong> : l'offrande et le bonus du jour, à la demande, ou publiés
+          chaque jour dans le salon et à l'heure choisis, selon le fuseau horaire du serveur. Les
+          données viennent de l'API communautaire dofusdude.
+        </li>
+        <li>
+          <strong>Accueil</strong> : la recrue donne son pseudo en jeu. Le bot la renomme et lui
+          ouvre le serveur, directement ou après la validation d'un officier.
+        </li>
+        <li>
+          <strong>Groupes de donjon</strong> : 187 donjons et leurs succès. Les membres
+          s'inscrivent avec leur classe, pour viser le succès ou pour aider. Chaque groupe a son
+          fil, les remplaçants sont promus, et les groupes oubliés se ferment seuls.
+        </li>
+        <li>
+          <strong>XP</strong> : un niveau d'activité, qui monte avec les messages, le temps en
+          vocal (compté seulement à plusieurs), les groupes formés et les métiers déclarés. Les
+          passages de niveau sont annoncés discrètement. Le module a un anti-spam, des salons
+          exclus et un classement.
+        </li>
+      </ul>
+    </Etape>
+    <Etape n={2}>
+      <p>
+        L'installation se fait en trois étapes. On invite le bot, ce qui demande le droit
+        « Gérer le serveur ». On lance <code>/setup</code> pour choisir les rôles
+        d'administration et d'officier et le fuseau horaire. Puis on active les modules, avec
+        <code>/module activer</code> ou depuis le tableau de bord web. Le bot signale lui-même
+        une permission manquante ou un rôle mal placé. Le tableau de bord applique les mêmes
+        droits que le bot, et le barème de l'XP s'y règle.
+      </p>
+    </Etape>
+  </section>
+
+  <section aria-labelledby="pas-fait">
+    <h2 id="pas-fait" class="intertitre">Ce qu'il ne fait pas</h2>
+    <Etape n={3}>
+      <p>
+        Le bot ne demande pas l'accès au contenu des messages. Le module XP voit qui écrit, dans
+        quel salon, et qui est en vocal, mais jamais ce qui est écrit. L'accueil des recrues se
+        passe aussi de tout accès privilégié : le bot n'écoute pas les arrivées sur le serveur,
+        tout part du clic de la recrue.
+      </p>
+    </Etape>
+    <Etape n={4}>
+      <p>
+        Il ne garde que le strict nécessaire : les identifiants Discord, les pseudos en jeu, les
+        métiers déclarés, les inscriptions aux groupes, l'XP et les réglages des
+        administrateurs. Quand une guilde retire le bot, toutes les données de son serveur sont
+        effacées 30 jours plus tard ; ce délai permet de le réinviter sans rien perdre. Sur le
+        site, la connexion Discord reste dans la session, pas dans une base de données, et
+        disparaît à la déconnexion ou après 7 jours d'inactivité. Pas de mesure d'audience, pas
+        de publicité. Le bot et le site sont hébergés à Paris.
+      </p>
+    </Etape>
+    <p>Tous les modules actuels sont gratuits, sans limite de membres.</p>
+    <p class="appels">
+      <a class="appel" href="https://dofintendant.cabalex.dev/inviter">Essayez-le sur votre serveur</a>
+    </p>
+    <p class="etiquette">
+      DofIntendant est un projet de fan, indépendant et non affilié à Ankama. Dofus est une
+      marque d'Ankama Games.
+    </p>
+  </section>
+</Projet>
