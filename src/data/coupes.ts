@@ -41,6 +41,27 @@ export const boucle: DonneesCoupe = {
 };
 
 export const coupes: Record<string, DonneesCoupe> = {
+  'ici-immobilier': {
+    titre: "Coupe du site d'une agence immobilière, côté visiteurs et côté agente",
+    resume: "Les visiteurs consultent le site public : annonces filtrées par commune, fiches des biens, honoraires, avis. Ils envoient une demande d'estimation ou de contact, qui arrive dans l'espace pro. Depuis cet espace, l'agente modifie elle-même ses annonces, leurs photos et son profil, et le site public se met à jour. Dans cette démonstration, biens, avis et coordonnées sont fictifs, et le site n'est pas indexé par les moteurs de recherche.",
+    hauteur: 484,
+    cartouche: ['Coupe · Ici Immobilier', 'Démonstration'],
+    noeuds: [
+      { x: 20, y: 14, l: 150, h: 72, titre: 'Visiteurs', lignes: ['acheteurs,', 'vendeurs'], ton: 'externe', etape: 1 },
+      { x: 190, y: 14, l: 150, h: 72, titre: "L'agente", lignes: ['met à jour', 'son site'], ton: 'externe', etape: 3 },
+      { x: 20, y: 126, l: 150, h: 104, titre: 'Site public', lignes: ['annonces, filtre', 'par commune,', 'honoraires, avis'], etape: 1 },
+      { x: 190, y: 126, l: 150, h: 104, titre: 'Espace pro', lignes: ['annonces, photos,', 'profil'], etape: 3 },
+      { x: 20, y: 270, l: 150, h: 88, titre: 'Formulaires', lignes: ['estimation,', 'contact'], etape: 2 },
+      { x: 20, y: 398, l: 320, h: 72, titre: 'Démonstration', lignes: ['biens, avis, coordonnées fictifs', 'non indexée par les moteurs'], ton: 'contrainte', etape: 4 },
+    ],
+    liens: [
+      { points: [[95, 86], [95, 126]], etape: 1 },
+      { points: [[265, 86], [265, 126]], etape: 3 },
+      { points: [[190, 178], [170, 178]], etape: 3 },
+      { points: [[95, 230], [95, 270]], etape: 2 },
+      { points: [[170, 314], [265, 314], [265, 230]], etape: 2, etiquette: { x: 275, y: 286, texte: 'demandes' } },
+    ],
+  },
   'plumes-jumelles': {
     titre: "Coupe du parcours d'une abonnée, d'Instagram à la boîte aux lettres",
     resume: "L'audience vient d'Instagram vers le site Laravel, qui gère comptes, abonnements et boutique. Le paiement passe par Stripe Checkout, dont les webhooks mettent à jour l'état local. Les créatrices pilotent commandes et abonnées dans un back-office dont elles exportent les adresses pour l'envoi postal. Les mails transactionnels partent par le SMTP de Brevo depuis un domaine authentifié DKIM.",

@@ -1,8 +1,9 @@
 ---
 /*
  * Suite de l'accueil, sous l'en-tête. D'abord pour le client : ce que je fais,
- * comment ça se passe, les formules. Puis les réalisations en cartes,
- * « Comment je travaille », le labo (projets personnels) et le contact.
+ * comment ça se passe, les formules. Puis les réalisations (les sites en
+ * cartes, les bots Discord regroupés dessous), « Comment je travaille », le
+ * labo (projets personnels) et le contact.
  */
 import Vignette from './Vignette.astro';
 import Coupe from './Coupe.astro';
@@ -11,7 +12,7 @@ import Formules from './Formules.astro';
 import Deroulement from './Deroulement.astro';
 import Todo from './Todo.astro';
 import { prepublication } from '../data/publication.json';
-import { realisations, labo } from '../data/projets';
+import { sites, bots, labo } from '../data/projets';
 import { boucle, coupes } from '../data/coupes';
 import { contact, conditions, prestations, euros } from '../data/offre';
 ---
@@ -104,7 +105,7 @@ import { contact, conditions, prestations, euros } from '../data/offre';
   <section class="grille bloc" aria-labelledby="realisations">
     <h2 id="realisations" class="intertitre">Réalisations</h2>
     <ol class="projets-cartes plein">
-      {realisations.map((projet, i) => (
+      {sites.map((projet, i) => (
         <li>
           <a class="carte" href={`/${projet.slug}`}>
             <span class="trace"><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} transition={`coupe-${projet.slug}`} /></span>
@@ -117,6 +118,16 @@ import { contact, conditions, prestations, euros } from '../data/offre';
         </li>
       ))}
     </ol>
+    <h3 class="bots-titre plein">Bots Discord</h3>
+    <ul class="bots plein" role="list">
+      {bots.map((projet) => (
+        <li>
+          <a href={`/${projet.slug}`}>{projet.titre}</a>
+          <span>{projet.angle}</span>
+          <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <section class="corps grille bloc facons" aria-labelledby="facons">

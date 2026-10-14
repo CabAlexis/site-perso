@@ -1,0 +1,70 @@
+---
+import Projet from '../layouts/Projet.astro';
+import Coupe from '../components/Coupe.astro';
+import { coupes } from '../data/coupes';
+import Etape from '../components/Etape.astro';
+---
+<Projet slug="ici-immobilier">
+  <Fragment slot="contexte">
+    <p>
+      Le site vitrine d'une agence immobilière à Pau, en version de démonstration : annonces,
+      demande d'estimation, avis, et un espace pro où l'agente met tout à jour <span class="insecable">elle-même</span>.
+      L'agente, les biens et les avis sont fictifs. Conçu et développé seul.
+    </p>
+    <p class="appels">
+      <a class="appel" href="https://ici-immobilier.cabalex.dev">Visiter le site de démonstration</a>
+    </p>
+  </Fragment>
+
+  <Coupe slot="coupe" id="coupe-ici-immobilier" {...coupes['ici-immobilier']} transition="coupe-ici-immobilier" />
+
+  <section aria-labelledby="visiteurs">
+    <h2 id="visiteurs" class="intertitre">Ce que voient les visiteurs</h2>
+    <Etape n={1}>
+      <p>
+        Les biens se cherchent par type (maisons, appartements) ou par commune, de Pau à
+        Bayonne. La page de tous les biens se filtre par vente ou location, par commune et par
+        nombre de chambres. Chaque fiche présente les photos, la description, les
+        caractéristiques (surface, pièces, chambres, année de construction), les équipements et
+        le diagnostic énergétique. Elle se termine par un formulaire « Ce bien vous
+        intéresse ? », déjà rempli avec la référence du bien. Les honoraires ont leur page : un
+        calculateur selon la surface, la grille complète et un barème à télécharger en PDF.
+      </p>
+    </Etape>
+    <Etape n={2}>
+      <p>
+        Un vendeur demande une estimation en quelques champs : le type de bien, la ville, son
+        nom et son e-mail suffisent ; la surface, l'adresse, le téléphone et un message sont
+        facultatifs. Les demandes d'estimation et de contact arrivent dans l'espace pro.
+      </p>
+    </Etape>
+  </section>
+
+  <section aria-labelledby="agente">
+    <h2 id="agente" class="intertitre">Ce que fait l'agente</h2>
+    <Etape n={3}>
+      <p>
+        L'agente tient son site seule, sans passer par moi. Elle crée, modifie et retire ses
+        annonces, réordonne leurs photos, change leur statut (vendu, sous compromis…) et met à
+        jour son profil. Depuis le même espace, elle consulte les demandes reçues, gère les
+        avis, ajuste sa grille d'honoraires et en tire le PDF.
+      </p>
+    </Etape>
+  </section>
+
+  <section aria-labelledby="demonstration">
+    <h2 id="demonstration" class="intertitre">Une démonstration, dite comme telle</h2>
+    <Etape n={4}>
+      <p>
+        Tout ce qui pourrait passer pour réel est signalé. L'agente est présentée comme
+        « fictive, créée pour la démonstration du site ». La carte professionnelle et le SIRET
+        portent la mention « (démo) ». Les mentions légales précisent que les biens, avis et
+        coordonnées affichés sont fictifs. Le site n'est pas indexé par les moteurs de
+        recherche.
+      </p>
+    </Etape>
+    <p class="appels">
+      <a class="appel" href="https://ici-immobilier.cabalex.dev">Visiter le site de démonstration</a>
+    </p>
+  </section>
+</Projet>
