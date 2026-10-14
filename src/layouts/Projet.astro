@@ -10,6 +10,9 @@ const { slug } = Astro.props;
 const { projet, numero, total, precedent, suivant } = projetParSlug(slug);
 const consultables = projet.elements.filter((e) => e.url);
 const declares = projet.elements.filter((e) => !e.url);
+// Mots à trait d'union (« elles-mêmes », « plumes-jumelles.fr ») : jamais
+// coupés au trait d'union en fin de ligne.
+const morceaux = (texte: string) => texte.split(/(\S*\p{L}-\p{L}\S*)/u);
 ---
 <Base titre={projet.titre} description={projet.description} type="article">
   <article class="projet">
@@ -21,6 +24,24 @@ const declares = projet.elements.filter((e) => !e.url);
       <h1 class="affiche plein"><span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></h1>
       <div class="chapeau"><slot name="contexte" /></div>
     </header>
+
+    <section class="grille en-bref-bloc" aria-labelledby="en-bref">
+      <div class="en-bref">
+        <h2 id="en-bref" class="etiquette">En bref</h2>
+        <dl>
+          {projet.enBref.map((e) => (
+            <div>
+              <dt class="etiquette">{e.terme}</dt>
+              <dd>{morceaux(e.texte).map((m, i) => (i % 2 ? <span class="insecable">{m}</span> : m))}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <div class="grille plus-loin-bloc">
+      <h2 id="plus-loin" class="plus-loin">Pour aller plus loin</h2>
+    </div>
 
     <div class="corps grille">
       <slot name="coupe" />

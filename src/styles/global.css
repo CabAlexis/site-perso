@@ -320,6 +320,28 @@
   .statut-fonctionnel::before { background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
   .statut-arret::before { border-style: dashed; }
 
+  /* Encadré « En bref » : le projet en langage simple, avant le détail
+     technique. Trait plein rouge, comme « Avec moi » sur l'accueil. */
+  .en-bref-bloc { margin-top: calc(var(--rythme) * 1.5); }
+  .en-bref { display: grid; gap: 0.6rem; padding: 1rem 1.25rem 1.2rem; border: 2px solid var(--signal); }
+  .en-bref h2 { color: var(--signal); font-weight: 500; }
+  .en-bref dl { display: grid; gap: 0.7rem; }
+  .en-bref dl > div { display: grid; gap: 0.15rem; padding-top: 0.6rem; border-top: 1px solid var(--trait); }
+  .en-bref dd { line-height: 1.5; }
+  .insecable { white-space: nowrap; }
+  /* Le détail technique s'ouvre sous un intertitre, au-dessus de la coupe
+     même sur mobile, où la coupe passe avant le texte. */
+  .plus-loin-bloc { margin-top: calc(var(--rythme) * 2.5); }
+  .plus-loin-bloc + .corps { margin-top: var(--rythme); }
+  .plus-loin {
+    padding-top: 0.7rem;
+    border-top: 2px solid var(--encre);
+    font-size: var(--t-2);
+    font-stretch: 62%;
+    font-weight: 800;
+    line-height: 1;
+  }
+
   .corps { margin-top: calc(var(--rythme) * 2.5); row-gap: calc(var(--rythme) * 2); align-items: start; }
 
   .preuves { display: grid; gap: calc(var(--rythme) * 0.6); }

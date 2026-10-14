@@ -31,6 +31,13 @@ const element = z.object({
   message: 'Un élément déclaré (sans URL) doit porter sa date dans sa note.',
 });
 
+// L'encadré « En bref », en langage simple, en tête de chaque page projet.
+// Une réalisation parle de son client ; un projet du labo n'en a pas.
+const TERMES_EN_BREF = {
+  realisations: ['Le client', 'Son besoin', 'Le résultat'],
+  labo: ['Le projet', 'Le besoin visé', 'Où il en est'],
+} as const;
+
 export const EXCEPTIONS_PREUVES = ['dofus-switcher', 'bot-legendes', 'patchoumio'] as const;
 
 const projet = z.object({
@@ -46,12 +53,17 @@ const projet = z.object({
     libelle: z.string().min(1),
   }),
   description: z.string().min(50).max(200),
+  enBref: z.array(z.object({ terme: z.string(), texte: z.string().min(20) })).length(3),
   // Au moins un arbitrage par page : ce qui a été refusé, reporté ou fait
   // autrement, et pourquoi. Résumé ici, développé dans la page.
   arbitrages: z.array(z.string().min(20)).min(1),
   elements: z.array(element).min(1).max(3),
   sansPreuve: z.object({ motif: z.string().min(20) }).optional(),
 }).superRefine((p, ctx) => {
+  const attendus = TERMES_EN_BREF[p.rubrique];
+  if (p.enBref.some((e, i) => e.terme !== attendus[i])) {
+    ctx.addIssue({ code: 'custom', message: `${p.slug} : l'encadré « En bref » attend ${attendus.join(', ')}.` });
+  }
   const consultables = p.elements.filter((e) => e.url).length;
   if (!p.sansPreuve) {
     if (p.elements.length < 2) {
@@ -85,6 +97,11 @@ const fiches = [
     description:
       "Abonnement postal et boutique en Laravel pour deux créatrices venues d'Instagram : "
       + 'Stripe, back-office maison, mails authentifiés DKIM. En production.',
+    enBref: [
+      { terme: "Le client", texte: "Deux créatrices qui animent une communauté de lectrices sur Instagram." },
+      { terme: "Son besoin", texte: "Lancer un abonnement (une histoire inédite envoyée par courrier chaque mois) et une boutique de papeterie, et tout gérer elles-mêmes, sans être techniciennes." },
+      { terme: "Le résultat", texte: "Un site à elles, en ligne depuis le 4 septembre 2026 sur plumes-jumelles.fr. Elles gèrent seules les produits, les abonnées, les commandes et les remboursements. Les mails aux abonnées (confirmation, expédition) partent d'une adresse reconnue, pour ne pas finir en spam." },
+    ],
     arbitrages: [
       "Première version AdonisJS + Nuxt réécrite en Laravel le 28 mai 2026.",
       'SSR abandonné : il imposait un démon Node sur Forge.',
@@ -105,6 +122,11 @@ const fiches = [
     description:
       "Bot Discord d'une alliance Dofus, conçu pour la panne : état en base, giveaways repris "
       + 'au redémarrage, tirage lu en REST, porte fermée si le bot tombe.',
+    enBref: [
+      { terme: "Le client", texte: "L'alliance Dofus « Faut Y Songer », quelques dizaines de membres réunis sur un serveur Discord." },
+      { terme: "Son besoin", texte: "Un bot qui organise la vie du serveur (collection des Légendes des Songes, giveaways, arrivée des nouveaux membres, inscriptions aux runs), et qui ne perd rien quand il redémarre." },
+      { terme: "Le résultat", texte: "En service. Une panne ou un redémarrage ne fait rien perdre : un tirage prévu pendant l'arrêt a bien lieu, les anciens boutons répondent toujours, et personne n'entre sur le serveur pendant une panne." },
+    ],
     arbitrages: [
       'Les participants des giveaways ne sont pas suivis en direct : la liste est lue en REST au tirage.',
       "La porte d'entrée n'est pas gardée par le bot mais par les permissions du serveur.",
@@ -126,6 +148,11 @@ const fiches = [
     description:
       'Bot Discord d’un serveur Warframe francophone : fiches rivens au prix de warframe.market, '
       + 'liens de builds, panel Laravel. Base SQLite partagée.',
+    enBref: [
+      { terme: "Le client", texte: "Le youtubeur Patchoumio et le serveur Discord Warframe francophone de sa communauté." },
+      { terme: "Son besoin", texte: "Que les joueurs obtiennent une réponse en tapant simplement le nom d'une arme ou d'une frame (prix du marché, stats à viser, liens de builds), et que l'équipe du serveur tienne ce contenu à jour elle-même." },
+      { terme: "Le résultat", texte: "En service. Les membres autorisés modifient fiches et builds depuis un panel web, et le bot prend en compte leurs changements en 30 secondes, sans redémarrage. 420 armes couvertes au 12 octobre 2026." },
+    ],
     arbitrages: [
       'Pas de commande : le bot lit le texte des messages, ce qui exige un intent privilégié, borné par salon et par longueur.',
       "Le bot n'écrit jamais : il lit la base du panel en lecture seule et la relit toutes les 30 secondes.",
@@ -148,6 +175,11 @@ const fiches = [
     description:
       'SaaS de suivi diététique construit seul en Laravel : deux interfaces, temps réel, IA '
       + 'asynchrone, audit interne. Fonctionnel, migration HDS requise.',
+    enBref: [
+      { terme: "Le projet", texte: "Un logiciel en ligne pour les diététiciens indépendants : plans alimentaires, suivi des patients entre les consultations, rendez-vous, messagerie." },
+      { terme: "Le besoin visé", texte: "Réunir le praticien et ses patients sur un même outil, entre les consultations." },
+      { terme: "Où il en est", texte: "Fonctionnel, pas encore ouvert. Avant d'accueillir de vrais patients, il doit passer sur un hébergement certifié pour les données de santé (HDS) et compléter deux protections supplémentaires." },
+    ],
     arbitrages: [
       "Le rattachement d'un compte existant par son e-mail, pratique, était une prise de contrôle de compte.",
       "Pas d'API REST ni d'application native : une seule application Inertia, l'interface patient en PWA.",
@@ -167,6 +199,11 @@ const fiches = [
     description:
       'Gestion multi-comptes Dofus Retro sous KDE Plasma 6 / Wayland : grab evdev, réinjection '
       + 'uinput, aucune entrée envoyée au jeu. Python, projet à l’arrêt.',
+    enBref: [
+      { terme: "Le projet", texte: "Un petit outil pour passer d'une fenêtre de jeu à l'autre avec les boutons de la souris, quand on joue plusieurs comptes Dofus Retro sous Linux." },
+      { terme: "Le besoin visé", texte: "Remplacer un script bricolé par une vraie application, sans jamais agir dans le jeu à la place du joueur : les règles d'Ankama l'interdisent." },
+      { terme: "Où il en est", texte: "Construit pour mon usage en juin 2026, plus utilisé depuis : le projet est à l'arrêt." },
+    ],
     arbitrages: [
       "Contrainte des CGU d'Ankama : aucune entrée synthétique vers une fenêtre Dofus, aucun broadcast, aucune macro.",
       'Raccourcis actifs seulement fenêtre ouverte : ni démon, ni démarrage automatique, ni icône de zone de notification.',
