@@ -87,7 +87,7 @@ export const contact = {
   email: 'alexis@cabalex.dev',
   // Objet pré-rempli du mail ouvert par l'appel à l'action.
   mailto: `mailto:alexis@cabalex.dev?subject=${encodeURIComponent('Mon projet')}`,
-  zone: 'Pau et alentours, et à distance partout en France',
+  zone: 'Pau et alentours. À distance : toute la France.',
 };
 
 /*

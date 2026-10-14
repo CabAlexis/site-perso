@@ -746,7 +746,7 @@
     letter-spacing: -0.01em;
   }
   .partage-l1 { font-stretch: 100%; font-weight: 300; }
-  .partage-l2 { font-stretch: 62%; font-weight: 800; color: var(--signal); padding-inline-start: 0.6em; }
+  .partage-l2 { font-stretch: 62%; font-weight: 800; color: var(--signal); padding-inline-start: 0.6em; text-wrap: balance; }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       .partage-l1 { animation: partage-1 linear both; }
