@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { prepublication } from '../data/publication.json';
 
 interface Props {
   titre: string;
@@ -39,7 +40,8 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
     <meta property="og:image:alt" content="Alexis Cabillic, développeur web à Pau. Je crée votre site, puis je m'en occupe." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="author" content="Alexis Cabillic" />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {/* En prépublication, le site se partage par lien mais ne s'indexe pas. */}
+    {(noindex || prepublication) && <meta name="robots" content="noindex, nofollow" />}
   </head>
   <body>
     <a class="saut" href="#contenu">Aller au contenu</a>

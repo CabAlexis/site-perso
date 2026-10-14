@@ -5,6 +5,7 @@
  * des cartes suit celui de la section qui les accueille.
  */
 import { formules, socle, conditions, euros, prixAnnuel } from '../data/offre';
+import { prepublication } from '../data/publication.json';
 
 interface Props {
   niveau?: 3 | 4;
@@ -43,3 +44,6 @@ const Titre = `h${niveau}`;
     </li>
   ))}
 </ul>
+{prepublication && (
+  <p class="etiquette ouverture">Les commandes ouvriront dès l'immatriculation de la société.</p>
+)}

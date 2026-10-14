@@ -30,6 +30,12 @@ Toute information manquante est marquée `<!-- TODO(cabalex): ... -->` (composan
 affichée dans la page pour être visible en relecture. **`make build` échoue tant qu'il en reste un
 dans `dist/`** (`scripts/verifier-todos.mjs`) : aucun trou ne part en production par mégarde.
 
+**Prépublication** : tant que `src/data/publication.json` vaut `{ "prepublication": true }`, les
+`Todo` ne sont pas rendus, le build passe en listant les trous en avertissement, et toutes les pages
+sont en `noindex`. Les pages masquent ce qui n'aurait pas de sens sans l'information (ligne
+Téléphone, section CGV, détail de la SASU) et annoncent l'ouverture des commandes à
+l'immatriculation. Repasser à `false` dès que tout est rempli : le garde-fou bloque de nouveau.
+
 Les fiches projets (`src/data/projets.ts`) sont validées par un schéma au build. Tous les dépôts
 étant privés, un élément est soit **consultable** (il porte une URL publique), soit **déclaré** (un
 chiffre sans URL, obligatoirement daté, affiché à part sous « Chiffres déclarés »). Chaque projet

@@ -869,6 +869,7 @@
   .formule-lignes { display: grid; gap: 0.5rem; margin-top: 0.3rem; }
   .formule-lignes > div { display: grid; gap: 0.1rem; align-content: start; padding-top: 0.4rem; border-top: 1px solid var(--trait); }
   .formule-lignes dd { line-height: 1.45; }
+  .ouverture { color: var(--signal); }
   @supports (grid-template-rows: subgrid) {
     .formules { row-gap: 0; }
     .formule { grid-row: span 8; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }

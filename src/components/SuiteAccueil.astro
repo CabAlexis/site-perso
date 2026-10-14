@@ -10,6 +10,7 @@ import Etape from './Etape.astro';
 import Formules from './Formules.astro';
 import Deroulement from './Deroulement.astro';
 import Todo from './Todo.astro';
+import { prepublication } from '../data/publication.json';
 import { realisations, labo } from '../data/projets';
 import { boucle, coupes } from '../data/coupes';
 import { contact, conditions, prestations, euros } from '../data/offre';
@@ -192,10 +193,12 @@ import { contact, conditions, prestations, euros } from '../data/offre';
           <dt class="etiquette">Mail</dt>
           <dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
         </div>
-        <div>
-          <dt class="etiquette">Téléphone</dt>
-          <dd><Todo note="Numéro de téléphone professionnel (lien tel:)." enLigne /></dd>
-        </div>
+        {!prepublication && (
+          <div>
+            <dt class="etiquette">Téléphone</dt>
+            <dd><Todo note="Numéro de téléphone professionnel (lien tel:)." enLigne /></dd>
+          </div>
+        )}
         <div>
           <dt class="etiquette">Où</dt>
           <dd>{contact.zone}</dd>
