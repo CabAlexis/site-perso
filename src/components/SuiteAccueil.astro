@@ -72,16 +72,20 @@ import { contact, conditions, prestations, euros } from '../data/offre';
     <h2 id="formules" class="intertitre">Trois formules</h2>
     <p>
       Dans les trois, la création du site est offerte ; seule la mise en service est facturée,
-      {euros(conditions.miseEnService)} HT une seule fois. Ensuite, vous payez un abonnement
+      {euros(conditions.miseEnService)}&nbsp;HT une seule fois. Ensuite, vous payez un abonnement
       mensuel, et je gère tout.
     </p>
     <Formules />
     <div class="prose">
+      <p class="modules-ligne">
+        Besoin d'un outil sur mesure (planning, prise de rendez-vous, devis en ligne…)&nbsp;?
+        Paiement comptant ou étalé avec votre abonnement.
+        <a href="/offre#modules">Exemples de modules</a>
+      </p>
       <p>
         Engagement de {conditions.engagementMois} mois, puis sans engagement, avec un préavis
         d'un mois. À la fin des {conditions.engagementMois} mois, vous recevez une copie complète et
         utilisable de votre site.
-        Les besoins particuliers (réservation, catalogue, outils internes…) sont sur devis.
       </p>
       <p>
         Aussi : des bots Discord sur mesure pour les streamers, les communautés et les

@@ -782,6 +782,11 @@
   .vav-externe > p:not(.etiquette) { font-weight: 450; }
   .services > li { display: grid; gap: 0.4rem; align-content: start; padding-top: 0.7rem; border-top: 2px solid var(--encre); }
   .services h3 { font-size: var(--t-2); font-stretch: 62%; font-weight: 800; line-height: 1; }
+  /* Modules : des exemples, pas des réalisations. Filet tireté, comme tout ce
+     qui n'est pas prouvé sur le site. */
+  .modules > li { border-top: 1px dashed var(--trait-fort); }
+  .modules-ligne { padding-top: 0.6rem; border-top: 1px dashed var(--trait-fort); }
+  .modules-ligne a { white-space: nowrap; font-weight: 600; }
   .services ul { padding-left: 1.2em; }
   .services ul li + li { margin-top: 0.4em; }
   .services ul li::marker { color: var(--trait-fort); }

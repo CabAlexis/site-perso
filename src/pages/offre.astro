@@ -3,10 +3,11 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, conditions, prestations, contact, euros, prixAnnuel } from '../data/offre';
+import { formules, socle, conditions, prestations, contact, modules, paiementModule, euros, prixAnnuel } from '../data/offre';
 
 const majuscule = (t: string) => t.replace(/^./, (c) => c.toUpperCase());
 const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
+const { acomptePourcent, etalementMoisMax } = paiementModule;
 ---
 <Base
   titre="L'offre"
@@ -95,7 +96,7 @@ const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
         <h3>Pas inclus</h3>
         <ul>
           <li>La mise en service&nbsp;: {miseEnService}.</li>
-          <li>Les modules spécifiques (réservation, catalogue, outils internes…)&nbsp;: sur devis.</li>
+          <li>Les <a href="#modules">modules sur mesure</a> (planning, prise de rendez-vous, devis en ligne…)&nbsp;: sur devis.</li>
           <li>Les adresses mail au-delà de 3&nbsp;: sur devis.</li>
           <li>Le report du temps de modifications&nbsp;: ce qui n'est pas utilisé dans le mois est perdu.</li>
         </ul>
@@ -121,6 +122,12 @@ const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
           et utilisable de votre site.
         </li>
         <li>Paiement mensuel, ou annuel avec un mois offert.</li>
+        <li>
+          <strong>Un module sur mesure</strong> se paie comptant à la livraison, ou de façon
+          étalée, ajouté à votre abonnement&nbsp;: {acomptePourcent}&nbsp;% d'acompte à la
+          commande, puis le reste réparti sur {etalementMoisMax}&nbsp;mois au plus. Si vous
+          partez avant la fin de l'étalement, le reste est dû.
+        </li>
       </ul>
       <Todo note="Lien vers les conditions générales de vente (en cours de rédaction)." />
       <Todo note="CGV, clause de propriété : le client reçoit une copie complète et utilisable de son site ; les briques techniques communes à mes sites restent ma propriété (licence d'utilisation, pas de cession exclusive)." />
@@ -130,6 +137,29 @@ const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
   <section class="grille bloc" aria-labelledby="deroulement">
     <h2 id="deroulement" class="intertitre">Comment ça se passe</h2>
     <Deroulement />
+  </section>
+
+  <section class="grille bloc" aria-labelledby="modules">
+    <h2 id="modules" class="intertitre">Des modules pour votre métier</h2>
+    <p>
+      Quand un site ne suffit plus, je développe l'outil qui colle à votre façon de travailler.
+      Quelques exemples de ce que je peux développer pour vous&nbsp;:
+    </p>
+    <ul class="services modules plein" role="list">
+      {modules.map((m) => (
+        <li>
+          <h3>{m.titre}</h3>
+          <p>{m.texte}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="prose">
+      <p>
+        Chaque module est sur devis, payable comptant à la livraison ou étalé avec votre
+        abonnement.
+      </p>
+      <p class="appels"><a class="appel" href={contact.mailto}>Parlons de votre projet</a></p>
+    </div>
   </section>
 
   <section class="grille bloc" aria-labelledby="autres">
@@ -205,6 +235,16 @@ const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
           Avec un créateur de site en ligne, vous louez un outil et vous faites tout vous-même.
           Ici, un seul interlocuteur s'occupe de tout, et au bout de
           {conditions.engagementMois} mois vous recevez une copie complète de votre site.
+        </p>
+      </details>
+      <details>
+        <summary>Puis-je étaler le paiement d'un module&nbsp;?</summary>
+        <p>
+          Oui. Chaque module est sur devis, et vous choisissez&nbsp;: paiement comptant à la
+          livraison, ou paiement étalé, ajouté à votre abonnement mensuel. Dans ce cas, vous
+          versez {acomptePourcent}&nbsp;% d'acompte à la commande, puis le reste est réparti sur
+          {etalementMoisMax}&nbsp;mois au plus. Si vous partez avant la fin de l'étalement, le
+          reste est dû.
         </p>
       </details>
       <details>

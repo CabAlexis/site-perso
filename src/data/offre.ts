@@ -89,3 +89,44 @@ export const contact = {
   mailto: `mailto:alexis@cabalex.dev?subject=${encodeURIComponent('Mon projet')}`,
   zone: 'Pau et alentours, et à distance partout en France',
 };
+
+/*
+ * Modules sur mesure : des EXEMPLES de ce que je peux développer, pas des
+ * réalisations. Aucun client, aucun chiffre ici.
+ */
+export const modules = z.array(z.object({
+  titre: z.string().min(1),
+  texte: z.string().min(20),
+})).min(1).parse([
+  {
+    titre: 'Planning pour les métiers à domicile',
+    texte: 'Les temps de trajet sont pris en compte et les rendez-vous regroupés par secteur, pour moins rouler et faire plus d’interventions dans la journée.',
+  },
+  {
+    titre: 'Prise de rendez-vous en ligne',
+    texte: 'Vos clients réservent un créneau libre, vous recevez la demande, et des rappels partent automatiquement par e-mail.',
+  },
+  {
+    titre: 'Demande de devis guidée',
+    texte: 'Le client décrit son besoin étape par étape, photos comprises, et vous recevez une demande complète.',
+  },
+  {
+    titre: 'Espace client',
+    texte: 'Devis, factures et documents au même endroit, accessibles par vos clients.',
+  },
+  {
+    titre: 'Catalogue ou réservation',
+    texte: 'Produits, prestations ou matériel, avec leurs disponibilités.',
+  },
+  {
+    titre: 'Un outil propre à votre activité',
+    texte: 'Un besoin qui n’entre dans aucune case : on en parle, et je développe l’outil qui y répond.',
+  },
+]);
+
+// Paiement d'un module, sur devis : comptant à la livraison, ou étalé avec
+// l'abonnement (acompte à la commande, puis le reste sur quelques mois).
+export const paiementModule = {
+  acomptePourcent: 30,
+  etalementMoisMax: 12,
+};
