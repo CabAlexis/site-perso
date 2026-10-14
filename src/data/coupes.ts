@@ -10,23 +10,25 @@ export interface DonneesCoupe {
   resume: string;
   hauteur: number;
   cartouche: [string, string];
+  legende?: string;
   noeuds: Noeud[];
   liens: Lien[];
 }
 
 /* Coupe de la façon de travailler, pour l'accueil (section « Comment je travaille »). */
 export const boucle: DonneesCoupe = {
-  titre: 'Coupe de la boucle de travail avec un client',
-  resume: "Chaque semaine, un point avec le client permet de noter ses idées et ses besoins. Ils sont traités en adaptant ou en combinant ce qui existe déjà, dans des limites posées avant d'écrire le code. La livraison montre l'état réel, et quand quelque chose casse, la cause est cherchée. Puis la boucle revient au client.",
+  titre: 'Schéma de la façon de travailler avec un client',
+  resume: "Vous me faites part de vos idées et de vos besoins lors d'un point régulier. Je pars de votre besoin, dans un cadre fixé ensemble avant de commencer. Je vous dis où en est le travail, franchement. Quand quelque chose casse, je règle la cause. Puis on refait le point.",
+  legende: 'Comment je travaille, en boucle : chaque point avec vous relance le cycle. Les numéros renvoient aux passages du texte.',
   hauteur: 420,
-  cartouche: ['Boucle · Comment je travaille', 'Hebdomadaire'],
+  cartouche: ['Comment je travaille', 'En boucle'],
   noeuds: [
-    { x: 20, y: 14, l: 150, h: 56, titre: 'Client', lignes: ['idées, besoins'], ton: 'externe', etape: 1 },
-    { x: 190, y: 14, l: 150, h: 56, titre: 'Point hebdomadaire', lignes: ['besoins notés'], etape: 1 },
-    { x: 20, y: 110, l: 320, h: 72, titre: "Adapter ou combiner l'existant", lignes: ['connaissance du produit', 'et du code'], etape: 2 },
-    { x: 20, y: 222, l: 150, h: 72, titre: 'Limites', lignes: ['posées avant', "d'écrire le code"], ton: 'contrainte', etape: 4 },
-    { x: 190, y: 222, l: 150, h: 72, titre: 'Livraison', lignes: ['état réel,', 'dit tel quel'], etape: 3 },
-    { x: 190, y: 334, l: 150, h: 72, titre: 'Quand ça casse', lignes: ['cause cherchée,', 'pas contournée'], etape: 5 },
+    { x: 20, y: 14, l: 150, h: 56, titre: 'Vous', lignes: ['idées, besoins'], ton: 'externe', etape: 1 },
+    { x: 190, y: 14, l: 150, h: 56, titre: 'Point régulier', lignes: ['mois ou semaine'], etape: 1 },
+    { x: 20, y: 110, l: 320, h: 72, titre: 'Partir de votre besoin', lignes: ['pas d’un modèle', 'tout fait'], etape: 2 },
+    { x: 20, y: 222, l: 150, h: 72, titre: 'Cadre', lignes: ['fixé ensemble,', 'avant de commencer'], ton: 'contrainte', etape: 4 },
+    { x: 190, y: 222, l: 150, h: 72, titre: 'Où on en est', lignes: ['dit', 'franchement'], etape: 3 },
+    { x: 190, y: 334, l: 150, h: 72, titre: 'Quand ça casse', lignes: ['cause réglée,', 'pas masquée'], etape: 5 },
   ],
   liens: [
     { points: [[170, 42], [190, 42]], etape: 1 },
@@ -34,7 +36,7 @@ export const boucle: DonneesCoupe = {
     { points: [[95, 182], [95, 222]], etape: 4 },
     { points: [[170, 258], [190, 258]], etape: 3 },
     { points: [[265, 294], [265, 334]], etape: 5, tirets: true },
-    { points: [[215, 294], [215, 314], [8, 314], [8, 42], [20, 42]], etape: 1, flux: true, etiquette: { x: 18, y: 334, texte: 'chaque semaine' } },
+    { points: [[215, 294], [215, 314], [8, 314], [8, 42], [20, 42]], etape: 1, flux: true, etiquette: { x: 18, y: 334, texte: 'à chaque point' } },
   ],
 };
 

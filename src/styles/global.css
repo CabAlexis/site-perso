@@ -690,6 +690,8 @@
   .vignette-titre { stroke: var(--encre); stroke-width: 2px; }
 
 
+  /* Sur mobile, le schéma vient après le texte qu'il résume, pas avant le titre. */
+  @media (max-width: 67.99rem) { .facons .coupe { order: 1; } }
   .facons .etape { padding-top: calc(var(--rythme) * 0.6); border-top: 1px solid var(--trait); }
   .facons .etape + .etape { margin-top: calc(var(--rythme) * 0.8); }
   @media (min-width: 68rem) { .facons .repere { top: calc(var(--rythme) * 0.6 + 0.15rem); } }
@@ -794,17 +796,32 @@
   .offre-tete { padding-top: calc(var(--rythme) * 2.5); margin-top: 0; row-gap: calc(var(--rythme) * 1.2); }
 
   /*
-   * Tableau comparatif. Sur petit écran, lui seul défile de côté, jamais la
-   * page ; la région est focalisable pour défiler au clavier.
+   * Tableau comparatif. Sur grand écran, un tableau classique. Sur mobile,
+   * chaque ligne devient un bloc : son libellé en titre, puis une ligne par
+   * formule, nommée par data-formule. Une ligne identique pour les trois
+   * formules se résume à « Les trois formules : … ».
    */
-  .tableau { overflow-x: auto; margin-top: calc(var(--rythme) * 0.4); }
-  .tableau table { width: 100%; min-width: 36rem; border-collapse: collapse; font-size: var(--t--1); line-height: 1.4; }
+  .tableau { margin-top: calc(var(--rythme) * 0.4); }
+  .tableau table { width: 100%; border-collapse: collapse; font-size: var(--t--1); line-height: 1.4; }
   .tableau caption { caption-side: bottom; text-align: start; padding-top: 0.6rem; }
   .tableau :is(th, td) { padding: 0.55rem 1rem 0.55rem 0; text-align: start; vertical-align: top; border-bottom: 1px solid var(--trait); }
   .tableau thead th { font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1; border-bottom: 2px solid var(--encre); }
   .tableau thead td { border-bottom: 2px solid var(--encre); }
-  /* Le libellé de la ligne reste visible pendant le défilement latéral. */
-  .tableau tbody th { position: sticky; left: 0; width: 30%; background: var(--papier); font-weight: 600; font-stretch: 92%; }
+  .tableau tbody th { width: 30%; font-weight: 600; font-stretch: 92%; }
+  @media (max-width: 47.99rem) {
+    .tableau :is(table, tbody, tr, th, td) { display: block; }
+    .tableau thead { display: none; }
+    .tableau tr { padding-block: 0.6rem; border-bottom: 1px solid var(--trait); }
+    .tableau :is(th, td) { width: auto; padding: 0; border: 0; }
+    .tableau caption { display: block; padding: 0 0 0.4rem; }
+    .tableau tbody th { width: auto; margin-bottom: 0.25rem; font-size: var(--t-0); }
+    .tableau td { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; }
+    .tableau td + td { margin-top: 0.2rem; }
+    .tableau td::before { content: attr(data-formule); font-family: var(--mono); color: var(--encre-2); }
+    .tableau tr.identique td + td { display: none; }
+    .tableau tr.identique td { display: flex; flex-wrap: wrap; gap: 0 0.75rem; }
+    .tableau tr.identique td::before { content: 'Les trois formules'; }
+  }
 
   /* Questions fréquentes : <details> natifs, aucun script. */
   .faq { display: grid; }

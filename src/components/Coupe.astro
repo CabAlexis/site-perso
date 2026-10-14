@@ -47,11 +47,13 @@ interface Props {
   cartouche: [string, string];
   // Nom de transition de vue : relie la vignette de l'accueil à cette coupe.
   transition?: string;
+  // Légende propre, à la place de la légende technique (convention de dessin).
+  legende?: string;
 }
 
 import { pointe } from '../lib/pointe';
 
-const { id, titre, resume, hauteur, noeuds, liens, cartouche, transition } = Astro.props;
+const { id, titre, resume, hauteur, noeuds, liens, cartouche, transition, legende } = Astro.props;
 const largeur = 360;
 const hauteurTotale = hauteur + 52;
 
@@ -121,7 +123,6 @@ const hachures = `${id}-hachures`;
     </g>
   </svg>
   <figcaption id={`${id}-legende`} class="etiquette">
-    {titre}. Les numéros renvoient aux passages du texte. Trait tireté : système externe ;
-    hachures : contrainte.
+    {legende ?? `${titre}. Les numéros renvoient aux passages du texte. Trait tireté : système externe ; hachures : contrainte.`}
   </figcaption>
 </figure>

@@ -8,6 +8,19 @@ import { formules, socle, conditions, prestations, contact, modules, paiementMod
 const majuscule = (t: string) => t.replace(/^./, (c) => c.toUpperCase());
 const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
 const { acomptePourcent, etalementMoisMax } = paiementModule;
+
+// Lignes du comparatif : une valeur par formule, dans l'ordre de `formules`.
+const pourChaque = (v: string) => formules.map(() => v);
+const lignes = [
+  { libelle: 'Prix par mois', valeurs: formules.map((f) => `${euros(f.prixMensuel)} HT`) },
+  { libelle: 'Prix par an, un mois offert', valeurs: formules.map((f) => `${euros(prixAnnuel(f))} HT`) },
+  { libelle: 'Pour qui', valeurs: formules.map((f) => f.pourQui) },
+  { libelle: "Création du site et espace d'administration", valeurs: pourChaque('Offerte') },
+  { libelle: 'Mise en service', valeurs: pourChaque(miseEnService) },
+  ...socle.map((element) => ({ libelle: majuscule(element), valeurs: pourChaque('Inclus') })),
+  { libelle: 'Modifications', valeurs: formules.map((f) => f.evolutions) },
+  { libelle: 'Point régulier', valeurs: formules.map((f) => f.point) },
+];
 ---
 <Base
   titre="L'offre"
@@ -30,9 +43,9 @@ const { acomptePourcent, etalementMoisMax } = paiementModule;
 
   <section class="grille bloc" aria-labelledby="comparatif">
     <h2 id="comparatif" class="intertitre">Comparer les formules</h2>
-    <div class="tableau plein" role="region" aria-label="Tableau comparatif, défilable" tabindex="0">
+    <div class="tableau plein">
       <table>
-        <caption class="etiquette">Prix hors taxes. Sur petit écran, le tableau défile de côté.</caption>
+        <caption class="etiquette">Prix hors taxes.</caption>
         <thead>
           <tr>
             <td></td>
@@ -40,40 +53,15 @@ const { acomptePourcent, etalementMoisMax } = paiementModule;
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Prix par mois</th>
-            {formules.map((f) => <td>{euros(f.prixMensuel)} HT</td>)}
-          </tr>
-          <tr>
-            <th scope="row">Prix par an, un mois offert</th>
-            {formules.map((f) => <td>{euros(prixAnnuel(f))} HT</td>)}
-          </tr>
-          <tr>
-            <th scope="row">Pour qui</th>
-            {formules.map((f) => <td>{f.pourQui}</td>)}
-          </tr>
-          <tr>
-            <th scope="row">Création du site et espace d'administration</th>
-            {formules.map(() => <td>Offerte</td>)}
-          </tr>
-          <tr>
-            <th scope="row">Mise en service</th>
-            {formules.map(() => <td>{miseEnService}</td>)}
-          </tr>
-          {socle.map((element) => (
-            <tr>
-              <th scope="row">{majuscule(element)}</th>
-              {formules.map(() => <td>Inclus</td>)}
-            </tr>
-          ))}
-          <tr>
-            <th scope="row">Modifications</th>
-            {formules.map((f) => <td>{f.evolutions}</td>)}
-          </tr>
-          <tr>
-            <th scope="row">Point régulier</th>
-            {formules.map((f) => <td>{f.point}</td>)}
-          </tr>
+          {lignes.map((ligne) => {
+            const identique = ligne.valeurs.every((v) => v === ligne.valeurs[0]);
+            return (
+              <tr class:list={{ identique }}>
+                <th scope="row">{ligne.libelle}</th>
+                {ligne.valeurs.map((v, i) => <td data-formule={formules[i].nom}>{v}</td>)}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
