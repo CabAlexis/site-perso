@@ -73,7 +73,8 @@ import { contact, conditions, prestations, euros } from '../data/offre';
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
     <p>
-      Dans les trois, la création du site est offerte ; seule la mise en service est facturée,
+      Elles s'appliquent à votre site ou à votre bot Discord. Dans les trois, la création est
+      offerte ; seule la mise en service est facturée,
       {euros(conditions.miseEnService)}&nbsp;HT une seule fois. Ensuite, vous payez un abonnement
       mensuel, et je gère tout.
     </p>
@@ -90,10 +91,9 @@ import { contact, conditions, prestations, euros } from '../data/offre';
         utilisable de votre site.
       </p>
       <p>
-        Aussi : des bots Discord sur mesure pour les streamers, les communautés et les
-        serveurs de jeu, à partir de {euros(prestations.bot.aPartirDe)} HT puis
-        {euros(prestations.bot.mensuel)} HT par mois ; des applications métier sur mesure, à
-        partir de {euros(prestations.surMesure.aPartirDe)} HT.
+        Aussi : des bots Discord pour les streamers, les communautés et les serveurs de jeu,
+        avec le même principe (<a href="/offre#bots">le détail</a>) ; des applications métier
+        sur mesure, à partir de {euros(prestations.surMesure.aPartirDe)} HT.
       </p>
       <p class="appels">
         <a class="appel" href={contact.mailto}>Parlons de votre projet</a>

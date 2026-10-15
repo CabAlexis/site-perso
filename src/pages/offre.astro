@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, conditions, prestations, contact, modules, paiementModule, euros, prixAnnuel } from '../data/offre';
+import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, euros, prixAnnuel } from '../data/offre';
 
 const majuscule = (t: string) => t.replace(/^./, (c) => c.toUpperCase());
 const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
@@ -15,7 +15,7 @@ const lignes = [
   { libelle: 'Prix par mois', valeurs: formules.map((f) => `${euros(f.prixMensuel)} HT`) },
   { libelle: 'Prix par an, un mois offert', valeurs: formules.map((f) => `${euros(prixAnnuel(f))} HT`) },
   { libelle: 'Pour qui', valeurs: formules.map((f) => f.pourQui) },
-  { libelle: "Création du site et espace d'administration", valeurs: pourChaque('Offerte') },
+  { libelle: 'Création de votre site ou de votre bot', valeurs: pourChaque('Offerte') },
   { libelle: 'Mise en service', valeurs: pourChaque(miseEnService) },
   ...socle.map((element) => ({ libelle: majuscule(element), valeurs: pourChaque('Inclus') })),
   { libelle: 'Modifications', valeurs: formules.map((f) => f.evolutions) },
@@ -24,7 +24,7 @@ const lignes = [
 ---
 <Base
   titre="L'offre"
-  description={`Site vitrine et espace d'administration offerts, puis un abonnement où je gère tout. Trois formules de ${euros(formules[0].prixMensuel)} à ${euros(formules[2].prixMensuel)} HT par mois.`}
+  description={`Site vitrine et espace d'administration offerts, puis un abonnement où je gère tout. Trois formules de ${euros(formules[0].prixMensuel)} à ${euros(formules[2].prixMensuel)} HT par mois, pour votre site ou votre bot Discord.`}
 >
   <div class="grille bloc offre-tete">
     <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
@@ -38,6 +38,7 @@ const lignes = [
 
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
+    <p>Elles s'appliquent à votre site ou à votre bot Discord.</p>
     <Formules />
     <p class="appels plein">
       <a class="appel" href="https://ici-immobilier.cabalex.dev">Voir un exemple de site</a>
@@ -76,8 +77,8 @@ const lignes = [
       <li>
         <h3>Inclus</h3>
         <ul>
-          <li>La création du site et de son espace d'administration.</li>
-          <li>L'hébergement, le nom de domaine et jusqu'à 3&nbsp;adresses mail.</li>
+          <li>La création de votre site ou de votre bot, avec son espace d'administration.</li>
+          <li>L'hébergement ; pour un site, le nom de domaine et jusqu'à 3&nbsp;adresses mail.</li>
           <li>La maintenance, la sécurité et les sauvegardes.</li>
           <li>Le temps de modifications de votre formule, chaque mois.</li>
           <li>Une réponse sous 48&nbsp;h ouvrées.</li>
@@ -157,16 +158,24 @@ const lignes = [
     <h2 id="autres" class="intertitre">Bots Discord et projets sur mesure</h2>
     <ul class="services plein" role="list">
       <li>
-        <h3>Bots Discord</h3>
+        <h3 id="bots">Bots Discord</h3>
         <p class="formule-prix">
-          <span class="etiquette">à partir de</span>
-          <span class="formule-montant">{euros(prestations.bot.aPartirDe)}</span>
+          <span class="etiquette">mise en service</span>
+          <span class="formule-montant">{euros(conditions.miseEnService)}</span>
           <span class="etiquette">HT</span>
         </p>
-        <p class="etiquette">puis {euros(prestations.bot.mensuel)} HT par mois</p>
+        <p class="etiquette">puis <a href="#formules">la formule de votre choix</a>, dès {euros(formules[0].prixMensuel)}&nbsp;HT par mois</p>
         <p>
-          Pour les streamers, les communautés et les serveurs de jeu. L'abonnement couvre
-          l'hébergement et la maintenance ; il est sans engagement, avec un préavis d'un mois.
+          Votre bot Discord, avec le même principe que mes sites&nbsp;: mise en service, puis un
+          abonnement où je m'occupe de tout. Pour les streamers, les communautés et les serveurs
+          de jeu.
+        </p>
+        <p>
+          Compris&nbsp;: un bot à votre nom avec les modules de base ({socleBot.join(', ')}),
+          configurés pour votre serveur. Des modules sur mesure s'ajoutent sur devis, payables
+          comptant ou étalés avec l'abonnement, comme pour les sites.
+        </p>
+        <p>
           Premier exemple, en accès libre&nbsp;: <a href="/dofintendant">DofIntendant</a>, mon
           bot public et gratuit pour les guildes Dofus.
           <a href="https://dofintendant.cabalex.dev/inviter">Essayez-le sur votre serveur</a>.
@@ -229,6 +238,15 @@ const lignes = [
           Avec un créateur de site en ligne, vous louez un outil et vous faites tout vous-même.
           Ici, un seul interlocuteur s'occupe de tout, et au bout de
           {conditions.engagementMois} mois vous recevez une copie complète de votre site.
+        </p>
+      </details>
+      <details>
+        <summary>Je paie déjà des bots Discord, pourquoi passer par vous&nbsp;?</summary>
+        <p>
+          Vous avez un seul bot, fait pour votre serveur, au lieu de plusieurs abonnements à des
+          bots différents. Vous avez un interlocuteur que vous joignez directement. Les données de
+          votre serveur sont hébergées en France, ne sont jamais revendues ni exploitées, et vous
+          pouvez les récupérer quand vous voulez.
         </p>
       </details>
       <details>

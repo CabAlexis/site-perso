@@ -49,12 +49,13 @@ export const formules: Formule[] = z.array(formule).length(3).parse([
   },
 ]);
 
-// Ce que les trois formules comprennent toutes (le socle de l'Essentiel).
+// Ce que les trois formules comprennent toutes (le socle de l'Essentiel), pour
+// un site comme pour un bot, sauf mention « pour un site ».
 // En minuscules : la liste se lit comme une phrase.
 export const socle = [
   'hébergement',
-  'nom de domaine',
-  'jusqu’à 3\u00a0adresses mail',
+  'nom de domaine (pour un site)',
+  'jusqu’à 3\u00a0adresses mail (pour un site)',
   'maintenance et sécurité',
   'sauvegardes',
   'réponse sous 48\u00a0h ouvrées',
@@ -67,8 +68,17 @@ export const conditions = {
   moisOfferts: 1,
 };
 
+// Un bot Discord suit le même modèle qu'un site : mise en service, puis l'une
+// des trois formules. Ce qu'il comprend au départ, configuré pour le serveur :
+export const socleBot = [
+  'accueil des nouveaux membres',
+  'rôles',
+  'modération',
+  'logs',
+  'tableau de bord web',
+];
+
 export const prestations = {
-  bot: { aPartirDe: 1500, mensuel: 49 },
   surMesure: { aPartirDe: 5000 },
 };
 

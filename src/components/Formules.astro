@@ -25,7 +25,7 @@ const Titre = `h${niveau}`;
       <p class="formule-cible">{f.pourQui}</p>
       <dl class="formule-lignes">
         <div>
-          <dt class="etiquette">Création du site</dt>
+          <dt class="etiquette">Création de votre site ou de votre bot</dt>
           <dd>Offerte, avec son espace d'administration. Mise en service : {euros(conditions.miseEnService)} HT, une seule fois.</dd>
         </div>
         <div>
@@ -44,6 +44,10 @@ const Titre = `h${niveau}`;
     </li>
   ))}
 </ul>
+<p class="plein">
+  Pour un bot, le tableau de bord est servi sur un sous-domaine (votrebot.cabalex.dev) ou sur
+  votre propre domaine.
+</p>
 {prepublication && (
   <p class="etiquette ouverture">Les commandes ouvriront dès l'immatriculation de la société.</p>
 )}
