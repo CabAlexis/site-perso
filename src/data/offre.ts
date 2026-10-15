@@ -26,7 +26,7 @@ export const formules: Formule[] = z.array(formule).length(3).parse([
   {
     id: 'essentiel',
     nom: 'Essentiel',
-    prixMensuel: 39,
+    prixMensuel: 59,
     pourQui: 'Artisans, indépendants',
     evolutions: 'Petites modifications, environ 30\u00a0min par mois',
     point: 'Pas de point programmé',
@@ -63,7 +63,7 @@ export const socle = [
 export const conditions = {
   engagementMois: 12,
   // Seul montant facturé à la création, une fois, hors taxes.
-  miseEnService: 300,
+  miseEnService: 490,
   moisOfferts: 1,
 };
 

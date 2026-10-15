@@ -4,10 +4,11 @@ import Vignette from '../components/Vignette.astro';
 import SuiteAccueil from '../components/SuiteAccueil.astro';
 import { projets } from '../data/projets';
 import { coupes } from '../data/coupes';
+import { formules, euros } from '../data/offre';
 ---
 <Base
   titre="Alexis Cabillic"
-  description="Développeur web freelance à Pau. Je crée votre site, je le mets en ligne, puis je m'en occupe : hébergement, maintenance, modifications. Dès 39 € HT par mois."
+  description={`Développeur web freelance à Pau. Je crée votre site, je le mets en ligne, puis je m'en occupe : hébergement, maintenance, modifications. Dès ${euros(formules[0].prixMensuel)} HT par mois.`}
 >
   <header class="tete">
     <div class="tete-plan" aria-hidden="true">
