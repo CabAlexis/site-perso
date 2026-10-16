@@ -800,6 +800,27 @@
     line-height: 1.02;
     text-wrap: balance;
   }
+  /* « Pourquoi pas… » : trois cartes empilées sur mobile, côte à côte sur
+     grand écran ; la formule recommandée reprend l'habit de sa carte. */
+  .alternatives {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--rythme) 2rem;
+    margin-top: calc(var(--rythme) * 0.4);
+    padding-block: 0;
+    list-style: none;
+  }
+  .alternatives > li { display: grid; gap: 0.5rem; align-content: start; padding-top: 0.8rem; border-top: 2px solid var(--encre); }
+  .alternatives h3 { font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1.1; }
+  .alternatives ul { padding-left: 1.2em; }
+  .alternatives ul li + li { margin-top: 0.4em; }
+  .alternatives ul li::marker { color: var(--trait-fort); }
+  .alternatives > .alternative-recommandee {
+    padding: 0.8rem 1rem 1rem;
+    border-top: 3px solid var(--signal);
+    background: color-mix(in oklab, var(--signal) 6%, var(--papier));
+  }
+  @media (min-width: 60rem) { .alternatives { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .modules > li { border-top: 1px dashed var(--trait-fort); }
   .modules-ligne { padding-top: 0.6rem; border-top: 1px dashed var(--trait-fort); }
   .modules-ligne a { white-space: nowrap; font-weight: 600; }
