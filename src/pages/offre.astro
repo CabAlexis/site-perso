@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, euros, prixAnnuel } from '../data/offre';
+import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, deuxiemeAnnee, auDelaRecommandee, euros, prixAnnuel } from '../data/offre';
 
 const majuscule = (t: string) => t.replace(/^./, (c) => c.toUpperCase());
 const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
@@ -19,6 +19,7 @@ const lignes = [
   { libelle: 'Mise en service', valeurs: pourChaque(miseEnService) },
   ...socle.map((element) => ({ libelle: majuscule(element), valeurs: pourChaque('Inclus') })),
   { libelle: 'Modifications', valeurs: formules.map((f) => f.evolutions) },
+  { libelle: 'Outil métier', valeurs: formules.map((f) => f.outil) },
   { libelle: 'Point régulier', valeurs: formules.map((f) => f.point) },
 ];
 ---
@@ -54,7 +55,11 @@ const lignes = [
         <thead>
           <tr>
             <td></td>
-            {formules.map((f) => <th scope="col">{f.nom}</th>)}
+            {formules.map((f) => (
+              <th scope="col" class:list={{ recommandee: f.recommandee }}>
+                {f.nom}{f.recommandee && <span class="etiquette">Recommandée</span>}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -63,7 +68,7 @@ const lignes = [
             return (
               <tr class:list={{ identique }}>
                 <th scope="row">{ligne.libelle}</th>
-                {ligne.valeurs.map((v, i) => <td data-formule={formules[i].nom}>{v}</td>)}
+                {ligne.valeurs.map((v, i) => <td data-formule={formules[i].nom} class:list={{ recommandee: formules[i].recommandee }}>{v}</td>)}
               </tr>
             );
           })}
@@ -81,7 +86,7 @@ const lignes = [
           <li>La création de votre site ou de votre bot, avec son espace d'administration.</li>
           <li>L'hébergement ; pour un site, le nom de domaine et jusqu'à 3&nbsp;adresses mail.</li>
           <li>La maintenance, la sécurité et les sauvegardes.</li>
-          <li>Le temps de modifications de votre formule, chaque mois.</li>
+          <li>Les évolutions de votre formule, chaque mois.</li>
           <li>Une réponse sous 48&nbsp;h ouvrées.</li>
         </ul>
       </li>
@@ -91,7 +96,7 @@ const lignes = [
           <li>La mise en service&nbsp;: {miseEnService}.</li>
           <li>Les <a href="#modules">modules sur mesure</a> (planning, prise de rendez-vous, devis en ligne…)&nbsp;: sur devis.</li>
           <li>Les adresses mail au-delà de 3&nbsp;: sur devis.</li>
-          <li>Le report du temps de modifications&nbsp;: ce qui n'est pas utilisé dans le mois est perdu.</li>
+          <li>Le report des évolutions&nbsp;: ce qui n'est pas utilisé dans le mois est perdu.</li>
         </ul>
       </li>
     </ul>
@@ -114,6 +119,7 @@ const lignes = [
           fin des {conditions.engagementMois} mois d'engagement, vous recevez une copie complète
           et utilisable de votre site.
         </li>
+        <li>{deuxiemeAnnee}</li>
         <li>Paiement mensuel, ou annuel avec un mois offert.</li>
         <li>
           <strong>Un module sur mesure</strong> se paie comptant à la livraison, ou de façon
@@ -143,13 +149,18 @@ const lignes = [
         <li>
           <h3>{m.titre}</h3>
           <p>{m.texte}</p>
+          {m.avecFormuleRecommandee && (
+            <p class="etiquette"><a href={`#formule-${formuleRecommandee.id}`}>Avec la formule {formuleRecommandee.nom}</a></p>
+          )}
         </li>
       ))}
     </ul>
     <div class="prose">
       <p>
-        Chaque module est sur devis, payable comptant à la livraison ou étalé avec votre
-        abonnement.
+        Un outil simple, comme un planning ou la prise de rendez-vous, se construit avec la
+        <a href={`#formule-${formuleRecommandee.id}`}>formule {formuleRecommandee.nom}</a>&nbsp;:
+        une première version à la mise en service, puis des améliorations chaque mois.
+        {auDelaRecommandee}
       </p>
       <p class="appels"><a class="appel" href={contact.mailto}>Parlons de votre projet</a></p>
     </div>
@@ -173,8 +184,10 @@ const lignes = [
         </p>
         <p>
           Compris&nbsp;: un bot à votre nom avec les modules de base ({socleBot.join(', ')}),
-          configurés pour votre serveur. Des modules sur mesure s'ajoutent sur devis, payables
-          comptant ou étalés avec l'abonnement, comme pour les sites.
+          configurés pour votre serveur. Avec la formule {formuleRecommandee.nom}, chaque
+          évolution du mois peut ajouter une fonction à votre bot ; les modules plus importants
+          s'ajoutent sur devis, payables comptant ou étalés avec l'abonnement, comme pour les
+          sites.
         </p>
         <p>
           Premier exemple, en accès libre&nbsp;: <a href="/dofintendant">DofIntendant</a>, mon
@@ -218,7 +231,7 @@ const lignes = [
         <p>
           L'abonnement continue, sans engagement&nbsp;: vous pouvez l'arrêter avec un mois de
           préavis. Vous recevez une copie complète et utilisable de votre site ; le nom
-          de domaine et les contenus vous appartiennent déjà.
+          de domaine et les contenus vous appartiennent déjà. {deuxiemeAnnee}
         </p>
       </details>
       <details>
@@ -270,8 +283,17 @@ const lignes = [
         </p>
       </details>
       <details>
-        <summary>Le temps de modifications non utilisé est-il reporté&nbsp;?</summary>
-        <p>Non&nbsp;: il vaut pour le mois en cours.</p>
+        <summary>Qu'est-ce qu'une évolution&nbsp;?</summary>
+        <p>
+          Une amélioration ciblée, qui se fait en une session de travail&nbsp;: ajouter une page
+          ou une section, un champ dans un formulaire, un export, une fonction simple dans
+          l'outil ou le bot. Un besoin plus important fait l'objet d'un devis, payable comptant ou
+          étalé, ou d'un passage à la formule {formules.find((f) => f.id === 'partenaire')!.nom}.
+        </p>
+      </details>
+      <details>
+        <summary>Une évolution non utilisée est-elle reportée&nbsp;?</summary>
+        <p>Non&nbsp;: elle vaut pour le mois en cours.</p>
       </details>
     </div>
   </section>

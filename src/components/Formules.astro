@@ -2,7 +2,9 @@
 /*
  * Les trois formules en cartes comparables : mêmes lignes, dans le même ordre,
  * d'une carte à l'autre. Partagé par l'accueil et /offre. Le niveau de titre
- * des cartes suit celui de la section qui les accueille.
+ * des cartes suit celui de la section qui les accueille. La formule
+ * recommandée (champ `recommandee` dans offre.ts) est mise en avant, au centre
+ * sur grand écran et en premier sur mobile ; les deux autres servent de repères.
  */
 import { formules, socle, conditions, euros, prixAnnuel } from '../data/offre';
 import { prepublication } from '../data/publication.json';
@@ -15,8 +17,10 @@ const Titre = `h${niveau}`;
 ---
 <ul class="formules plein" role="list">
   {formules.map((f) => (
-    <li class="formule">
+    <li class:list={['formule', { 'formule-recommandee': f.recommandee }]}>
+      {f.recommandee && <p class="formule-badge etiquette">Recommandée</p>}
       <Titre class="formule-nom" id={`formule-${f.id}`}>{f.nom}</Titre>
+      <p class="formule-accroche">{f.accroche}</p>
       <p class="formule-prix">
         <span class="formule-montant">{euros(f.prixMensuel)}</span>
         <span class="etiquette">HT par mois</span>
@@ -35,6 +39,10 @@ const Titre = `h${niveau}`;
         <div>
           <dt class="etiquette">Modifications</dt>
           <dd>{f.evolutions}</dd>
+        </div>
+        <div>
+          <dt class="etiquette">Outil métier</dt>
+          <dd>{f.outil}</dd>
         </div>
         <div>
           <dt class="etiquette">Point régulier</dt>

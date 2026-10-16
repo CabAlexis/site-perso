@@ -812,6 +812,9 @@
   .tableau thead th { font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1; border-bottom: 2px solid var(--encre); }
   .tableau thead td { border-bottom: 2px solid var(--encre); }
   .tableau tbody th { width: 30%; font-weight: 600; font-stretch: 92%; }
+  .tableau .recommandee { background: color-mix(in oklab, var(--signal) 6%, var(--papier)); padding-inline-start: 0.75rem; }
+  .tableau thead .recommandee { border-bottom-color: var(--signal); }
+  .tableau thead .recommandee .etiquette { display: block; margin-top: 0.3rem; color: var(--signal); font-stretch: normal; font-weight: 500; }
   @media (max-width: 47.99rem) {
     .tableau :is(table, tbody, tr, th, td) { display: block; }
     .tableau thead { display: none; }
@@ -820,6 +823,8 @@
     .tableau caption { display: block; padding: 0 0 0.4rem; }
     .tableau tbody th { width: auto; margin-bottom: 0.25rem; font-size: var(--t-0); }
     .tableau td { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; }
+    .tableau td.recommandee { padding-inline-start: 0; background: none; }
+    .tableau td.recommandee::before { color: var(--signal); }
     .tableau td + td { margin-top: 0.2rem; }
     .tableau td::before { content: attr(data-formule); font-family: var(--mono); color: var(--encre-2); }
     .tableau tr.identique td + td { display: none; }
@@ -870,7 +875,7 @@
    */
   .formules {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: calc(var(--rythme) * 1.25) 2rem;
     margin-block: calc(var(--rythme) * 0.6);
     padding-block: 0;
@@ -878,6 +883,33 @@
   }
   .formule { display: grid; gap: 0.5rem; align-content: start; padding-top: 0.8rem; border-top: 2px solid var(--encre); }
   .formule-nom { font-size: var(--t-2); font-stretch: 62%; font-weight: 800; line-height: 1; }
+  .formule-accroche { font-stretch: 92%; font-style: italic; line-height: 1.35; color: var(--encre-2); }
+  /* La recommandée : filet et aplat léger en couleur signal, badge posé sur
+     le filet (hors des rangées partagées). En tête sur une colonne. */
+  .formule-recommandee {
+    position: relative;
+    order: -1;
+    margin-top: 0.8rem;
+    padding-inline: 1rem;
+    padding-top: 1.4rem;
+    border-top: 3px solid var(--signal);
+    background: color-mix(in oklab, var(--signal) 6%, var(--papier));
+  }
+  .formule-badge {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    translate: 0 -50%;
+    padding: 0.15rem 0.5rem;
+    background: var(--signal);
+    color: var(--papier);
+  }
+  @media (min-width: 60rem) {
+    .formules { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    /* Même retrait en haut pour les trois : les noms restent alignés. */
+    .formule { padding-top: 1.4rem; }
+    .formule-recommandee { order: 0; margin-top: 0; }
+  }
   .formule-prix { display: flex; flex-wrap: wrap; gap: 0.2rem 0.6rem; align-items: baseline; }
   .formule-montant {
     font-size: var(--t-3);
@@ -893,8 +925,8 @@
   .ouverture { color: var(--signal); }
   @supports (grid-template-rows: subgrid) {
     .formules { row-gap: 0; }
-    .formule { grid-row: span 8; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }
-    .formule-lignes { grid-row: span 4; grid-template-rows: subgrid; }
+    .formule { grid-row: span 10; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }
+    .formule-lignes { grid-row: span 5; grid-template-rows: subgrid; }
   }
 
   /* Appel à l'action : le seul aplat du site. Cible tactile de 44 px ; la
