@@ -790,6 +790,16 @@
   .services h3 { font-size: var(--t-2); font-stretch: 62%; font-weight: 800; line-height: 1; }
   /* Modules : des exemples, pas des réalisations. Filet tireté, comme tout ce
      qui n'est pas prouvé sur le site. */
+  /* Accroche « problème du client » de l'accueil : affichage étroit, comme
+     les titres, sans animation. */
+  .accroche-outil {
+    max-width: 22ch;
+    font-size: var(--t-3);
+    font-stretch: 62%;
+    font-weight: 800;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
   .modules > li { border-top: 1px dashed var(--trait-fort); }
   .modules-ligne { padding-top: 0.6rem; border-top: 1px dashed var(--trait-fort); }
   .modules-ligne a { white-space: nowrap; font-weight: 600; }
