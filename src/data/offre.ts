@@ -15,20 +15,34 @@ const formule = z.object({
   nom: z.string().min(1),
   prixMensuel: z.number().int().positive(),
   pourQui: z.string().min(10),
-  // Temps de modifications ou d'évolutions compris chaque mois.
+  // En une ligne, ce que la formule apporte.
+  accroche: z.string().min(1),
+  // Ce que le client obtient chaque mois, sans durée en heures.
   evolutions: z.string().min(1),
+  // Temps de travail mensuel derrière les évolutions. JAMAIS affiché sur le
+  // site : il sert de référence pour les CGV.
+  dureeEvolutionInterne: z.string().min(1),
+  // Outil métier (planning, rendez-vous…) : ce que la formule permet.
+  outil: z.string().min(1),
   point: z.string().min(1),
+  // La formule mise en avant ; les autres servent de repères. Une seule.
+  recommandee: z.boolean().optional(),
 });
 
 export type Formule = z.infer<typeof formule>;
 
-export const formules: Formule[] = z.array(formule).length(3).parse([
+export const formules: Formule[] = z.array(formule).length(3)
+  .refine((fs) => fs.filter((f) => f.recommandee).length === 1, 'Une seule formule recommandée')
+  .parse([
   {
     id: 'essentiel',
     nom: 'Essentiel',
     prixMensuel: 59,
     pourQui: 'Artisans, indépendants',
-    evolutions: 'Petites modifications, environ 30\u00a0min par mois',
+    accroche: 'Le site, sans souci',
+    evolutions: 'Corrections et petites mises à jour de contenu',
+    dureeEvolutionInterne: '30\u00a0min par mois',
+    outil: 'Sur devis, comptant ou étalé',
     point: 'Pas de point programmé',
   },
   {
@@ -36,15 +50,22 @@ export const formules: Formule[] = z.array(formule).length(3).parse([
     nom: 'Suivi',
     prixMensuel: 150,
     pourQui: 'Commerces, TPE dont les besoins évoluent',
-    evolutions: 'Environ 1\u00a0h\u00a030 d’évolutions par mois',
+    accroche: 'Le site et vos outils, qui grandissent avec vous',
+    evolutions: 'Une évolution par mois\u00a0: une page ou une section, un champ dans un formulaire, un export, une fonction simple dans l’outil ou le bot',
+    dureeEvolutionInterne: '1\u00a0h\u00a030 par mois, non reportable',
+    outil: 'Planning, prise de rendez-vous, suivi de clients, petit back-office\u00a0: une première version à la mise en service, puis des améliorations chaque mois',
     point: 'Un point par mois',
+    recommandee: true,
   },
   {
     id: 'partenaire',
     nom: 'Partenaire',
     prixMensuel: 500,
     pourQui: 'PME avec des besoins numériques continus',
-    evolutions: 'Environ une journée d’évolutions par mois',
+    accroche: 'L’accompagnement rapproché',
+    evolutions: 'Des évolutions chaque semaine',
+    dureeEvolutionInterne: 'une journée par mois, non reportable',
+    outil: 'Un outil plus complet, amélioré chaque semaine',
     point: 'Un point par semaine',
   },
 ]);
@@ -93,6 +114,18 @@ export function prixAnnuel(f: Formule): number {
   return f.prixMensuel * (12 - conditions.moisOfferts);
 }
 
+const parId = (id: string) => formules.find((f) => f.id === id)!;
+const essentiel = parId('essentiel');
+const partenaire = parId('partenaire');
+
+export const formuleRecommandee = formules.find((f) => f.recommandee)!;
+
+// Après les 12 mois d'engagement de la formule recommandée.
+export const deuxiemeAnnee = `Après la première année de ${formuleRecommandee.nom}, vous choisissez\u00a0: rester à ${euros(formuleRecommandee.prixMensuel)}\u00a0HT par mois avec les évolutions, ou passer à l’${essentiel.nom}, ${euros(essentiel.prixMensuel)}\u00a0HT par mois, pour le suivi seul.`;
+
+// Ce qui dépasse le volume mensuel de la formule recommandée.
+export const auDelaRecommandee = `Au-delà d’une évolution par mois, le travail fait l’objet d’un devis, comptant ou étalé, ou d’un passage à la formule ${partenaire.nom}.`;
+
 export const contact = {
   email: 'alexis@cabalex.dev',
   // Objet pré-rempli du mail ouvert par l'appel à l'action.
@@ -107,14 +140,19 @@ export const contact = {
 export const modules = z.array(z.object({
   titre: z.string().min(1),
   texte: z.string().min(20),
+  // Assez simple pour se construire avec la formule recommandée : première
+  // version à la mise en service, puis améliorations chaque mois.
+  avecFormuleRecommandee: z.boolean().optional(),
 })).min(1).parse([
   {
     titre: 'Planning pour les métiers à domicile',
     texte: 'Les temps de trajet sont pris en compte et les rendez-vous regroupés par secteur, pour moins rouler et faire plus d’interventions dans la journée.',
+    avecFormuleRecommandee: true,
   },
   {
     titre: 'Prise de rendez-vous en ligne',
     texte: 'Vos clients réservent un créneau libre, vous recevez la demande, et des rappels partent automatiquement par e-mail.',
+    avecFormuleRecommandee: true,
   },
   {
     titre: 'Demande de devis guidée',
