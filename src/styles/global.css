@@ -740,25 +740,37 @@
   @media (min-width: 40rem) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   /*
-   * « Vous, votre métier. / Moi, tout le reste. » : l'argument en typographie
-   * d'affichage, sur le modèle de l'accroche de l'en-tête (une largeur de
-   * police par ligne). Au défilement, chaque ligne s'étire jusqu'à sa largeur.
+   * « Vous, votre métier. / Moi, votre site, vos outils et le suivi. » :
+   * l'argument en typographie d'affichage, sur le modèle de l'accroche de
+   * l'en-tête (une largeur de police par ligne). Au défilement, chaque ligne
+   * s'étire jusqu'à sa largeur.
+   *
+   * L'animation fait varier font-stretch, donc la largeur du texte : pour que
+   * la hauteur ne bouge pas, les lignes sont coupées à la main et ne se
+   * renvoient jamais (nowrap), et la taille est plafonnée pour que l'état le
+   * plus large tienne dans la colonne. Ligne la plus large : « vos outils et
+   * le suivi. » à 125 %, graisse 300 = 10,5 em, + 0,6 em de retrait → 11,5 em.
    */
   .partage {
     display: grid;
+    container-type: inline-size;
     margin-block: calc(var(--rythme) * 0.3) calc(var(--rythme) * 0.6);
-    font-size: clamp(2.1rem, 0.6rem + 5.4vw, 5.6rem);
+  }
+  .partage > span {
+    font-size: min(clamp(2.1rem, 0.6rem + 5.4vw, 5.6rem), 100cqi / 11.5);
     line-height: 0.92;
     letter-spacing: -0.01em;
   }
+  .partage span span { display: block; }
+  .partage span { white-space: nowrap; }
   .partage-l1 { font-stretch: 100%; font-weight: 300; }
-  .partage-l2 { font-stretch: 62%; font-weight: 800; color: var(--signal); padding-inline-start: 0.6em; text-wrap: balance; }
+  .partage-l2 { font-stretch: 62%; font-weight: 800; color: var(--signal); padding-inline-start: 0.6em; }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       .partage-l1 { animation: partage-1 linear both; }
       .partage-l2 { animation: partage-2 linear both; }
     }
-    :root .partage span { animation-timeline: view(); animation-range: entry 0% cover 40%; }
+    :root .partage > span { animation-timeline: view(); animation-range: entry 0% cover 40%; }
   }
   @keyframes partage-1 { from { font-stretch: 62%; font-weight: 800; } }
   @keyframes partage-2 { from { font-stretch: 125%; font-weight: 300; } }
