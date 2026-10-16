@@ -50,6 +50,12 @@ const lignes = [
     <h2 id="formules" class="intertitre">Trois formules</h2>
     <p>Elles s'appliquent à votre site ou à votre bot Discord.</p>
     <Formules />
+    {formuleRecommandee.pourQuiDetail && (
+      <p class="pour-qui plein">
+        <strong>La formule {formuleRecommandee.nom}, pour qui&nbsp;?</strong>
+        {formuleRecommandee.pourQuiDetail}
+      </p>
+    )}
     <p class="appels plein">
       <a class="appel" href="https://ici-immobilier.cabalex.dev">Voir un exemple de site</a>
     </p>

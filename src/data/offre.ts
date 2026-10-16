@@ -27,6 +27,8 @@ const formule = z.object({
   point: z.string().min(1),
   // La formule mise en avant ; les autres servent de repères. Une seule.
   recommandee: z.boolean().optional(),
+  // Pour qui, en une phrase complète (affichée près des cartes sur /offre).
+  pourQuiDetail: z.string().min(10).optional(),
 });
 
 export type Formule = z.infer<typeof formule>;
@@ -56,6 +58,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     outil: 'Planning, prise de rendez-vous, suivi de clients, petit back-office\u00a0: une première version à la mise en service, puis des améliorations chaque mois',
     point: 'Un point par mois',
     recommandee: true,
+    pourQuiDetail: 'Les petites entreprises qui gèrent chaque semaine des rendez-vous, des interventions ou du stock\u00a0: salons, garages, artisans du dépannage, commerces.',
   },
   {
     id: 'partenaire',
