@@ -9,6 +9,14 @@ const majuscule = (t: string) => t.replace(/^./, (c) => c.toUpperCase());
 const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
 const { acomptePourcent, etalementMoisMax } = paiementModule;
 
+// La construction d'un outil avec la formule recommandée, calée sur les
+// étapes de « Comment ça se passe » (même vocabulaire).
+const etapesOutil = [
+  { titre: 'Premier échange', texte: 'On parle de ce qui vous fait perdre du temps chaque semaine.' },
+  { titre: 'Mise en ligne', texte: 'Je livre une première version simple de l’outil, à la mise en service.' },
+  { titre: 'Point mensuel', texte: 'Chaque mois, on l’améliore selon ce qui vous manque à l’usage.' },
+];
+
 // Lignes du comparatif : une valeur par formule, dans l'ordre de `formules`.
 const pourChaque = (v: string) => formules.map(() => v);
 const lignes = [
@@ -136,6 +144,27 @@ const lignes = [
   <section class="grille bloc" aria-labelledby="deroulement">
     <h2 id="deroulement" class="intertitre">Comment ça se passe</h2>
     <Deroulement />
+  </section>
+
+  <section class="grille bloc" aria-labelledby="outil">
+    <h2 id="outil" class="intertitre">Comment se construit votre outil</h2>
+    <p>
+      Avec la formule {formuleRecommandee.nom}, votre outil métier se construit ainsi, sur les
+      mêmes étapes&nbsp;:
+    </p>
+    <ol class="deroulement plein" role="list">
+      {etapesOutil.map((e, i) => (
+        <li>
+          <span class="etiquette" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <strong>{e.titre}</strong>
+          <span>{e.texte}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="prose">
+      Au bout d'un an, vous avez un outil qui colle à votre façon de travailler, et votre site
+      est compris.
+    </p>
   </section>
 
   <section class="grille bloc" aria-labelledby="modules">
