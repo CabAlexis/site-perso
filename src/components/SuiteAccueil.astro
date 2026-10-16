@@ -26,39 +26,39 @@ import { contact, conditions, prestations, euros } from '../data/offre';
       <li>
         <h3>Création</h3>
         <p>
-          Je crée votre site, avec un espace d'administration simple. Vous modifiez vous-même vos
+          Votre site, avec un espace d'administration simple&nbsp;: vous modifiez vous-même vos
           textes, horaires et actualités, en quelques clics.
         </p>
       </li>
       <li>
         <h3>Hébergement</h3>
         <p>
-          J'héberge votre site et je gère vos adresses mail et votre nom de domaine, qui reste à
+          Le site, les adresses mail et le nom de domaine sont pris en charge. Le domaine reste à
           vous, comme vos contenus.
         </p>
       </li>
       <li>
         <h3>Entretien</h3>
-        <p>Je gère la maintenance, la sécurité et les sauvegardes.</p>
+        <p>Maintenance, sécurité et sauvegardes, sans rien à faire de votre côté.</p>
       </li>
       <li>
         <h3>Modifications</h3>
-        <p>Vous m'écrivez, je vous réponds sous 48&nbsp;h ouvrées.</p>
+        <p>Une demande par mail, une réponse sous <span class="cle">48&nbsp;h ouvrées</span>.</p>
       </li>
     </ul>
     <div class="vis-a-vis plein">
       <div class="vav vav-externe">
         <p class="etiquette">Site à faire soi-même</p>
         <p>
-          Vous louez un outil et vous faites tout vous-même&nbsp;: le site, les mises à jour, et
+          Vous louez un outil et le reste repose sur vous&nbsp;: le site, les mises à jour, et
           un support que vous ne connaissez pas.
         </p>
       </div>
       <div class="vav vav-moi">
         <p class="etiquette">Avec moi</p>
         <p>
-          Rien à installer ni à mettre à jour. Un seul interlocuteur s'occupe de tout, et vous
-          le joignez directement.
+          Rien à installer ni à mettre à jour. <span class="cle">Un seul interlocuteur</span>,
+          que vous joignez directement.
         </p>
         <p class="etiquette">{contact.zone}</p>
       </div>
@@ -73,10 +73,10 @@ import { contact, conditions, prestations, euros } from '../data/offre';
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
     <p>
-      Elles s'appliquent à votre site ou à votre bot Discord. Dans les trois, la création est
-      offerte ; seule la mise en service est facturée,
-      {euros(conditions.miseEnService)}&nbsp;HT une seule fois. Ensuite, vous payez un abonnement
-      mensuel, et je gère tout.
+      Elles s'appliquent à votre site ou à votre bot Discord. Dans les trois,
+      <span class="cle">la création est offerte</span> ; seule la mise en service est facturée,
+      {euros(conditions.miseEnService)}&nbsp;HT une seule fois. Un abonnement mensuel couvre
+      ensuite le reste.
     </p>
     <Formules />
     <div class="prose">
@@ -87,8 +87,8 @@ import { contact, conditions, prestations, euros } from '../data/offre';
       </p>
       <p>
         Engagement de {conditions.engagementMois} mois, puis sans engagement, avec un préavis
-        d'un mois. À la fin des {conditions.engagementMois} mois, vous recevez une copie complète et
-        utilisable de votre site.
+        d'un mois. À la fin des {conditions.engagementMois} mois, vous recevez
+        <span class="cle">une copie complète et utilisable</span> de votre site.
       </p>
       <p>
         Aussi : des bots Discord pour les streamers, les communautés et les serveurs de jeu,
@@ -97,7 +97,7 @@ import { contact, conditions, prestations, euros } from '../data/offre';
       </p>
       <p class="appels">
         <a class="appel" href={contact.mailto}>Parlons de votre projet</a>
-        <a href="/offre">Tout le détail de l'offre</a>
+        <a href="/offre">Le détail de l'offre</a>
       </p>
     </div>
   </section>
@@ -136,14 +136,14 @@ import { contact, conditions, prestations, euros } from '../data/offre';
       <h2 id="facons" class="intertitre">Comment je travaille</h2>
         <Etape n={1}>
           <p>
-        <strong>Je vous écoute avant de proposer.</strong> On fait le point régulièrement,
-        chaque mois ou chaque semaine selon votre formule : vous me dites ce qui marche, ce qui
-        manque, et vos idées. Je cherche ensuite la façon la plus simple d'y répondre.
+        <strong>Écouter avant de proposer.</strong> On fait le point régulièrement, chaque
+        mois ou chaque semaine selon votre formule : ce qui marche, ce qui manque, vos idées.
+        Reste ensuite à trouver la façon la plus simple d'y répondre.
           </p>
         </Etape>
         <Etape n={2}>
           <p>
-        <strong>Je pars de votre besoin, pas d'un modèle tout fait.</strong>
+        <strong>Partir de votre besoin, pas d'un modèle tout fait.</strong>
         <a href="/plumes-jumelles">Plumes Jumelles</a> n'était pas une boutique au départ : le
         site a grandi avec les demandes de ses créatrices, et c'est pour ça qu'il a été fait sur
         mesure.
@@ -151,22 +151,22 @@ import { contact, conditions, prestations, euros } from '../data/offre';
         </Etape>
         <Etape n={3}>
           <p>
-        <strong>Je vous dis les choses franchement.</strong> Si quelque chose n'est pas prêt ou
-        ne marche pas, je vous le dis. Sur ce site aussi, chaque projet est présenté tel qu'il
+        <strong>Parler franchement.</strong> Si quelque chose n'est pas prêt ou ne marche pas,
+        vous le savez. Sur ce site aussi, chaque projet est présenté tel qu'il
         est : en ligne, en service, pas encore ouvert ou à l'arrêt.
           </p>
         </Etape>
         <Etape n={4}>
           <p>
-        <strong>On fixe le cadre avant de commencer.</strong> Ce que le site doit faire, ce
-        qu'il ne fera pas, ce qui est compris et ce qui est sur devis : tout est clair avant
-        que je me mette au travail.
+        <strong>Fixer le cadre avant de commencer.</strong> Ce que le site doit faire, ce
+        qu'il ne fera pas, ce qui est compris et ce qui est sur devis : rien ne démarre avant
+        que ce soit clair.
           </p>
         </Etape>
         <Etape n={5}>
           <p>
-        <strong>Quand quelque chose casse, je règle la cause.</strong> Je cherche d'où vient le
-        problème plutôt que de le masquer, pour qu'il ne revienne pas.
+        <strong>Régler la cause, pas le symptôme.</strong> Quand quelque chose casse, je
+        cherche d'où vient le problème plutôt que de le masquer, pour qu'il ne revienne pas.
           </p>
         </Etape>
     </div>
@@ -175,7 +175,7 @@ import { contact, conditions, prestations, euros } from '../data/offre';
   <section class="grille bloc" aria-labelledby="labo">
     <h2 id="labo" class="intertitre">Labo</h2>
     <div class="prose">
-      <p>Mes projets personnels : là où j'expérimente et j'apprends.</p>
+      <p>Projets personnels, pour expérimenter et apprendre.</p>
       <ul class="labo" role="list">
         {labo.map((projet) => (
           <li>

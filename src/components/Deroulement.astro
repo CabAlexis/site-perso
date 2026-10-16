@@ -1,24 +1,24 @@
 ---
 /*
  * « Comment ça se passe » : les quatre étapes, du premier échange au suivi,
- * chacune en une phrase.
+ * chacune en une phrase. Le résumé peut porter un mot clé (.cle).
  */
 const etapes = [
   {
     titre: 'Premier échange',
-    resume: 'On parle de votre activité et de ce que le site doit vous apporter. Gratuit et sans engagement.',
+    resume: 'On parle de votre activité et de ce que le site doit vous apporter. <span class="cle">Gratuit et sans engagement.</span>',
   },
   {
     titre: 'Maquette',
-    resume: 'Je vous montre une première version, et on l’ajuste jusqu’à ce qu’elle vous ressemble.',
+    resume: 'Une première version à l’écran, ajustée jusqu’à ce qu’elle vous ressemble.',
   },
   {
     titre: 'Mise en ligne',
-    resume: 'Je m’occupe de tout : nom de domaine, adresses mail, hébergement.',
+    resume: 'Nom de domaine, adresses mail, hébergement : rien à gérer de votre côté.',
   },
   {
     titre: 'Suivi',
-    resume: 'Une question, une modification ? Vous m’écrivez, je m’en occupe.',
+    resume: 'Le site évolue avec votre activité, au fil de vos demandes.',
   },
 ];
 ---
@@ -27,7 +27,7 @@ const etapes = [
     <li>
       <span class="etiquette" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
       <strong>{e.titre}</strong>
-      <span>{e.resume}</span>
+      <span set:html={e.resume} />
     </li>
   ))}
 </ol>

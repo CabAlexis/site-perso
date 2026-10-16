@@ -164,6 +164,8 @@
   }
 
   strong { font-weight: 650; }
+  /* Mot clé : quelques-uns par page, pas plus. */
+  .cle { color: var(--signal); font-weight: 650; }
   em { font-style: italic; }
 
   ::selection { background: var(--signal); color: var(--papier); }

@@ -24,15 +24,16 @@ const lignes = [
 ---
 <Base
   titre="L'offre"
-  description={`Site vitrine et espace d'administration offerts, puis un abonnement où je gère tout. Trois formules de ${euros(formules[0].prixMensuel)} à ${euros(formules[2].prixMensuel)} HT par mois, pour votre site ou votre bot Discord.`}
+  description={`Site vitrine et espace d'administration offerts, puis un abonnement qui couvre hébergement, maintenance et modifications. Trois formules de ${euros(formules[0].prixMensuel)} à ${euros(formules[2].prixMensuel)} HT par mois, pour votre site ou votre bot Discord.`}
 >
   <div class="grille bloc offre-tete">
     <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
     <h1 class="affiche plein">L'offre</h1>
     <p class="chapeau">
-      Je crée votre site et son espace d'administration, puis je m'en occupe chaque mois :
-      hébergement, nom de domaine, adresses mail, maintenance, sauvegardes, modifications. La
-      création est offerte ; vous payez un abonnement, et vous n'avez plus à vous en occuper.
+      Votre site et son espace d'administration, puis un suivi chaque mois : hébergement, nom
+      de domaine, adresses mail, maintenance, sauvegardes, modifications.
+      <span class="cle">La création est offerte</span> ; un abonnement couvre le reste, sans rien
+      à gérer de votre côté.
     </p>
   </div>
 
@@ -134,8 +135,8 @@ const lignes = [
   <section class="grille bloc" aria-labelledby="modules">
     <h2 id="modules" class="intertitre">Des modules pour votre métier</h2>
     <p>
-      Quand un site ne suffit plus, je développe l'outil qui colle à votre façon de travailler.
-      Quelques exemples de ce que je peux développer pour vous&nbsp;:
+      Un outil qui colle à votre façon de travailler, ajouté à votre site. Quelques
+      exemples&nbsp;:
     </p>
     <ul class="services modules plein" role="list">
       {modules.map((m) => (
@@ -166,8 +167,8 @@ const lignes = [
         </p>
         <p class="etiquette">puis <a href="#formules">la formule de votre choix</a>, dès {euros(formules[0].prixMensuel)}&nbsp;HT par mois</p>
         <p>
-          Votre bot Discord, avec le même principe que mes sites&nbsp;: mise en service, puis un
-          abonnement où je m'occupe de tout. Pour les streamers, les communautés et les serveurs
+          Votre bot Discord, sur le même principe que les sites&nbsp;: mise en service, puis
+          abonnement mensuel. Pour les streamers, les communautés et les serveurs
           de jeu.
         </p>
         <p>
@@ -215,8 +216,8 @@ const lignes = [
       <details>
         <summary>Que se passe-t-il après 12&nbsp;mois&nbsp;?</summary>
         <p>
-          L'abonnement continue, sans engagement&nbsp;: vous pouvez l'arrêter à tout moment avec un
-          mois de préavis. Vous recevez une copie complète et utilisable de votre site ; le nom
+          L'abonnement continue, sans engagement&nbsp;: vous pouvez l'arrêter avec un mois de
+          préavis. Vous recevez une copie complète et utilisable de votre site ; le nom
           de domaine et les contenus vous appartiennent déjà.
         </p>
       </details>
@@ -228,16 +229,17 @@ const lignes = [
           de préavis. Je vous
           remets une copie complète du site, l'export de vos contenus et les accès nécessaires.
           Votre nom de domaine est transféré vers le prestataire de votre choix, et je vous aide
-          à récupérer vos e-mails. Tout est fait dans les 30&nbsp;jours suivant la fin du
+          à récupérer vos e-mails. Ces remises se font dans les 30&nbsp;jours suivant la fin du
           contrat, sans frais.
         </p>
       </details>
       <details>
         <summary>Quelle différence avec un créateur de site en ligne&nbsp;?</summary>
         <p>
-          Avec un créateur de site en ligne, vous louez un outil et vous faites tout vous-même.
-          Ici, un seul interlocuteur s'occupe de tout, et au bout de
-          {conditions.engagementMois} mois vous recevez une copie complète de votre site.
+          Avec un créateur de site en ligne, vous louez un outil et le reste repose sur vous.
+          Ici, un seul interlocuteur prend en charge l'hébergement, l'entretien et les
+          modifications, et au bout de {conditions.engagementMois} mois vous recevez une copie
+          complète de votre site.
         </p>
       </details>
       <details>
@@ -253,7 +255,7 @@ const lignes = [
         <summary>Qu'est-ce qui est inclus dans la mise en service d'un bot&nbsp;?</summary>
         <p>
           Le socle&nbsp;: accueil des nouveaux membres, rôles, modération de base, logs et tableau
-          de bord web. Toute autre fonctionnalité est un module chiffré à part&nbsp;: vous voyez le
+          de bord web. Chaque autre fonctionnalité est un module chiffré à part&nbsp;: vous voyez le
           prix de chaque fonction et vous choisissez ce que vous voulez, maintenant ou plus tard.
         </p>
       </details>
