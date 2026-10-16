@@ -57,7 +57,7 @@ const lignes = [
       </p>
     )}
     <p class="appels plein">
-      <a class="appel" href="https://ici-immobilier.cabalex.dev">Voir un exemple de site</a>
+      <a class="appel" href="#module-planning">Voir un exemple d'outil</a>
     </p>
   </section>
 
@@ -213,7 +213,7 @@ const lignes = [
     </p>
     <ul class="services modules plein" role="list">
       {modules.map((m) => (
-        <li>
+        <li id={m.ancre && `module-${m.ancre}`}>
           <h3>{m.titre}</h3>
           <p>{m.texte}</p>
           {m.avecFormuleRecommandee && (

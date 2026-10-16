@@ -51,7 +51,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     id: 'suivi',
     nom: 'Suivi',
     prixMensuel: 150,
-    pourQui: 'Commerces, TPE dont les besoins évoluent',
+    pourQui: 'Petites entreprises avec rendez-vous, interventions ou stock',
     accroche: 'Le site et vos outils, qui grandissent avec vous',
     evolutions: 'Une évolution par mois\u00a0: une page ou une section, un champ dans un formulaire, un export, une fonction simple dans l’outil ou le bot',
     dureeEvolutionInterne: '1\u00a0h\u00a030 par mois, ne se cumulent pas d’un mois sur l’autre',
@@ -146,9 +146,12 @@ export const modules = z.array(z.object({
   // Assez simple pour se construire avec la formule recommandée : première
   // version à la mise en service, puis améliorations chaque mois.
   avecFormuleRecommandee: z.boolean().optional(),
+  // Ancre (#module-…) pour y renvoyer depuis la page.
+  ancre: z.string().regex(/^[a-z-]+$/).optional(),
 })).min(1).parse([
   {
     titre: 'Planning pour les métiers à domicile',
+    ancre: 'planning',
     texte: 'Les temps de trajet sont pris en compte et les rendez-vous regroupés par secteur, pour moins rouler et faire plus d’interventions dans la journée.',
     avecFormuleRecommandee: true,
   },
