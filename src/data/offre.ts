@@ -34,16 +34,11 @@ const formule = z.object({
   pourQui: z.string().min(10),
   // En une ligne, ce que la formule apporte.
   accroche: z.string().min(1),
-  // Ce que le client obtient chaque mois, sans durée en heures.
-  evolutions: z.string().min(1),
   // Temps de travail mensuel derrière les évolutions. JAMAIS affiché sur le
   // site : il sert de référence pour les CGV.
   dureeEvolutionInterne: z.string().min(1),
-  // Outil métier (planning, rendez-vous…) : ce que la formule permet.
-  outil: z.string().min(1),
-  point: z.string().min(1),
   // Ce que paie le client, en puces courtes, après le socle (`socleCourt`) :
-  // une puce = une chose concrète. Affiché dans les cartes de /offre.
+  // une puce = une chose concrète. Affiché dans les cartes (accueil et /offre).
   comprend: z.array(z.string().min(1).max(100)).min(1),
   // La formule mise en avant ; les autres servent de repères. Une seule.
   recommandee: z.boolean().optional(),
@@ -66,10 +61,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     tarifs: [{ mois: 12, prixMensuel: 59 }],
     pourQui: 'Artisans, indépendants',
     accroche: 'Le site, sans souci',
-    evolutions: 'Corrections et petites mises à jour de contenu',
     dureeEvolutionInterne: '30\u00a0min par mois',
-    outil: 'Sur devis, comptant ou étalé',
-    point: 'Pas de point programmé',
     comprend: ['Corrections et mises à jour de contenu'],
   },
   {
@@ -82,10 +74,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     ],
     pourQui: 'Petites entreprises avec rendez-vous, interventions ou stock',
     accroche: 'Le site et vos outils, qui grandissent avec vous',
-    evolutions: 'Une évolution par mois\u00a0: une page ou une section, un champ dans un formulaire, un export, une fonction simple dans l’outil ou le bot',
     dureeEvolutionInterne: '1\u00a0h\u00a030 par mois, ne se cumulent pas d’un mois sur l’autre',
-    outil: 'Planning, prise de rendez-vous, suivi de clients, petit back-office\u00a0: une première version à la mise en service, puis des améliorations chaque mois',
-    point: 'Un point par mois',
     comprend: [
       'Une évolution par mois (page, champ de formulaire, export, fonction dans l’outil ou le bot)',
       'Un point mensuel',
@@ -104,10 +93,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     ],
     pourQui: 'PME avec des besoins numériques continus',
     accroche: 'L’accompagnement rapproché',
-    evolutions: 'Des évolutions chaque semaine',
     dureeEvolutionInterne: 'une journée par mois, ne se cumulent pas d’un mois sur l’autre',
-    outil: 'Un outil plus complet, amélioré chaque semaine',
-    point: 'Un point par semaine',
     comprend: [
       'Des évolutions chaque semaine',
       'Un point hebdomadaire',
@@ -142,7 +128,8 @@ if (comprisOffre.length !== socle.length - reunis.length + 1) {
 
 // Options payées à l'unité, réservées à une formule (l'Essentiel). L'évolution
 // a la même définition que celle de la Suivi. Le point se fait en visio ou par
-// téléphone ; sa durée est affichée (seule durée du site, à la demande).
+// téléphone ; sa durée est affichée (seule durée du site, à la demande) et
+// sert aussi de référence pour les CGV.
 export const optionsUnite = {
   formule: 'essentiel',
   point: { prix: 79, duree: '45\u00a0min' },
