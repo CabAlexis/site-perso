@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, hebergementEurope, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, optionsUnite, besoinRegulier, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
+import { formules, comprisOffre, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, optionsUnite, besoinRegulier, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
 
 const { acomptePourcent, etalementMoisMax } = paiementModule;
 const partenaire = formules.find((f) => f.id === 'partenaire')!;
@@ -66,7 +66,7 @@ const etapes = [
   <section class="grille bloc" aria-labelledby="compris">
     <h2 id="compris" class="intertitre">Compris dans toutes les formules</h2>
     <ul class="compris plein" role="list">
-      {[...socle, hebergementEurope].map((element) => <li>{element.replace(/^./, (c) => c.toUpperCase())}</li>)}
+      {comprisOffre.map((element) => <li>{element.replace(/^./, (c) => c.toUpperCase())}</li>)}
     </ul>
   </section>
 

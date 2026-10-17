@@ -128,16 +128,24 @@ export const socle = [
   'réponse sous 48\u00a0h ouvrées',
 ];
 
-// Affiché sur /offre avec le socle (pas dans la ligne « Compris » des cartes
-// de l'accueil).
-export const hebergementEurope = 'hébergement et sauvegardes en Europe';
+// « Compris dans toutes les formules » sur /offre : le socle, hébergement et
+// sauvegardes réunis en une ligne qui dit où ils sont. La ligne « Compris »
+// des cartes de l'accueil garde le socle tel quel.
+const reunis = ['hébergement', 'sauvegardes'];
+export const comprisOffre = [
+  'hébergement et sauvegardes en Europe',
+  ...socle.filter((e) => !reunis.includes(e)),
+];
+if (comprisOffre.length !== socle.length - reunis.length + 1) {
+  throw new Error('comprisOffre : « hébergement » ou « sauvegardes » introuvable dans le socle');
+}
 
 // Options payées à l'unité, réservées à une formule (l'Essentiel). L'évolution
-// a la même définition que celle de la Suivi. La durée du point n'est JAMAIS
-// affichée sur le site.
+// a la même définition que celle de la Suivi. Le point se fait en visio ou par
+// téléphone ; sa durée est affichée (seule durée du site, à la demande).
 export const optionsUnite = {
   formule: 'essentiel',
-  point: { prix: 79, dureeInterne: '45\u00a0min, en visio ou par téléphone' },
+  point: { prix: 79, duree: '45\u00a0min' },
   evolution: { prix: 119 },
 };
 

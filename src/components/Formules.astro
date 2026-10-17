@@ -99,7 +99,7 @@ const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
             {[socleCourt, ...f.comprend].map((c) => <li>{c}</li>)}
             {optionsUnite.formule === f.id && (
               <li class="formule-option">
-                À l'unité&nbsp;: un point ({euros(optionsUnite.point.prix)}&nbsp;HT) ou une évolution
+                À l'unité&nbsp;: un point de {optionsUnite.point.duree} ({euros(optionsUnite.point.prix)}&nbsp;HT) ou une évolution
                 ({euros(optionsUnite.evolution.prix)}&nbsp;HT)
               </li>
             )}
