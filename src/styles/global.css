@@ -959,6 +959,7 @@
   .formule-lignes > div { display: grid; gap: 0.1rem; align-content: start; padding-top: 0.4rem; border-top: 1px solid var(--trait); }
   .formule-lignes dd { line-height: 1.45; }
   .ouverture { color: var(--signal); }
+  .engagement { display: grid; gap: 0.4rem; max-width: 60ch; padding-left: 1rem; border-left: 3px solid var(--encre); }
   .pour-qui { max-width: 60ch; padding-left: 1rem; border-left: 3px solid var(--signal); }
   .pour-qui strong { display: block; }
   @supports (grid-template-rows: subgrid) {

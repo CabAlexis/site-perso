@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, deuxiemeAnnee, auDelaRecommandee, euros } from '../data/offre';
+import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
 
 const { acomptePourcent, etalementMoisMax } = paiementModule;
 const partenaire = formules.find((f) => f.id === 'partenaire')!;
@@ -49,6 +49,10 @@ const etapes = [
       {euros(conditions.miseEnService)}&nbsp;HT, une seule fois.
     </p>
     <Formules variante="offre" />
+    <div class="engagement plein">
+      <p><strong>{engagementTotal}</strong></p>
+      <p>{finEngagement}</p>
+    </div>
     {formuleRecommandee.pourQuiDetail && (
       <p class="pour-qui plein">
         <strong>La formule {formuleRecommandee.nom}, pour qui&nbsp;?</strong>
@@ -159,19 +163,33 @@ const etapes = [
         </p>
       </details>
       <details>
-        <summary>Que se passe-t-il après 12&nbsp;mois&nbsp;?</summary>
+        <summary>Comment se passe le paiement&nbsp;?</summary>
         <p>
-          L'abonnement continue, sans engagement&nbsp;: vous pouvez l'arrêter avec un mois de
-          préavis. Vous recevez une copie complète et utilisable de votre site ; le nom
-          de domaine et les contenus vous appartiennent déjà. {deuxiemeAnnee}
+          Sur facture&nbsp;: pas de paiement en ligne. Vous payez chaque mois, ou d'avance pour
+          toute la durée choisie. Payés d'avance, {conditions.engagementMois}&nbsp;mois n'en
+          coûtent que {moisPayes(12)}&nbsp;: un mois offert. Pour 6 ou 3&nbsp;mois d'avance, c'est
+          le montant total, sans remise. La mise en service, {euros(conditions.miseEnService)}&nbsp;HT,
+          est facturée une seule fois, quelle que soit la formule.
+        </p>
+      </details>
+      <details>
+        <summary>Que se passe-t-il à la fin de l'engagement&nbsp;?</summary>
+        <p>
+          {engagementTotal} {finEngagement} Au-delà de {conditions.engagementMois}&nbsp;mois
+          cumulés, l'{formules[0].nom} est sans engagement&nbsp;: vous l'arrêtez avec un mois de
+          préavis.
+        </p>
+        <p>
+          Après {conditions.engagementMois}&nbsp;mois d'abonnement cumulés, toutes formules
+          confondues, vous recevez une copie complète et utilisable de votre site ; le nom de
+          domaine et les contenus vous appartiennent déjà.
         </p>
       </details>
       <details>
         <summary>Et si je veux partir&nbsp;?</summary>
         <p>
           Pendant les {conditions.engagementMois} premiers mois, les mois restants jusqu'à la fin
-          de l'engagement sont dus. À la fin de votre engagement, vous pouvez partir avec un mois
-          de préavis. Je vous
+          de l'engagement sont dus. Ensuite, vous pouvez partir avec un mois de préavis. Je vous
           remets une copie complète du site, l'export de vos contenus et les accès nécessaires.
           Votre nom de domaine est transféré vers le prestataire de votre choix, et je vous aide
           à récupérer vos e-mails. Ces remises se font dans les 30&nbsp;jours suivant la fin du
