@@ -954,6 +954,38 @@
     line-height: 1;
     font-variant-numeric: lining-nums tabular-nums;
   }
+  /*
+   * Choix de la durée et du paiement (/offre). Chaque carte porte toutes les
+   * combinaisons dans des .tarif (display: contents, pour que leurs lignes
+   * restent dans la grille partagée) ; seule celle qui est cochée s'affiche.
+   * Sans :has(), les règles du bas sont ignorées et 12 mois, paiement
+   * mensuel, reste affiché.
+   */
+  .choix { display: flex; flex-wrap: wrap; gap: 0.75rem 2.5rem; margin-top: calc(var(--rythme) * 0.4); }
+  .choix fieldset { display: flex; flex-wrap: wrap; gap: 0.5rem; min-inline-size: 0; padding: 0; border: 0; }
+  .choix legend { margin-bottom: 0.4rem; padding: 0; }
+  .choix label {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--trait-fort);
+    font-stretch: 92%;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .choix input { width: 1.05rem; height: 1.05rem; margin: 0; accent-color: var(--signal); }
+  .choix label:has(:checked) { border-color: var(--signal); background: color-mix(in oklab, var(--signal) 8%, var(--papier)); }
+  .formule .tarif { display: none; }
+  .formule .tarif:is([data-duree="12"], [data-paiement="mensuel"]) { display: contents; }
+  :root:has(#duree-6:checked) .tarif[data-duree="12"],
+  :root:has(#duree-3:checked) .tarif[data-duree="12"],
+  :root:has(#paiement-avance:checked) .tarif[data-paiement="mensuel"] { display: none; }
+  :root:has(#duree-6:checked) .tarif[data-duree="6"],
+  :root:has(#duree-3:checked) .tarif[data-duree="3"],
+  :root:has(#paiement-avance:checked) .tarif[data-paiement="avance"] { display: contents; }
+  .formule-absente { align-self: end; font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1.1; color: var(--encre-2); }
   .formule-cible { font-stretch: 92%; font-weight: 600; line-height: 1.35; }
   .formule-lignes { display: grid; gap: 0.5rem; margin-top: 0.3rem; }
   .formule-lignes > div { display: grid; gap: 0.1rem; align-content: start; padding-top: 0.4rem; border-top: 1px solid var(--trait); }

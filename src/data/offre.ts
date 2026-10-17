@@ -172,8 +172,9 @@ const partenaire = parId('partenaire');
 
 export const formuleRecommandee = formules.find((f) => f.recommandee)!;
 
-// « 3 ou 6 mois » : les durées courtes proposées, toutes formules confondues.
-const ou = (ns: number[]) => ns.join(', ').replace(/, (?=[^,]*$)/, ' ou ');
+// [3, 6] → « 3 ou 6 ».
+export const ou = (ns: number[]) => ns.join(', ').replace(/, (?=[^,]*$)/, ' ou ');
+// Les durées courtes proposées, toutes formules confondues.
 const dureesCourtes = durees.filter((d) => d < 12 && formules.some((f) => tarifPour(f, d))).reverse();
 const renouvelables = formules.filter((f) => f.tarifs.length > 1);
 

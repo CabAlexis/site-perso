@@ -8,8 +8,13 @@
  *
  * Variante « offre » : la création, la mise en service et ce qui est compris
  * sont dits une fois autour des cartes, qui ne gardent que ce qui les distingue.
+ * Elle ajoute le choix de la durée et du paiement : des boutons radio, et
+ * chaque carte porte toutes les combinaisons, dont le CSS n'affiche que celle
+ * qui est cochée (global.css, « Choix de la durée »). Aucun script : sans
+ * :has(), la page reste lisible en 12 mois, paiement mensuel.
  */
-import { formules, socle, conditions, euros, prixAnnuel } from '../data/offre';
+import { formules, socle, conditions, durees, paiements, euros, prixAnnuel, tarifPour, montantAvance, moisPayes, ou } from '../data/offre';
+import type { Tarif } from '../data/offre';
 import { prepublication } from '../data/publication.json';
 
 interface Props {
@@ -19,18 +24,73 @@ interface Props {
 const { niveau = 3, variante = 'accueil' } = Astro.props;
 const accueil = variante === 'accueil';
 const Titre = `h${niveau}`;
+
+const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
+const duree = (t: Tarif) => (t.nom ? `${t.nom} de ${t.mois} mois` : `${t.mois} mois`);
 ---
+{!accueil && (
+  <div class="choix plein">
+    <fieldset>
+      <legend class="etiquette">Durée d'engagement</legend>
+      {durees.map((d) => (
+        <label><input type="radio" name="duree" id={`duree-${d}`} value={d} checked={d === 12} /> {d}&nbsp;mois</label>
+      ))}
+    </fieldset>
+    <fieldset>
+      <legend class="etiquette">Paiement</legend>
+      {paiements.map((p) => (
+        <label><input type="radio" name="paiement" id={`paiement-${p}`} value={p} checked={p === 'mensuel'} /> {libellesPaiement[p]}</label>
+      ))}
+    </fieldset>
+  </div>
+)}
 <ul class:list={['formules plein', { 'formules-offre': !accueil }]} role="list">
   {formules.map((f) => (
     <li class:list={['formule', { 'formule-recommandee': f.recommandee }]}>
       {f.recommandee && <p class="formule-badge etiquette">Recommandée</p>}
       <Titre class="formule-nom" id={`formule-${f.id}`}>{f.nom}</Titre>
       <p class="formule-accroche">{f.accroche}</p>
-      <p class="formule-prix">
-        <span class="formule-montant">{euros(f.prixMensuel)}</span>
-        <span class="etiquette">HT par mois</span>
-      </p>
-      <p class="etiquette">ou {euros(prixAnnuel(f))} HT par an, un mois offert</p>
+      {accueil ? (
+        <>
+          <p class="formule-prix">
+            <span class="formule-montant">{euros(f.prixMensuel)}</span>
+            <span class="etiquette">HT par mois</span>
+          </p>
+          <p class="etiquette">ou {euros(prixAnnuel(f))} HT par an, un mois offert</p>
+        </>
+      ) : durees.map((d) => {
+        const t = tarifPour(f, d);
+        if (!t) {
+          return (
+            <div class="tarif" data-duree={d}>
+              <p class="formule-absente">Pas de formule {d}&nbsp;mois</p>
+              <p class="etiquette">{f.nom}&nbsp;: {ou(f.tarifs.map((x) => x.mois).reverse())}&nbsp;mois uniquement</p>
+            </div>
+          );
+        }
+        return (
+          <div class="tarif" data-duree={d}>
+            <div class="tarif" data-paiement="mensuel">
+              <p class="formule-prix">
+                <span class="formule-montant">{euros(t.prixMensuel)}</span>
+                <span class="etiquette">HT par mois</span>
+              </p>
+              <p class="etiquette">{duree(t)}, payé chaque mois</p>
+            </div>
+            <div class="tarif" data-paiement="avance">
+              <p class="formule-prix">
+                <span class="formule-montant">{euros(montantAvance(t))}</span>
+                <span class="etiquette">HT pour {t.mois}&nbsp;mois</span>
+              </p>
+              <p class="etiquette">
+                {duree(t)}, payé d'avance&nbsp;: {moisPayes(t.mois) < t.mois
+                  ? `${moisPayes(t.mois)}\u00a0mois payés, un mois offert`
+                  : `${t.mois} × ${euros(t.prixMensuel)}\u00a0HT`}
+              </p>
+            </div>
+          </div>
+        );
+      })}
       <p class="formule-cible">{f.pourQui}</p>
       <dl class="formule-lignes">
         {accueil && (
@@ -64,6 +124,7 @@ const Titre = `h${niveau}`;
     Pour un bot, le tableau de bord est servi sur un sous-domaine (votrebot.cabalex.dev) ou sur
     votre propre domaine.
   </p>
+  <p class="plein"><a href="/offre#formules">Durées et paiement d'avance</a></p>
 )}
 {prepublication && (
   <p class="etiquette ouverture">Ouverture des commandes à l'immatriculation de la société.</p>
