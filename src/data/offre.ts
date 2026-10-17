@@ -115,6 +115,10 @@ export const socle = [
   'réponse sous 48\u00a0h ouvrées',
 ];
 
+// Affiché sur /offre avec le socle (pas dans la ligne « Compris » des cartes
+// de l'accueil).
+export const hebergementEurope = 'hébergement et sauvegardes en Europe';
+
 export const conditions = {
   // Engagement minimum, au total, toutes formules confondues : après une
   // formule de 3 ou 6 mois, le client passe en Essentiel jusqu'à 12 mois.

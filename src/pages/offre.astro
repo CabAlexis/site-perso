@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
+import { formules, socle, hebergementEurope, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
 
 const { acomptePourcent, etalementMoisMax } = paiementModule;
 const partenaire = formules.find((f) => f.id === 'partenaire')!;
@@ -36,18 +36,16 @@ const etapes = [
     <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
     <h1 class="affiche plein">L'offre</h1>
     <p class="chapeau">
-      Je crée votre site ou votre bot, avec son espace d'administration&nbsp;:
-      <span class="cle">la création est offerte</span>. Un abonnement couvre ensuite
-      l'hébergement, la maintenance et les modifications, sans rien à gérer de votre côté.
+      Je crée votre site ou votre bot, avec son espace d'administration, puis un abonnement
+      couvre l'hébergement, la maintenance et les modifications, sans rien à gérer de votre
+      côté. <span class="cle">La création est offerte</span>&nbsp;: seule la mise en service est
+      facturée, {euros(conditions.miseEnService)}&nbsp;HT une fois.
     </p>
   </div>
 
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
-    <p>
-      Pour votre site ou votre bot Discord. Seule la mise en service est facturée&nbsp;:
-      {euros(conditions.miseEnService)}&nbsp;HT, une seule fois.
-    </p>
+    <p>Pour votre site ou votre bot Discord.</p>
     <Formules variante="offre" />
     <div class="engagement plein">
       <p><strong>{engagementTotal}</strong></p>
@@ -67,7 +65,7 @@ const etapes = [
   <section class="grille bloc" aria-labelledby="compris">
     <h2 id="compris" class="intertitre">Compris dans toutes les formules</h2>
     <ul class="compris plein" role="list">
-      {socle.map((element) => <li>{element.replace(/^./, (c) => c.toUpperCase())}</li>)}
+      {[...socle, hebergementEurope].map((element) => <li>{element.replace(/^./, (c) => c.toUpperCase())}</li>)}
     </ul>
   </section>
 
@@ -97,6 +95,7 @@ const etapes = [
         <h3>Formule {formuleRecommandee.nom}</h3>
         <ul>
           <li>Une première version rapide, puis des ajustements chaque mois.</li>
+          <li>Un seul interlocuteur.</li>
           <li>Site et outil reliés&nbsp;: un rendez-vous pris sur le site arrive dans votre planning.</li>
         </ul>
       </li>
