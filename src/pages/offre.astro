@@ -3,32 +3,29 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, deuxiemeAnnee, auDelaRecommandee, euros, prixAnnuel } from '../data/offre';
+import { formules, socle, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, deuxiemeAnnee, auDelaRecommandee, euros } from '../data/offre';
 
-const majuscule = (t: string) => t.replace(/^./, (c) => c.toUpperCase());
-const miseEnService = `${euros(conditions.miseEnService)} HT, une fois`;
 const { acomptePourcent, etalementMoisMax } = paiementModule;
+const partenaire = formules.find((f) => f.id === 'partenaire')!;
 
-// La construction d'un outil avec la formule recommandée, calée sur les
-// étapes de « Comment ça se passe » (même vocabulaire).
-const etapesOutil = [
-  { titre: 'Premier échange', texte: 'On parle de ce qui vous fait perdre du temps chaque semaine.' },
-  { titre: 'Mise en ligne', texte: 'Je livre une première version simple de l’outil, à la mise en service.' },
-  { titre: 'Point mensuel', texte: 'Chaque mois, on l’améliore selon ce qui vous manque à l’usage.' },
-];
-
-// Lignes du comparatif : une valeur par formule, dans l'ordre de `formules`.
-const pourChaque = (v: string) => formules.map(() => v);
-const lignes = [
-  { libelle: 'Prix par mois', valeurs: formules.map((f) => `${euros(f.prixMensuel)} HT`) },
-  { libelle: 'Prix par an, un mois offert', valeurs: formules.map((f) => `${euros(prixAnnuel(f))} HT`) },
-  { libelle: 'Pour qui', valeurs: formules.map((f) => f.pourQui) },
-  { libelle: 'Création de votre site ou de votre bot', valeurs: pourChaque('Offerte') },
-  { libelle: 'Mise en service', valeurs: pourChaque(miseEnService) },
-  ...socle.map((element) => ({ libelle: majuscule(element), valeurs: pourChaque('Inclus') })),
-  { libelle: 'Modifications', valeurs: formules.map((f) => f.evolutions) },
-  { libelle: 'Outil métier', valeurs: formules.map((f) => f.outil) },
-  { libelle: 'Point régulier', valeurs: formules.map((f) => f.point) },
+// Le déroulé du site et la construction de l'outil, en quatre étapes.
+const etapes = [
+  {
+    titre: 'Premier échange',
+    resume: 'On parle de votre activité et de ce qui vous fait perdre du temps chaque semaine. <span class="cle">Gratuit et sans engagement.</span>',
+  },
+  {
+    titre: 'Maquette',
+    resume: 'Votre site à l’écran, et votre outil s’il y en a un, ajustés jusqu’à ce qu’ils vous ressemblent.',
+  },
+  {
+    titre: 'Mise en ligne',
+    resume: 'Le site et une première version simple de l’outil. Nom de domaine, adresses mail, hébergement&nbsp;: rien à gérer de votre côté.',
+  },
+  {
+    titre: 'Suivi',
+    resume: 'Chaque mois, on améliore le site et l’outil selon ce qui vous manque à l’usage.',
+  },
 ];
 ---
 <Base
@@ -39,17 +36,19 @@ const lignes = [
     <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
     <h1 class="affiche plein">L'offre</h1>
     <p class="chapeau">
-      Votre site et son espace d'administration, puis un suivi chaque mois : hébergement, nom
-      de domaine, adresses mail, maintenance, sauvegardes, modifications.
-      <span class="cle">La création est offerte</span> ; un abonnement couvre le reste, sans rien
-      à gérer de votre côté.
+      Je crée votre site ou votre bot, avec son espace d'administration&nbsp;:
+      <span class="cle">la création est offerte</span>. Un abonnement couvre ensuite
+      l'hébergement, la maintenance et les modifications, sans rien à gérer de votre côté.
     </p>
   </div>
 
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
-    <p>Elles s'appliquent à votre site ou à votre bot Discord.</p>
-    <Formules />
+    <p>
+      Pour votre site ou votre bot Discord. Seule la mise en service est facturée&nbsp;:
+      {euros(conditions.miseEnService)}&nbsp;HT, une seule fois.
+    </p>
+    <Formules variante="offre" />
     {formuleRecommandee.pourQuiDetail && (
       <p class="pour-qui plein">
         <strong>La formule {formuleRecommandee.nom}, pour qui&nbsp;?</strong>
@@ -61,207 +60,73 @@ const lignes = [
     </p>
   </section>
 
+  <section class="grille bloc" aria-labelledby="compris">
+    <h2 id="compris" class="intertitre">Compris dans toutes les formules</h2>
+    <ul class="compris plein" role="list">
+      {socle.map((element) => <li>{element.replace(/^./, (c) => c.toUpperCase())}</li>)}
+    </ul>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="deroulement">
+    <h2 id="deroulement" class="intertitre">Comment ça se passe</h2>
+    <Deroulement etapes={etapes} />
+  </section>
+
   <section class="grille bloc" aria-labelledby="pourquoi">
-    <h2 id="pourquoi" class="intertitre">Pourquoi pas un logiciel standard ou un gros devis&nbsp;?</h2>
+    <h2 id="pourquoi" class="intertitre">Pourquoi la formule {formuleRecommandee.nom}&nbsp;?</h2>
     <ul class="alternatives plein" role="list">
       <li>
         <h3>Logiciel standard</h3>
         <ul>
-          <li>Prêt immédiatement, mais c'est à vous de vous adapter à lui.</li>
-          <li>Un support anonyme.</li>
+          <li>Prêt tout de suite, mais c'est à vous de vous adapter à lui.</li>
           <li>Pas relié à votre site.</li>
         </ul>
       </li>
       <li>
         <h3>Gros devis sur mesure</h3>
         <ul>
-          <li>Adapté, mais il faut tout prévoir à l'avance et payer d'un coup.</li>
+          <li>Il faut tout prévoir à l'avance et payer d'un coup.</li>
           <li>Ce qu'on n'a pas prévu coûte un nouveau devis.</li>
         </ul>
       </li>
       <li class="alternative-recommandee">
         <h3>Formule {formuleRecommandee.nom}</h3>
         <ul>
-          <li>Une première version rapide, puis des ajustements chaque mois selon l'usage réel.</li>
-          <li>Un seul interlocuteur.</li>
-          <li>
-            Site et outil reliés&nbsp;: par exemple, un rendez-vous pris sur le site arrive dans
-            votre planning.
-          </li>
+          <li>Une première version rapide, puis des ajustements chaque mois.</li>
+          <li>Site et outil reliés&nbsp;: un rendez-vous pris sur le site arrive dans votre planning.</li>
         </ul>
       </li>
     </ul>
   </section>
 
-  <section class="grille bloc" aria-labelledby="comparatif">
-    <h2 id="comparatif" class="intertitre">Comparer les formules</h2>
-    <div class="tableau plein">
-      <table>
-        <caption class="etiquette">Prix hors taxes.</caption>
-        <thead>
-          <tr>
-            <td></td>
-            {formules.map((f) => (
-              <th scope="col" class:list={{ recommandee: f.recommandee }}>
-                {f.nom}{f.recommandee && <span class="etiquette">Recommandée</span>}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {lignes.map((ligne) => {
-            const identique = ligne.valeurs.every((v) => v === ligne.valeurs[0]);
-            return (
-              <tr class:list={{ identique }}>
-                <th scope="row">{ligne.libelle}</th>
-                {ligne.valeurs.map((v, i) => <td data-formule={formules[i].nom} class:list={{ recommandee: formules[i].recommandee }}>{v}</td>)}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="grille bloc" aria-labelledby="inclus">
-    <h2 id="inclus" class="intertitre">Ce qui est inclus, ce qui ne l'est pas</h2>
-    <ul class="services plein" role="list">
+  <section class="grille bloc" aria-labelledby="sur-mesure">
+    <h2 id="sur-mesure" class="intertitre">Sur mesure</h2>
+    <ul class="sur-mesure plein" role="list">
       <li>
-        <h3>Inclus</h3>
+        <h3 id="modules">Modules</h3>
+        <p>Un outil ajouté à votre site, par exemple&nbsp;:</p>
         <ul>
-          <li>La création de votre site ou de votre bot, avec son espace d'administration.</li>
-          <li>L'hébergement ; pour un site, le nom de domaine et jusqu'à 3&nbsp;adresses mail.</li>
-          <li>La maintenance, la sécurité et les sauvegardes.</li>
-          <li>Les évolutions de votre formule, chaque mois.</li>
-          <li>Une réponse sous 48&nbsp;h ouvrées.</li>
+          {modules.map((m) => (
+            <li id={m.ancre && `module-${m.ancre}`}><strong>{m.titre}.</strong> {m.texte}</li>
+          ))}
         </ul>
+        <p>
+          Un outil simple se construit avec la
+          <a href={`#formule-${formuleRecommandee.id}`}>formule {formuleRecommandee.nom}</a>.
+          {auDelaRecommandee}
+        </p>
       </li>
-      <li>
-        <h3>Pas inclus</h3>
-        <ul>
-          <li>La mise en service&nbsp;: {miseEnService}.</li>
-          <li>Les <a href="#modules">modules sur mesure</a> (planning, prise de rendez-vous, devis en ligne…)&nbsp;: sur devis.</li>
-          <li>Les adresses mail au-delà de 3&nbsp;: sur devis.</li>
-          <li>Les évolutions ne se cumulent pas d'un mois sur l'autre.</li>
-        </ul>
-      </li>
-    </ul>
-  </section>
-
-  <section class="grille bloc" aria-labelledby="engagement">
-    <h2 id="engagement" class="intertitre">Engagement et propriété</h2>
-    <div class="prose">
-      <ul>
-        <li>
-          <strong>{conditions.engagementMois} mois d'engagement</strong>, puis sans engagement :
-          vous arrêtez quand vous voulez, avec un préavis d'un mois.
-        </li>
-        <li>
-          Si vous partez avant la fin des {conditions.engagementMois} mois, les mois restants
-          jusqu'à la fin de l'engagement sont dus.
-        </li>
-        <li>
-          <strong>Le nom de domaine et les contenus vous appartiennent</strong>, toujours. À la
-          fin des {conditions.engagementMois} mois d'engagement, vous recevez une copie complète
-          et utilisable de votre site.
-        </li>
-        <li>{deuxiemeAnnee}</li>
-        <li>Paiement mensuel, ou annuel avec un mois offert.</li>
-        <li>
-          <strong>Un module sur mesure</strong> se paie comptant à la livraison, ou de façon
-          étalée, ajouté à votre abonnement&nbsp;: {acomptePourcent}&nbsp;% d'acompte à la
-          commande, puis le reste réparti sur {etalementMoisMax}&nbsp;mois au plus. Si vous
-          partez avant la fin de l'étalement, le reste est dû.
-        </li>
-      </ul>
-      <Todo note="Lien vers les conditions générales de vente (en cours de rédaction)." />
-      <Todo note="CGV, clause de propriété : le client reçoit une copie complète et utilisable de son site ; les briques techniques communes à mes sites restent ma propriété (licence d'utilisation, pas de cession exclusive)." />
-    </div>
-  </section>
-
-  <section class="grille bloc" aria-labelledby="deroulement">
-    <h2 id="deroulement" class="intertitre">Comment ça se passe</h2>
-    <Deroulement />
-  </section>
-
-  <section class="grille bloc" aria-labelledby="outil">
-    <h2 id="outil" class="intertitre">Comment se construit votre outil</h2>
-    <p>
-      Avec la formule {formuleRecommandee.nom}, votre outil métier se construit ainsi, sur les
-      mêmes étapes&nbsp;:
-    </p>
-    <ol class="deroulement plein" role="list">
-      {etapesOutil.map((e, i) => (
-        <li>
-          <span class="etiquette" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <strong>{e.titre}</strong>
-          <span>{e.texte}</span>
-        </li>
-      ))}
-    </ol>
-    <p class="prose">
-      Au bout d'un an, vous avez un outil qui colle à votre façon de travailler, et votre site
-      est compris.
-    </p>
-  </section>
-
-  <section class="grille bloc" aria-labelledby="modules">
-    <h2 id="modules" class="intertitre">Des modules pour votre métier</h2>
-    <p>
-      Un outil qui colle à votre façon de travailler, ajouté à votre site. Quelques
-      exemples&nbsp;:
-    </p>
-    <ul class="services modules plein" role="list">
-      {modules.map((m) => (
-        <li id={m.ancre && `module-${m.ancre}`}>
-          <h3>{m.titre}</h3>
-          <p>{m.texte}</p>
-          {m.avecFormuleRecommandee && (
-            <p class="etiquette"><a href={`#formule-${formuleRecommandee.id}`}>Avec la formule {formuleRecommandee.nom}</a></p>
-          )}
-        </li>
-      ))}
-    </ul>
-    <div class="prose">
-      <p>
-        Un outil simple, comme un planning ou la prise de rendez-vous, se construit avec la
-        <a href={`#formule-${formuleRecommandee.id}`}>formule {formuleRecommandee.nom}</a>&nbsp;:
-        une première version à la mise en service, puis des améliorations chaque mois.
-        {auDelaRecommandee}
-      </p>
-      <p class="appels"><a class="appel" href={contact.mailto}>Parlons de votre projet</a></p>
-    </div>
-  </section>
-
-  <section class="grille bloc" aria-labelledby="autres">
-    <h2 id="autres" class="intertitre">Bots Discord et projets sur mesure</h2>
-    <ul class="services plein" role="list">
       <li>
         <h3 id="bots">Bots Discord</h3>
-        <p class="formule-prix">
-          <span class="etiquette">mise en service</span>
-          <span class="formule-montant">{euros(conditions.miseEnService)}</span>
-          <span class="etiquette">HT</span>
-        </p>
-        <p class="etiquette">puis <a href="#formules">la formule de votre choix</a>, dès {euros(formules[0].prixMensuel)}&nbsp;HT par mois</p>
         <p>
-          Votre bot Discord, sur le même principe que les sites&nbsp;: mise en service, puis
-          abonnement mensuel. Pour les streamers, les communautés et les serveurs
-          de jeu.
+          Même principe que les sites&nbsp;: mise en service, puis la formule de votre choix.
+          Compris&nbsp;: un bot à votre nom ({socleBot.join(', ')}), configuré pour votre
+          serveur, avec son tableau de bord sur votrebot.cabalex.dev ou sur votre domaine.
         </p>
         <p>
-          Compris&nbsp;: un bot à votre nom avec les modules de base ({socleBot.join(', ')}),
-          configurés pour votre serveur. Avec la formule {formuleRecommandee.nom}, chaque
-          évolution du mois peut ajouter une fonction à votre bot ; les modules plus importants
-          s'ajoutent sur devis, payables comptant ou étalés avec l'abonnement, comme pour les
-          sites.
-        </p>
-        <p>
-          Premier exemple, en accès libre&nbsp;: <a href="/dofintendant">DofIntendant</a>, mon
-          bot public et gratuit pour les guildes Dofus.
-          <a href="https://dofintendant.cabalex.dev/inviter">Essayez-le sur votre serveur</a>.
-          Deux autres en service, pour des clients&nbsp;: <a href="/bot-legendes">Bot Légendes</a>
-          et <a href="/patchoumio">Patchoumio</a>.
+          Exemples&nbsp;: <a href="/dofintendant">DofIntendant</a>, public et gratuit
+          (<a href="https://dofintendant.cabalex.dev/inviter">essayez-le</a>),
+          <a href="/bot-legendes">Bot Légendes</a> et <a href="/patchoumio">Patchoumio</a>.
         </p>
       </li>
       <li>
@@ -269,16 +134,16 @@ const lignes = [
         <p class="formule-prix">
           <span class="etiquette">à partir de</span>
           <span class="formule-montant">{euros(prestations.surMesure.aPartirDe)}</span>
-          <span class="etiquette">HT</span>
+          <span class="etiquette">HT, sur devis</span>
         </p>
-        <p class="etiquette">sur devis</p>
         <p>
-          Un outil conçu pour votre façon de travailler, quand un site ne suffit plus. Exemple
-          en production&nbsp;: <a href="/plumes-jumelles">Plumes Jumelles</a>, avec abonnements,
-          boutique et gestion des commandes.
+          Quand un site ne suffit plus. Exemple en production&nbsp;:
+          <a href="/plumes-jumelles">Plumes Jumelles</a>, avec abonnements, boutique et
+          gestion des commandes.
         </p>
       </li>
     </ul>
+    <p class="appels plein"><a class="appel" href={contact.mailtoDevis}>Demander un devis</a></p>
   </section>
 
   <section class="grille bloc" aria-labelledby="faq">
@@ -312,14 +177,24 @@ const lignes = [
           à récupérer vos e-mails. Ces remises se font dans les 30&nbsp;jours suivant la fin du
           contrat, sans frais.
         </p>
+        <Todo note="Lien vers les conditions générales de vente (en cours de rédaction)." />
+        <Todo note="CGV, clause de propriété : le client reçoit une copie complète et utilisable de son site ; les briques techniques communes à mes sites restent ma propriété (licence d'utilisation, pas de cession exclusive)." />
       </details>
       <details>
-        <summary>Quelle différence avec un créateur de site en ligne&nbsp;?</summary>
+        <summary>Qu'est-ce qu'une évolution&nbsp;?</summary>
         <p>
-          Avec un créateur de site en ligne, vous louez un outil et le reste repose sur vous.
-          Ici, un seul interlocuteur prend en charge l'hébergement, l'entretien et les
-          modifications, et au bout de {conditions.engagementMois} mois vous recevez une copie
-          complète de votre site.
+          Une amélioration ciblée, qui se fait en une session de travail&nbsp;: ajouter une page
+          ou une section, un champ dans un formulaire, un export, une fonction simple dans
+          l'outil ou le bot. Les évolutions ne se cumulent pas d'un mois sur l'autre. Si votre
+          besoin change, on ajuste au point mensuel ; un besoin plus important fait l'objet d'un
+          devis, payable comptant ou étalé, ou d'un passage à la formule {partenaire.nom}.
+        </p>
+      </details>
+      <details>
+        <summary>Je ne sais pas exactement ce qu'il me faut.</summary>
+        <p>
+          C'est normal. On part du problème, je livre une première version simple, et on l'affine
+          à l'usage.
         </p>
       </details>
       <details>
@@ -331,23 +206,6 @@ const lignes = [
         </p>
       </details>
       <details>
-        <summary>Je paie déjà des bots Discord, pourquoi passer par vous&nbsp;?</summary>
-        <p>
-          Vous avez un seul bot, fait pour votre serveur, au lieu de plusieurs abonnements à des
-          bots différents. Vous avez un interlocuteur que vous joignez directement. Les données de
-          votre serveur sont hébergées dans l'Union européenne, ne sont jamais revendues ni
-          exploitées, et vous pouvez les récupérer quand vous voulez.
-        </p>
-      </details>
-      <details>
-        <summary>Qu'est-ce qui est inclus dans la mise en service d'un bot&nbsp;?</summary>
-        <p>
-          Le socle&nbsp;: accueil des nouveaux membres, rôles, modération de base, logs et tableau
-          de bord web. Chaque autre fonctionnalité est un module chiffré à part&nbsp;: vous voyez le
-          prix de chaque fonction et vous choisissez ce que vous voulez, maintenant ou plus tard.
-        </p>
-      </details>
-      <details>
         <summary>Puis-je étaler le paiement d'un module&nbsp;?</summary>
         <p>
           Oui. Chaque module est sur devis, et vous choisissez&nbsp;: paiement comptant à la
@@ -356,35 +214,6 @@ const lignes = [
           {etalementMoisMax}&nbsp;mois au plus. Si vous partez avant la fin de l'étalement, le
           reste est dû.
         </p>
-      </details>
-      <details>
-        <summary>Qu'est-ce qu'une évolution&nbsp;?</summary>
-        <p>
-          Une amélioration ciblée, qui se fait en une session de travail&nbsp;: ajouter une page
-          ou une section, un champ dans un formulaire, un export, une fonction simple dans
-          l'outil ou le bot. Un besoin plus important fait l'objet d'un devis, payable comptant ou
-          étalé, ou d'un passage à la formule {formules.find((f) => f.id === 'partenaire')!.nom}.
-        </p>
-      </details>
-      <details>
-        <summary>Et si mon besoin change en cours d'année&nbsp;?</summary>
-        <p>
-          C'est le principe de la formule {formuleRecommandee.nom}&nbsp;: on ajuste chaque mois,
-          au point mensuel, selon ce qui vous manque. Un besoin plus important fait l'objet d'un
-          devis, payable comptant ou étalé, ou d'un passage à la formule
-          {formules.find((f) => f.id === 'partenaire')!.nom}.
-        </p>
-      </details>
-      <details>
-        <summary>Je ne sais pas exactement ce qu'il me faut.</summary>
-        <p>
-          C'est normal. On part du problème, je livre une première version simple, et on l'affine
-          à l'usage.
-        </p>
-      </details>
-      <details>
-        <summary>Les évolutions non utilisées se cumulent-elles&nbsp;?</summary>
-        <p>Non&nbsp;: les évolutions ne se cumulent pas d'un mois sur l'autre.</p>
       </details>
     </div>
   </section>

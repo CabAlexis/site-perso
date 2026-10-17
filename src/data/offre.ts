@@ -133,6 +133,7 @@ export const contact = {
   email: 'alexis@cabalex.dev',
   // Objet pré-rempli du mail ouvert par l'appel à l'action.
   mailto: `mailto:alexis@cabalex.dev?subject=${encodeURIComponent('Mon projet')}`,
+  mailtoDevis: `mailto:alexis@cabalex.dev?subject=${encodeURIComponent('Demande de devis')}`,
   zone: 'Pau et alentours. À distance : toute la France.',
 };
 
@@ -148,7 +149,7 @@ export const modules = z.array(z.object({
   avecFormuleRecommandee: z.boolean().optional(),
   // Ancre (#module-…) pour y renvoyer depuis la page.
   ancre: z.string().regex(/^[a-z-]+$/).optional(),
-})).min(1).parse([
+})).min(1).max(3).parse([
   {
     titre: 'Planning pour les métiers à domicile',
     ancre: 'planning',
@@ -163,18 +164,6 @@ export const modules = z.array(z.object({
   {
     titre: 'Demande de devis guidée',
     texte: 'Le client décrit son besoin étape par étape, photos comprises, et vous recevez une demande complète.',
-  },
-  {
-    titre: 'Espace client',
-    texte: 'Devis, factures et documents au même endroit, accessibles par vos clients.',
-  },
-  {
-    titre: 'Catalogue ou réservation',
-    texte: 'Produits, prestations ou matériel, avec leurs disponibilités.',
-  },
-  {
-    titre: 'Un outil propre à votre activité',
-    texte: 'Un besoin qui n’entre dans aucune case : on en parle, et je développe l’outil qui y répond.',
   },
 ]);
 

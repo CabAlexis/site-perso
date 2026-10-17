@@ -833,47 +833,40 @@
     background: color-mix(in oklab, var(--signal) 6%, var(--papier));
   }
   @media (min-width: 60rem) { .alternatives { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .modules > li { border-top: 1px dashed var(--trait-fort); }
   .modules-ligne { padding-top: 0.6rem; border-top: 1px dashed var(--trait-fort); }
   .modules-ligne a { white-space: nowrap; font-weight: 600; }
   .services ul { padding-left: 1.2em; }
   .services ul li + li { margin-top: 0.4em; }
   .services ul li::marker { color: var(--trait-fort); }
 
-  .offre-tete { padding-top: calc(var(--rythme) * 2.5); margin-top: 0; row-gap: calc(var(--rythme) * 1.2); }
-
-  /*
-   * Tableau comparatif. Sur grand écran, un tableau classique. Sur mobile,
-   * chaque ligne devient un bloc : son libellé en titre, puis une ligne par
-   * formule, nommée par data-formule. Une ligne identique pour les trois
-   * formules se résume à « Les trois formules : … ».
-   */
-  .tableau { margin-top: calc(var(--rythme) * 0.4); }
-  .tableau table { width: 100%; border-collapse: collapse; font-size: var(--t--1); line-height: 1.4; }
-  .tableau caption { caption-side: bottom; text-align: start; padding-top: 0.6rem; }
-  .tableau :is(th, td) { padding: 0.55rem 1rem 0.55rem 0; text-align: start; vertical-align: top; border-bottom: 1px solid var(--trait); }
-  .tableau thead th { font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1; border-bottom: 2px solid var(--encre); }
-  .tableau thead td { border-bottom: 2px solid var(--encre); }
-  .tableau tbody th { width: 30%; font-weight: 600; font-stretch: 92%; }
-  .tableau .recommandee { background: color-mix(in oklab, var(--signal) 6%, var(--papier)); padding-inline-start: 0.75rem; }
-  .tableau thead .recommandee { border-bottom-color: var(--signal); }
-  .tableau thead .recommandee .etiquette { display: block; margin-top: 0.3rem; color: var(--signal); font-stretch: normal; font-weight: 500; }
-  @media (max-width: 47.99rem) {
-    .tableau :is(table, tbody, tr, th, td) { display: block; }
-    .tableau thead { display: none; }
-    .tableau tr { padding-block: 0.6rem; border-bottom: 1px solid var(--trait); }
-    .tableau :is(th, td) { width: auto; padding: 0; border: 0; }
-    .tableau caption { display: block; padding: 0 0 0.4rem; }
-    .tableau tbody th { width: auto; margin-bottom: 0.25rem; font-size: var(--t-0); }
-    .tableau td { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.75rem; }
-    .tableau td.recommandee { padding-inline-start: 0; background: none; }
-    .tableau td.recommandee::before { color: var(--signal); }
-    .tableau td + td { margin-top: 0.2rem; }
-    .tableau td::before { content: attr(data-formule); font-family: var(--mono); color: var(--encre-2); }
-    .tableau tr.identique td + td { display: none; }
-    .tableau tr.identique td { display: flex; flex-wrap: wrap; gap: 0 0.75rem; }
-    .tableau tr.identique td::before { content: 'Les trois formules'; }
+  /* « Compris dans toutes les formules » : une liste courte, en colonnes. */
+  .compris {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 0 2rem;
+    padding-block: 0;
+    list-style: none;
   }
+  .compris li { padding-block: 0.5rem; border-top: 1px solid var(--trait); font-stretch: 92%; font-weight: 600; }
+  .compris li::before { content: '✓ '; content: '✓ ' / ''; color: var(--signal); }
+
+  /* « Sur mesure » : modules, bots et applications métier, trois colonnes
+     sur grand écran. Filet tireté : des exemples, pas une formule. */
+  .sur-mesure {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--rythme) 2rem;
+    padding-block: 0;
+    list-style: none;
+  }
+  .sur-mesure > li { display: grid; gap: 0.5rem; align-content: start; padding-top: 0.7rem; border-top: 1px dashed var(--trait-fort); }
+  .sur-mesure h3 { font-size: var(--t-2); font-stretch: 62%; font-weight: 800; line-height: 1; }
+  .sur-mesure ul { padding-left: 1.2em; }
+  .sur-mesure ul li + li { margin-top: 0.4em; }
+  .sur-mesure ul li::marker { color: var(--trait-fort); }
+  @media (min-width: 60rem) { .sur-mesure { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  .offre-tete { padding-top: calc(var(--rythme) * 2.5); margin-top: 0; row-gap: calc(var(--rythme) * 1.2); }
 
   /* Questions fréquentes : <details> natifs, aucun script. */
   .faq { display: grid; }
@@ -972,6 +965,9 @@
     .formules { row-gap: 0; }
     .formule { grid-row: span 10; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }
     .formule-lignes { grid-row: span 5; grid-template-rows: subgrid; }
+    /* Sur /offre, les cartes perdent « Création » et « Compris ». */
+    .formules-offre .formule { grid-row: span 8; }
+    .formules-offre .formule-lignes { grid-row: span 3; }
   }
 
   /* Appel à l'action : le seul aplat du site. Cible tactile de 44 px ; la

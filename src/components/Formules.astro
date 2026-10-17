@@ -5,17 +5,22 @@
  * des cartes suit celui de la section qui les accueille. La formule
  * recommandée (champ `recommandee` dans offre.ts) est mise en avant, au centre
  * sur grand écran et en premier sur mobile ; les deux autres servent de repères.
+ *
+ * Variante « offre » : la création, la mise en service et ce qui est compris
+ * sont dits une fois autour des cartes, qui ne gardent que ce qui les distingue.
  */
 import { formules, socle, conditions, euros, prixAnnuel } from '../data/offre';
 import { prepublication } from '../data/publication.json';
 
 interface Props {
   niveau?: 3 | 4;
+  variante?: 'accueil' | 'offre';
 }
-const { niveau = 3 } = Astro.props;
+const { niveau = 3, variante = 'accueil' } = Astro.props;
+const accueil = variante === 'accueil';
 const Titre = `h${niveau}`;
 ---
-<ul class="formules plein" role="list">
+<ul class:list={['formules plein', { 'formules-offre': !accueil }]} role="list">
   {formules.map((f) => (
     <li class:list={['formule', { 'formule-recommandee': f.recommandee }]}>
       {f.recommandee && <p class="formule-badge etiquette">Recommandée</p>}
@@ -28,14 +33,16 @@ const Titre = `h${niveau}`;
       <p class="etiquette">ou {euros(prixAnnuel(f))} HT par an, un mois offert</p>
       <p class="formule-cible">{f.pourQui}</p>
       <dl class="formule-lignes">
-        <div>
-          <dt class="etiquette">Création de votre site ou de votre bot</dt>
-          <dd>Offerte, avec son espace d'administration. Mise en service : {euros(conditions.miseEnService)} HT, une seule fois.</dd>
-        </div>
-        <div>
-          <dt class="etiquette">Compris</dt>
-          <dd>{socle.join(', ').replace(/^./, (c) => c.toUpperCase())}</dd>
-        </div>
+        {accueil && (
+          <div>
+            <dt class="etiquette">Création de votre site ou de votre bot</dt>
+            <dd>Offerte, avec son espace d'administration. Mise en service : {euros(conditions.miseEnService)} HT, une seule fois.</dd>
+          </div>
+          <div>
+            <dt class="etiquette">Compris</dt>
+            <dd>{socle.join(', ').replace(/^./, (c) => c.toUpperCase())}</dd>
+          </div>
+        )}
         <div>
           <dt class="etiquette">Modifications</dt>
           <dd>{f.evolutions}</dd>
@@ -52,10 +59,12 @@ const Titre = `h${niveau}`;
     </li>
   ))}
 </ul>
-<p class="plein">
-  Pour un bot, le tableau de bord est servi sur un sous-domaine (votrebot.cabalex.dev) ou sur
-  votre propre domaine.
-</p>
+{accueil && (
+  <p class="plein">
+    Pour un bot, le tableau de bord est servi sur un sous-domaine (votrebot.cabalex.dev) ou sur
+    votre propre domaine.
+  </p>
+)}
 {prepublication && (
   <p class="etiquette ouverture">Ouverture des commandes à l'immatriculation de la société.</p>
 )}
