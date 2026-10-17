@@ -1,31 +1,27 @@
 ---
 /*
  * « Comment ça se passe » : les quatre étapes, du premier échange au suivi,
- * chacune en une phrase. Le résumé peut porter un mot clé (.cle). Une page
- * peut passer ses propres étapes (/offre y ajoute la construction de l'outil).
+ * pour le site et l'outil métier ensemble, chacune en une phrase. Partagé par
+ * l'accueil et /offre. Le résumé peut porter un mot clé (.cle).
  */
-interface Props {
-  etapes?: { titre: string; resume: string }[];
-}
-const etapesSite = [
+const etapes = [
   {
     titre: 'Premier échange',
-    resume: 'On parle de votre activité et de ce que le site doit vous apporter. <span class="cle">Gratuit et sans engagement.</span>',
+    resume: 'On parle de votre activité et de ce qui vous fait perdre du temps chaque semaine. <span class="cle">Gratuit et sans engagement.</span>',
   },
   {
     titre: 'Maquette',
-    resume: 'Une première version à l’écran, ajustée jusqu’à ce qu’elle vous ressemble.',
+    resume: 'Votre site à l’écran, et votre outil s’il y en a un, ajustés jusqu’à ce qu’ils vous ressemblent.',
   },
   {
     titre: 'Mise en ligne',
-    resume: 'Nom de domaine, adresses mail, hébergement : rien à gérer de votre côté.',
+    resume: 'Le site et une première version simple de l’outil. Nom de domaine, adresses mail, hébergement&nbsp;: rien à gérer de votre côté.',
   },
   {
     titre: 'Suivi',
-    resume: 'Le site évolue avec votre activité, au fil de vos demandes.',
+    resume: 'Chaque mois, on améliore le site et l’outil selon ce qui vous manque à l’usage.',
   },
 ];
-const { etapes = etapesSite } = Astro.props;
 ---
 <ol class="deroulement plein" role="list">
   {etapes.map((e, i) => (

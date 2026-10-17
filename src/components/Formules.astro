@@ -6,15 +6,18 @@
  * recommandée (champ `recommandee` dans offre.ts) est mise en avant, au centre
  * sur grand écran et en premier sur mobile ; les deux autres servent de repères.
  *
- * Variante « offre » : la création et la mise en service sont dites une fois
- * autour des cartes ; chaque carte liste en puces ce que paie le client
- * (`comprend` dans offre.ts, après le socle).
- * Elle ajoute le choix de la durée et du paiement : des boutons radio, et
- * chaque carte porte toutes les combinaisons, dont le CSS n'affiche que celle
- * qui est cochée (global.css, « Choix de la durée »). Aucun script : sans
- * :has(), la page reste lisible en 12 mois, paiement mensuel.
+ * La création et la mise en service sont dites une fois autour des cartes ;
+ * chaque carte liste en puces ce que paie le client (`comprend` dans
+ * offre.ts, après le socle).
+ *
+ * Variante « offre » : le choix de la durée et du paiement, des boutons
+ * radio, et chaque carte porte toutes les combinaisons, dont le CSS n'affiche
+ * que celle qui est cochée (global.css, « Choix de la durée »). Aucun script :
+ * sans :has(), la page reste lisible en 12 mois, paiement mensuel. L'accueil
+ * n'a pas de choix : il n'affiche que 12 mois, paiement mensuel.
  */
-import { formules, socle, socleCourt, conditions, durees, paiements, euros, prixAnnuel, tarifPour, montantAvance, moisPayes, ou, besoinPonctuel, optionsUnite } from '../data/offre';
+import { formules, socleCourt, durees, dureesCourtes, paiements, euros, tarifPour, montantAvance, moisPayes, ou, besoinPonctuel, optionsUnite } from '../data/offre';
+import type { Duree, Paiement } from '../data/offre';
 import { prepublication } from '../data/publication.json';
 
 interface Props {
@@ -26,6 +29,8 @@ const accueil = variante === 'accueil';
 const Titre = `h${niveau}`;
 
 const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
+const dureesAffichees: readonly Duree[] = accueil ? [12] : durees;
+const paiementsAffiches: readonly Paiement[] = accueil ? ['mensuel'] : paiements;
 ---
 {!accueil && (
   <div class="choix plein">
@@ -44,21 +49,13 @@ const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
     <p class="choix-usage">{besoinPonctuel}</p>
   </div>
 )}
-<ul class:list={['formules plein', { 'formules-offre': !accueil }]} role="list">
+<ul class="formules plein" role="list">
   {formules.map((f) => (
     <li class:list={['formule', { 'formule-recommandee': f.recommandee }]}>
       {f.recommandee && <p class="formule-badge etiquette">Recommandée</p>}
       <Titre class="formule-nom" id={`formule-${f.id}`}>{f.nom}</Titre>
       <p class="formule-accroche">{f.accroche}</p>
-      {accueil ? (
-        <>
-          <p class="formule-prix">
-            <span class="formule-montant">{euros(f.prixMensuel)}</span>
-            <span class="etiquette">HT par mois</span>
-          </p>
-          <p class="etiquette">ou {euros(prixAnnuel(f))} HT par an, un mois offert</p>
-        </>
-      ) : durees.map((d) => {
+      {dureesAffichees.map((d) => {
         const t = tarifPour(f, d);
         if (!t) {
           return (
@@ -70,14 +67,14 @@ const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
         }
         return (
           <div class="tarif" data-duree={d}>
-            <div class="tarif" data-paiement="mensuel">
+            {paiementsAffiches.includes('mensuel') && <div class="tarif" data-paiement="mensuel">
               <p class="formule-prix">
                 <span class="formule-montant">{euros(t.prixMensuel)}</span>
                 <span class="etiquette">HT par mois</span>
               </p>
               <p class="etiquette">{t.mois}&nbsp;mois, payé chaque mois</p>
-            </div>
-            <div class="tarif" data-paiement="avance">
+            </div>}
+            {paiementsAffiches.includes('avance') && <div class="tarif" data-paiement="avance">
               <p class="formule-prix">
                 <span class="formule-montant">{euros(montantAvance(t))}</span>
                 <span class="etiquette">HT pour {t.mois}&nbsp;mois</span>
@@ -87,56 +84,30 @@ const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
                   ? `${moisPayes(t.mois)}\u00a0mois payés, un mois offert`
                   : `${t.mois}\u00a0×\u00a0${euros(t.prixMensuel)}\u00a0HT`}
               </p>
-            </div>
+            </div>}
           </div>
         );
       })}
       <p class="formule-cible">{f.pourQui}</p>
-      {!accueil && (
-        <div class="formule-comprend">
-          <p class="etiquette">Ce que comprend votre abonnement</p>
-          <ul>
-            {[socleCourt, ...f.comprend].map((c) => <li>{c}</li>)}
-            {optionsUnite.formule === f.id && (
-              <li class="formule-option">
-                À l'unité&nbsp;: un point de {optionsUnite.point.duree} ({euros(optionsUnite.point.prix)}&nbsp;HT) ou une évolution
-                ({euros(optionsUnite.evolution.prix)}&nbsp;HT)
-              </li>
-            )}
-          </ul>
-        </div>
-      )}
-      {accueil && <dl class="formule-lignes">
-        <div>
-          <dt class="etiquette">Création de votre site ou de votre bot</dt>
-          <dd>Offerte, avec son espace d'administration. Mise en service : {euros(conditions.miseEnService)} HT, une seule fois.</dd>
-        </div>
-        <div>
-          <dt class="etiquette">Compris</dt>
-          <dd>{socle.join(', ').replace(/^./, (c) => c.toUpperCase())}</dd>
-        </div>
-        <div>
-          <dt class="etiquette">Modifications</dt>
-          <dd>{f.evolutions}</dd>
-        </div>
-        <div>
-          <dt class="etiquette">Outil métier</dt>
-          <dd>{f.outil}</dd>
-        </div>
-        <div>
-          <dt class="etiquette">Point régulier</dt>
-          <dd>{f.point}</dd>
-        </div>
-      </dl>}
+      <div class="formule-comprend">
+        <p class="etiquette">Ce que comprend votre abonnement</p>
+        <ul>
+          {[socleCourt, ...f.comprend].map((c) => <li>{c}</li>)}
+          {optionsUnite.formule === f.id && (
+            <li class="formule-option">
+              À l'unité&nbsp;: un point de {optionsUnite.point.duree} ({euros(optionsUnite.point.prix)}&nbsp;HT) ou une évolution
+              ({euros(optionsUnite.evolution.prix)}&nbsp;HT)
+            </li>
+          )}
+        </ul>
+      </div>
     </li>
   ))}
 </ul>
 {accueil && (
   <p class="plein">
-    Pour un bot, le tableau de bord est servi sur un sous-domaine (votrebot.cabalex.dev) ou sur
-    votre propre domaine.
+    <a href="/offre#formules">Aussi en {ou(dureesCourtes)}&nbsp;mois, ou payé d'avance</a>
   </p>
-  <p class="plein"><a href="/offre#formules">Durées et paiement d'avance</a></p>
 )}
 {prepublication && (
   <p class="etiquette ouverture">Ouverture des commandes à l'immatriculation de la société.</p>

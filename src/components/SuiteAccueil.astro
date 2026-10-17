@@ -14,7 +14,7 @@ import Todo from './Todo.astro';
 import { prepublication } from '../data/publication.json';
 import { sites, bots, labo } from '../data/projets';
 import { boucle, coupes } from '../data/coupes';
-import { contact, conditions, prestations, formuleRecommandee, euros } from '../data/offre';
+import { contact, conditions, prestations, formuleRecommandee, engagementTotal, euros } from '../data/offre';
 ---
   <section class="grille bloc" aria-labelledby="services">
     <h2 id="services" class="intertitre">Ce que je fais pour vous</h2>
@@ -90,10 +90,9 @@ import { contact, conditions, prestations, formuleRecommandee, euros } from '../
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
     <p>
-      Elles s'appliquent à votre site ou à votre bot Discord. Dans les trois,
-      <span class="cle">la création est offerte</span> ; seule la mise en service est facturée,
-      {euros(conditions.miseEnService)}&nbsp;HT une seule fois. Un abonnement mensuel couvre
-      ensuite le reste.
+      Elles s'appliquent à votre site ou à votre bot Discord.
+      <span class="cle">La création est offerte</span>&nbsp;: seule la mise en service est
+      facturée, {euros(conditions.miseEnService)}&nbsp;HT une fois.
     </p>
     <Formules />
     <div class="prose">
@@ -104,9 +103,8 @@ import { contact, conditions, prestations, formuleRecommandee, euros } from '../
         <a href="/offre#modules">Exemples de modules</a>
       </p>
       <p>
-        Engagement de {conditions.engagementMois} mois, puis sans engagement, avec un préavis
-        d'un mois. À la fin des {conditions.engagementMois} mois, vous recevez
-        <span class="cle">une copie complète et utilisable</span> de votre site.
+        {engagementTotal} Après {conditions.engagementMois}&nbsp;mois d'abonnement cumulés, vous
+        recevez <span class="cle">une copie complète et utilisable</span> de votre site.
       </p>
       <p>
         Aussi : des bots Discord pour les streamers, les communautés et les serveurs de jeu,

@@ -994,19 +994,13 @@
   .formule-comprend .formule-option::marker { color: var(--trait-fort); }
   .formule-absente { align-self: end; font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1.1; color: var(--encre-2); }
   .formule-cible { font-stretch: 92%; font-weight: 600; line-height: 1.35; }
-  .formule-lignes { display: grid; gap: 0.5rem; margin-top: 0.3rem; }
-  .formule-lignes > div { display: grid; gap: 0.1rem; align-content: start; padding-top: 0.4rem; border-top: 1px solid var(--trait); }
-  .formule-lignes dd { line-height: 1.45; }
   .ouverture { color: var(--signal); }
   .engagement { display: grid; gap: 0.4rem; max-width: 60ch; padding-left: 1rem; border-left: 3px solid var(--encre); }
   .pour-qui { max-width: 60ch; padding-left: 1rem; border-left: 3px solid var(--signal); }
   .pour-qui strong { display: block; }
   @supports (grid-template-rows: subgrid) {
     .formules { row-gap: 0; }
-    .formule { grid-row: span 10; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }
-    .formule-lignes { grid-row: span 5; grid-template-rows: subgrid; }
-    /* Sur /offre, une seule rangée de puces au lieu des cinq lignes. */
-    .formules-offre .formule { grid-row: span 6; }
+    .formule { grid-row: span 6; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }
   }
 
   /* Appel à l'action : le seul aplat du site. Cible tactile de 44 px ; la

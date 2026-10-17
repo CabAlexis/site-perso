@@ -7,26 +7,6 @@ import { formules, comprisOffre, socleBot, conditions, prestations, contact, mod
 
 const { acomptePourcent, etalementMoisMax } = paiementModule;
 const partenaire = formules.find((f) => f.id === 'partenaire')!;
-
-// Le déroulé du site et la construction de l'outil, en quatre étapes.
-const etapes = [
-  {
-    titre: 'Premier échange',
-    resume: 'On parle de votre activité et de ce qui vous fait perdre du temps chaque semaine. <span class="cle">Gratuit et sans engagement.</span>',
-  },
-  {
-    titre: 'Maquette',
-    resume: 'Votre site à l’écran, et votre outil s’il y en a un, ajustés jusqu’à ce qu’ils vous ressemblent.',
-  },
-  {
-    titre: 'Mise en ligne',
-    resume: 'Le site et une première version simple de l’outil. Nom de domaine, adresses mail, hébergement&nbsp;: rien à gérer de votre côté.',
-  },
-  {
-    titre: 'Suivi',
-    resume: 'Chaque mois, on améliore le site et l’outil selon ce qui vous manque à l’usage.',
-  },
-];
 ---
 <Base
   titre="L'offre"
@@ -72,7 +52,7 @@ const etapes = [
 
   <section class="grille bloc" aria-labelledby="deroulement">
     <h2 id="deroulement" class="intertitre">Comment ça se passe</h2>
-    <Deroulement etapes={etapes} />
+    <Deroulement />
   </section>
 
   <section class="grille bloc" aria-labelledby="pourquoi">
