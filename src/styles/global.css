@@ -975,6 +975,7 @@
     font-weight: 600;
     cursor: pointer;
   }
+  .choix-usage { flex-basis: 100%; max-width: 60ch; font-stretch: 92%; font-weight: 600; }
   .choix input { width: 1.05rem; height: 1.05rem; margin: 0; accent-color: var(--signal); }
   .choix label:has(:checked) { border-color: var(--signal); background: color-mix(in oklab, var(--signal) 8%, var(--papier)); }
   .formule .tarif { display: none; }
@@ -985,6 +986,10 @@
   :root:has(#duree-6:checked) .tarif[data-duree="6"],
   :root:has(#duree-3:checked) .tarif[data-duree="3"],
   :root:has(#paiement-avance:checked) .tarif[data-paiement="avance"] { display: contents; }
+  .formule-comprend { display: grid; gap: 0.4rem; align-content: start; margin-top: 0.3rem; padding-top: 0.4rem; border-top: 1px solid var(--trait); }
+  .formule-comprend ul { padding-left: 1.2em; line-height: 1.45; }
+  .formule-comprend li + li { margin-top: 0.35em; }
+  .formule-comprend li::marker { color: var(--signal); }
   .formule-absente { align-self: end; font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1.1; color: var(--encre-2); }
   .formule-cible { font-stretch: 92%; font-weight: 600; line-height: 1.35; }
   .formule-lignes { display: grid; gap: 0.5rem; margin-top: 0.3rem; }
@@ -998,9 +1003,8 @@
     .formules { row-gap: 0; }
     .formule { grid-row: span 10; grid-template-rows: subgrid; padding-bottom: calc(var(--rythme) * 1.25); }
     .formule-lignes { grid-row: span 5; grid-template-rows: subgrid; }
-    /* Sur /offre, les cartes perdent « Création » et « Compris ». */
-    .formules-offre .formule { grid-row: span 8; }
-    .formules-offre .formule-lignes { grid-row: span 3; }
+    /* Sur /offre, une seule rangée de puces au lieu des cinq lignes. */
+    .formules-offre .formule { grid-row: span 6; }
   }
 
   /* Appel à l'action : le seul aplat du site. Cible tactile de 44 px ; la

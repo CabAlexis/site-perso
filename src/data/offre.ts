@@ -21,8 +21,6 @@ export type Paiement = (typeof paiements)[number];
 const tarif = z.object({
   mois: z.union([z.literal(12), z.literal(6), z.literal(3)]),
   prixMensuel: z.number().int().positive(),
-  // Nom de cette durée, s'il en a un (« Sprint » pour 3 mois).
-  nom: z.string().min(1).optional(),
 });
 
 export type Tarif = z.infer<typeof tarif>;
@@ -44,6 +42,9 @@ const formule = z.object({
   // Outil métier (planning, rendez-vous…) : ce que la formule permet.
   outil: z.string().min(1),
   point: z.string().min(1),
+  // Ce que paie le client, en puces courtes, après le socle (`socleCourt`) :
+  // une puce = une chose concrète. Affiché dans les cartes de /offre.
+  comprend: z.array(z.string().min(1).max(100)).min(1),
   // La formule mise en avant ; les autres servent de repères. Une seule.
   recommandee: z.boolean().optional(),
   // Pour qui, en une phrase complète (affichée près des cartes sur /offre).
@@ -69,6 +70,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     dureeEvolutionInterne: '30\u00a0min par mois',
     outil: 'Sur devis, comptant ou étalé',
     point: 'Pas de point programmé',
+    comprend: ['Corrections et mises à jour de contenu'],
   },
   {
     id: 'suivi',
@@ -76,6 +78,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     tarifs: [
       { mois: 12, prixMensuel: 150 },
       { mois: 6, prixMensuel: 175 },
+      { mois: 3, prixMensuel: 199 },
     ],
     pourQui: 'Petites entreprises avec rendez-vous, interventions ou stock',
     accroche: 'Le site et vos outils, qui grandissent avec vous',
@@ -83,6 +86,11 @@ export const formules: Formule[] = z.array(formule).length(3)
     dureeEvolutionInterne: '1\u00a0h\u00a030 par mois, ne se cumulent pas d’un mois sur l’autre',
     outil: 'Planning, prise de rendez-vous, suivi de clients, petit back-office\u00a0: une première version à la mise en service, puis des améliorations chaque mois',
     point: 'Un point par mois',
+    comprend: [
+      'Une évolution par mois (page, champ de formulaire, export, fonction dans l’outil ou le bot)',
+      'Un point mensuel',
+      'Votre outil métier qui s’améliore chaque mois',
+    ],
     recommandee: true,
     pourQuiDetail: 'Les petites entreprises qui gèrent chaque semaine des rendez-vous, des interventions ou du stock\u00a0: salons, garages, artisans du dépannage, commerces.',
   },
@@ -92,7 +100,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     tarifs: [
       { mois: 12, prixMensuel: 500 },
       { mois: 6, prixMensuel: 575 },
-      { mois: 3, prixMensuel: 650, nom: 'Sprint' },
+      { mois: 3, prixMensuel: 650 },
     ],
     pourQui: 'PME avec des besoins numériques continus',
     accroche: 'L’accompagnement rapproché',
@@ -100,6 +108,11 @@ export const formules: Formule[] = z.array(formule).length(3)
     dureeEvolutionInterne: 'une journée par mois, ne se cumulent pas d’un mois sur l’autre',
     outil: 'Un outil plus complet, amélioré chaque semaine',
     point: 'Un point par semaine',
+    comprend: [
+      'Des évolutions chaque semaine',
+      'Un point hebdomadaire',
+      'Un outil plus complet, amélioré chaque semaine',
+    ],
   },
 ]);
 
@@ -118,6 +131,9 @@ export const socle = [
 // Affiché sur /offre avec le socle (pas dans la ligne « Compris » des cartes
 // de l'accueil).
 export const hebergementEurope = 'hébergement et sauvegardes en Europe';
+
+// Le socle en une puce, en tête de « Ce que comprend votre abonnement ».
+export const socleCourt = 'Hébergement, domaine, mails, sécurité, sauvegardes';
 
 export const conditions = {
   // Engagement minimum, au total, toutes formules confondues : après une
@@ -181,9 +197,13 @@ export const ou = (ns: number[]) => ns.join(', ').replace(/, (?=[^,]*$)/, ' ou '
 // Les durées courtes proposées, toutes formules confondues.
 const dureesCourtes = durees.filter((d) => d < 12 && formules.some((f) => tarifPour(f, d))).reverse();
 const renouvelables = formules.filter((f) => f.tarifs.length > 1);
+const dureeCourte = Math.min(...durees);
 
 // Engagement au total, à afficher sous les cartes.
 export const engagementTotal = `Engagement de ${conditions.engagementMois}\u00a0mois au total\u00a0: après une formule de ${ou(dureesCourtes)}\u00a0mois, votre site passe en ${essentiel.nom} jusqu’à la fin de la première année.`;
+
+// Sous les sélecteurs : la formule recommandée sur la durée la plus courte.
+export const besoinPonctuel = `Un besoin ponctuel, comme un module\u00a0? Prenez ${dureeCourte}\u00a0mois de ${formuleRecommandee.nom}\u00a0: votre site reste ensuite en ${essentiel.nom}.`;
 
 // À la fin d'un engagement de Suivi ou de Partenaire.
 export const finEngagement = `Sans renouvellement, passage en ${essentiel.nom}, à ${euros(essentiel.prixMensuel)}\u00a0HT par mois\u00a0: votre site et votre outil restent en ligne et maintenus. Vous pouvez renouveler la ${renouvelables.map((f) => f.nom).join(' ou la ')} pour ${ou(durees.filter((d) => renouvelables.every((f) => tarifPour(f, d))).reverse())}\u00a0mois à tout moment.`;

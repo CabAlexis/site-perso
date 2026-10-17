@@ -6,15 +6,15 @@
  * recommandée (champ `recommandee` dans offre.ts) est mise en avant, au centre
  * sur grand écran et en premier sur mobile ; les deux autres servent de repères.
  *
- * Variante « offre » : la création, la mise en service et ce qui est compris
- * sont dits une fois autour des cartes, qui ne gardent que ce qui les distingue.
+ * Variante « offre » : la création et la mise en service sont dites une fois
+ * autour des cartes ; chaque carte liste en puces ce que paie le client
+ * (`comprend` dans offre.ts, après le socle).
  * Elle ajoute le choix de la durée et du paiement : des boutons radio, et
  * chaque carte porte toutes les combinaisons, dont le CSS n'affiche que celle
  * qui est cochée (global.css, « Choix de la durée »). Aucun script : sans
  * :has(), la page reste lisible en 12 mois, paiement mensuel.
  */
-import { formules, socle, conditions, durees, paiements, euros, prixAnnuel, tarifPour, montantAvance, moisPayes, ou } from '../data/offre';
-import type { Tarif } from '../data/offre';
+import { formules, socle, socleCourt, conditions, durees, paiements, euros, prixAnnuel, tarifPour, montantAvance, moisPayes, ou, besoinPonctuel } from '../data/offre';
 import { prepublication } from '../data/publication.json';
 
 interface Props {
@@ -26,7 +26,6 @@ const accueil = variante === 'accueil';
 const Titre = `h${niveau}`;
 
 const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
-const duree = (t: Tarif) => (t.nom ? `${t.nom} de ${t.mois} mois` : `${t.mois} mois`);
 ---
 {!accueil && (
   <div class="choix plein">
@@ -42,6 +41,7 @@ const duree = (t: Tarif) => (t.nom ? `${t.nom} de ${t.mois} mois` : `${t.mois}�
         <label><input type="radio" name="paiement" id={`paiement-${p}`} value={p} checked={p === 'mensuel'} /> {libellesPaiement[p]}</label>
       ))}
     </fieldset>
+    <p class="choix-usage">{besoinPonctuel}</p>
   </div>
 )}
 <ul class:list={['formules plein', { 'formules-offre': !accueil }]} role="list">
@@ -75,7 +75,7 @@ const duree = (t: Tarif) => (t.nom ? `${t.nom} de ${t.mois} mois` : `${t.mois}�
                 <span class="formule-montant">{euros(t.prixMensuel)}</span>
                 <span class="etiquette">HT par mois</span>
               </p>
-              <p class="etiquette">{duree(t)}, payé chaque mois</p>
+              <p class="etiquette">{t.mois}&nbsp;mois, payé chaque mois</p>
             </div>
             <div class="tarif" data-paiement="avance">
               <p class="formule-prix">
@@ -83,26 +83,32 @@ const duree = (t: Tarif) => (t.nom ? `${t.nom} de ${t.mois} mois` : `${t.mois}�
                 <span class="etiquette">HT pour {t.mois}&nbsp;mois</span>
               </p>
               <p class="etiquette">
-                {duree(t)}, payé d'avance&nbsp;: {moisPayes(t.mois) < t.mois
+                {t.mois}&nbsp;mois, payé d'avance&nbsp;: {moisPayes(t.mois) < t.mois
                   ? `${moisPayes(t.mois)}\u00a0mois payés, un mois offert`
-                  : `${t.mois} × ${euros(t.prixMensuel)}\u00a0HT`}
+                  : `${t.mois}\u00a0×\u00a0${euros(t.prixMensuel)}\u00a0HT`}
               </p>
             </div>
           </div>
         );
       })}
       <p class="formule-cible">{f.pourQui}</p>
-      <dl class="formule-lignes">
-        {accueil && (
-          <div>
-            <dt class="etiquette">Création de votre site ou de votre bot</dt>
-            <dd>Offerte, avec son espace d'administration. Mise en service : {euros(conditions.miseEnService)} HT, une seule fois.</dd>
-          </div>
-          <div>
-            <dt class="etiquette">Compris</dt>
-            <dd>{socle.join(', ').replace(/^./, (c) => c.toUpperCase())}</dd>
-          </div>
-        )}
+      {!accueil && (
+        <div class="formule-comprend">
+          <p class="etiquette">Ce que comprend votre abonnement</p>
+          <ul>
+            {[socleCourt, ...f.comprend].map((c) => <li>{c}</li>)}
+          </ul>
+        </div>
+      )}
+      {accueil && <dl class="formule-lignes">
+        <div>
+          <dt class="etiquette">Création de votre site ou de votre bot</dt>
+          <dd>Offerte, avec son espace d'administration. Mise en service : {euros(conditions.miseEnService)} HT, une seule fois.</dd>
+        </div>
+        <div>
+          <dt class="etiquette">Compris</dt>
+          <dd>{socle.join(', ').replace(/^./, (c) => c.toUpperCase())}</dd>
+        </div>
         <div>
           <dt class="etiquette">Modifications</dt>
           <dd>{f.evolutions}</dd>
@@ -115,7 +121,7 @@ const duree = (t: Tarif) => (t.nom ? `${t.nom} de ${t.mois} mois` : `${t.mois}�
           <dt class="etiquette">Point régulier</dt>
           <dd>{f.point}</dd>
         </div>
-      </dl>
+      </dl>}
     </li>
   ))}
 </ul>
