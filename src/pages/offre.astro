@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
 import Todo from '../components/Todo.astro';
-import { formules, socle, hebergementEurope, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
+import { formules, socle, hebergementEurope, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, optionsUnite, besoinRegulier, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
 
 const { acomptePourcent, etalementMoisMax } = paiementModule;
 const partenaire = formules.find((f) => f.id === 'partenaire')!;
@@ -47,6 +47,7 @@ const etapes = [
     <h2 id="formules" class="intertitre">Trois formules</h2>
     <p>Pour votre site ou votre bot Discord.</p>
     <Formules variante="offre" />
+    <p class="plein">{besoinRegulier}</p>
     <div class="engagement plein">
       <p><strong>{engagementTotal}</strong></p>
       <p>{finEngagement}</p>
@@ -202,7 +203,9 @@ const etapes = [
         <p>
           Une amélioration ciblée, qui se fait en une session de travail&nbsp;: ajouter une page
           ou une section, un champ dans un formulaire, un export, une fonction simple dans
-          l'outil ou le bot. Les évolutions ne se cumulent pas d'un mois sur l'autre. Si votre
+          l'outil ou le bot. Les évolutions ne se cumulent pas d'un mois sur l'autre. En
+          {formules.find((f) => f.id === optionsUnite.formule)!.nom}, vous pouvez commander une
+          évolution à l'unité&nbsp;: {euros(optionsUnite.evolution.prix)}&nbsp;HT. Si votre
           besoin change, on ajuste au point mensuel ; un besoin plus important fait l'objet d'un
           devis, payable comptant ou étalé, ou d'un passage à la formule {partenaire.nom}.
         </p>

@@ -990,6 +990,8 @@
   .formule-comprend ul { padding-left: 1.2em; line-height: 1.45; }
   .formule-comprend li + li { margin-top: 0.35em; }
   .formule-comprend li::marker { color: var(--signal); }
+  .formule-comprend .formule-option { color: var(--encre-2); font-size: var(--t--1); }
+  .formule-comprend .formule-option::marker { color: var(--trait-fort); }
   .formule-absente { align-self: end; font-size: var(--t-1); font-stretch: 62%; font-weight: 800; line-height: 1.1; color: var(--encre-2); }
   .formule-cible { font-stretch: 92%; font-weight: 600; line-height: 1.35; }
   .formule-lignes { display: grid; gap: 0.5rem; margin-top: 0.3rem; }

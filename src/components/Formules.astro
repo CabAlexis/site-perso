@@ -14,7 +14,7 @@
  * qui est cochée (global.css, « Choix de la durée »). Aucun script : sans
  * :has(), la page reste lisible en 12 mois, paiement mensuel.
  */
-import { formules, socle, socleCourt, conditions, durees, paiements, euros, prixAnnuel, tarifPour, montantAvance, moisPayes, ou, besoinPonctuel } from '../data/offre';
+import { formules, socle, socleCourt, conditions, durees, paiements, euros, prixAnnuel, tarifPour, montantAvance, moisPayes, ou, besoinPonctuel, optionsUnite } from '../data/offre';
 import { prepublication } from '../data/publication.json';
 
 interface Props {
@@ -97,6 +97,12 @@ const libellesPaiement = { mensuel: 'Chaque mois', avance: 'D’avance' };
           <p class="etiquette">Ce que comprend votre abonnement</p>
           <ul>
             {[socleCourt, ...f.comprend].map((c) => <li>{c}</li>)}
+            {optionsUnite.formule === f.id && (
+              <li class="formule-option">
+                À l'unité&nbsp;: un point ({euros(optionsUnite.point.prix)}&nbsp;HT) ou une évolution
+                ({euros(optionsUnite.evolution.prix)}&nbsp;HT)
+              </li>
+            )}
           </ul>
         </div>
       )}

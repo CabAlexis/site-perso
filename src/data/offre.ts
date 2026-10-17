@@ -132,6 +132,15 @@ export const socle = [
 // de l'accueil).
 export const hebergementEurope = 'hébergement et sauvegardes en Europe';
 
+// Options payées à l'unité, réservées à une formule (l'Essentiel). L'évolution
+// a la même définition que celle de la Suivi. La durée du point n'est JAMAIS
+// affichée sur le site.
+export const optionsUnite = {
+  formule: 'essentiel',
+  point: { prix: 79, dureeInterne: '45\u00a0min, en visio ou par téléphone' },
+  evolution: { prix: 119 },
+};
+
 // Le socle en une puce, en tête de « Ce que comprend votre abonnement ».
 export const socleCourt = 'Hébergement, domaine, mails, sécurité, sauvegardes';
 
@@ -201,6 +210,9 @@ const dureeCourte = Math.min(...durees);
 
 // Engagement au total, à afficher sous les cartes.
 export const engagementTotal = `Engagement de ${conditions.engagementMois}\u00a0mois au total\u00a0: après une formule de ${ou(dureesCourtes)}\u00a0mois, votre site passe en ${essentiel.nom} jusqu’à la fin de la première année.`;
+
+// Sous les cartes : pour qui prend souvent des options à l'unité.
+export const besoinRegulier = `Besoin régulier de points ou d’évolutions\u00a0? La formule ${formuleRecommandee.nom} les inclut chaque mois.`;
 
 // Sous les sélecteurs : la formule recommandée sur la durée la plus courte.
 export const besoinPonctuel = `Un besoin ponctuel, comme un module\u00a0? Prenez ${dureeCourte}\u00a0mois de ${formuleRecommandee.nom}\u00a0: votre site reste ensuite en ${essentiel.nom}.`;
