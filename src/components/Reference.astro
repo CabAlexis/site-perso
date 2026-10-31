@@ -1,0 +1,35 @@
+---
+/*
+ * Une référence d'avant mon indépendance (references.ts) : le cadre (employeur
+ * et période), le parallèle avec l'offre en une phrase, le contexte et le
+ * lien vers le site du client, puis chaque volet au format des projets.
+ * Texte seul : aucun logo.
+ */
+import ResumeProjet from './ResumeProjet.astro';
+import type { Reference } from '../data/references';
+
+interface Props {
+  reference: Reference;
+  niveau?: 3 | 4;
+}
+const { reference: r, niveau = 3 } = Astro.props;
+const Titre = `h${niveau}`;
+const SousTitre = `h${niveau + 1}`;
+---
+<article class="reference plein">
+  <p class="etiquette">Avant de me lancer · {r.cadre}</p>
+  <Titre class="reference-nom">{r.titre}</Titre>
+  <p class="reference-parallele">{r.parallele}</p>
+  <p class="reference-contexte">
+    {r.contexte} <a href={r.site.url}>Voir le site de {r.titre} ({r.site.libelle})</a>
+  </p>
+  <ul class="reference-volets" role="list">
+    {r.volets.map((v) => (
+      <li>
+        <SousTitre>{v.titre}</SousTitre>
+        <ResumeProjet projet={v} partie="resume" />
+        <ResumeProjet projet={v} partie="technique" />
+      </li>
+    ))}
+  </ul>
+</article>

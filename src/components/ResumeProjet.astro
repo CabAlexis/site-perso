@@ -9,7 +9,8 @@
 import type { Projet } from '../data/projets';
 
 interface Props {
-  projet: Projet;
+  // Un projet, ou un volet d'une référence (references.ts) : même lecture.
+  projet: Pick<Projet, 'resume' | 'technique'>;
   partie: 'resume' | 'technique';
 }
 const { projet, partie } = Astro.props;
