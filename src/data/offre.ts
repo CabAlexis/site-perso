@@ -158,13 +158,13 @@ export const conditions = {
 };
 
 // Un bot Discord suit le même modèle qu'un site : mise en service, puis l'une
-// des trois formules. Ce qu'il comprend au départ, configuré pour le serveur :
+// des trois formules. Ce qu'il comprend au départ, configuré pour le serveur
+// (le tableau de bord est cité à part, dans la phrase qui suit la liste) :
 export const socleBot = [
   'accueil des nouveaux membres',
   'rôles',
   'modération',
-  'logs',
-  'tableau de bord web',
+  'journal du serveur',
 ];
 
 export const prestations = {
