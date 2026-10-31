@@ -40,8 +40,7 @@ export const references: Reference[] = z.array(reference).parse([
   {
     titre: 'PLUSDE',
     site: { libelle: 'plusde.com', url: 'https://www.plusde.com' },
-    // Intitulé du poste à ajouter quand l'utilisateur le donnera (DECISIONS.md).
-    cadre: 'Chez Outlined, de novembre 2023 à juin 2026',
+    cadre: 'Développeur web chez Outlined, de novembre 2023 à juin 2026',
     parallele: 'Un interlocuteur unique qui fait évoluer votre outil dans la durée : c’est ce que je propose aujourd’hui, et ce que j’ai fait pour PLUSDE, client de mon employeur, de 2023 à 2026.',
     contexte: 'PLUSDE, client d’Outlined, est une plateforme de loisirs numériques et de culture pour les CSE et leurs salariés : plus de 1 200 CSE clients et plus d’un million d’utilisateurs, selon plusde.com. J’ai repris le projet progressivement, jusqu’à le gérer entièrement, seul, en lien direct avec le client.',
     volets: [
