@@ -736,7 +736,7 @@
   @media (min-width: 40rem) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   /*
-   * « Vous, votre métier. / Moi, votre site, vos outils et le suivi. » :
+   * « Vous, votre métier. / Moi, vos outils, votre site et le suivi. » :
    * l'argument en typographie d'affichage, sur le modèle de l'accroche de
    * l'en-tête (une largeur de police par ligne). Au défilement, chaque ligne
    * s'étire jusqu'à sa largeur.
@@ -744,7 +744,7 @@
    * L'animation fait varier font-stretch, donc la largeur du texte : pour que
    * la hauteur ne bouge pas, les lignes sont coupées à la main et ne se
    * renvoient jamais (nowrap), et la taille est plafonnée pour que l'état le
-   * plus large tienne dans la colonne. Ligne la plus large : « vos outils et
+   * plus large tienne dans la colonne. Ligne la plus large : « votre site et
    * le suivi. » à 125 %, graisse 300 = 10,5 em, + 0,6 em de retrait → 11,5 em.
    */
   .partage {
@@ -772,9 +772,8 @@
   @keyframes partage-2 { from { font-stretch: 125%; font-weight: 300; } }
 
   /*
-   * Vis-à-vis : le code des coupes. Tireté et hachures pour le site à faire
-   * soi-même,
-   * trait plein et rouge pour ce que je prends en charge.
+   * Vis-à-vis : le code des coupes. Tireté et hachures pour le logiciel tout
+   * fait, trait plein et rouge pour ce que je prends en charge.
    */
   .vis-a-vis {
     display: grid;

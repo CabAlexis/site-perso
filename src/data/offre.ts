@@ -209,16 +209,16 @@ const renouvelables = formules.filter((f) => f.tarifs.length > 1);
 const dureeCourte = Math.min(...durees);
 
 // Engagement au total, à afficher sous les cartes.
-export const engagementTotal = `Engagement de ${conditions.engagementMois}\u00a0mois au total\u00a0: après une formule de ${ou(dureesCourtes)}\u00a0mois, votre site passe en ${essentiel.nom} jusqu’à la fin de la première année.`;
+export const engagementTotal = `Engagement de ${conditions.engagementMois}\u00a0mois au total\u00a0: après une formule de ${ou(dureesCourtes)}\u00a0mois, votre outil ou votre site passe en ${essentiel.nom} jusqu’à la fin de la première année.`;
 
 // Sous les cartes : pour qui prend souvent des options à l'unité.
 export const besoinRegulier = `Besoin régulier de points ou d’évolutions\u00a0? La formule ${formuleRecommandee.nom} les inclut chaque mois.`;
 
 // Sous les sélecteurs : la formule recommandée sur la durée la plus courte.
-export const besoinPonctuel = `Un besoin ponctuel, comme un nouvel outil\u00a0? Prenez ${dureeCourte}\u00a0mois de ${formuleRecommandee.nom}\u00a0: votre site reste ensuite en ${essentiel.nom}.`;
+export const besoinPonctuel = `Un besoin ponctuel, comme un nouvel outil\u00a0? Prenez ${dureeCourte}\u00a0mois de ${formuleRecommandee.nom}\u00a0: votre outil ou votre site reste ensuite en ${essentiel.nom}.`;
 
 // À la fin d'un engagement de Suivi ou de Partenaire.
-export const finEngagement = `Sans renouvellement, passage en ${essentiel.nom}, à ${euros(essentiel.prixMensuel)}\u00a0HT par mois\u00a0: votre site et votre outil restent en ligne et maintenus. Vous pouvez renouveler la ${renouvelables.map((f) => f.nom).join(' ou la ')} pour ${ou(durees.filter((d) => renouvelables.every((f) => tarifPour(f, d))).reverse())}\u00a0mois à tout moment.`;
+export const finEngagement = `Sans renouvellement, passage en ${essentiel.nom}, à ${euros(essentiel.prixMensuel)}\u00a0HT par mois\u00a0: votre outil et votre site restent en ligne et maintenus. Vous pouvez renouveler la ${renouvelables.map((f) => f.nom).join(' ou la ')} pour ${ou(durees.filter((d) => renouvelables.every((f) => tarifPour(f, d))).reverse())}\u00a0mois à tout moment.`;
 
 // Ce qui dépasse le volume mensuel de la formule recommandée.
 export const auDelaRecommandee = `Au-delà d’une évolution par mois, le travail fait l’objet d’un devis, comptant ou étalé, ou d’un passage à la formule ${partenaire.nom}.`;

@@ -11,22 +11,24 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
 ---
 <Base
   titre="L'offre"
-  description={`Site vitrine et espace d'administration offerts, puis un abonnement qui couvre hébergement, maintenance et modifications. Trois formules de ${euros(formules[0].prixMensuel)} à ${euros(formules[2].prixMensuel)} HT par mois, pour votre site ou votre bot Discord.`}
+  description={`Création offerte de votre outil ou de votre site, puis un abonnement qui couvre hébergement, maintenance et modifications. Trois formules de ${euros(formules[0].prixMensuel)} à ${euros(formules[2].prixMensuel)} HT par mois, pour votre outil, votre site ou votre bot Discord.`}
 >
   <div class="grille bloc offre-tete">
     <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
     <h1 class="affiche plein">L'offre</h1>
     <p class="chapeau">
-      Je crée votre site ou votre bot, avec son espace d'administration, puis un abonnement
-      couvre l'hébergement, la maintenance et les modifications, sans rien à gérer de votre
-      côté. <span class="cle">La création est offerte</span>&nbsp;: seule la mise en service est
-      facturée, {euros(conditions.miseEnService)}&nbsp;HT une fois.
+      Planning, prise de rendez-vous, suivi de clients, application pour votre équipe, votre
+      site ou votre bot Discord&nbsp;: je crée l'outil, puis un abonnement couvre
+      l'hébergement, la maintenance et les modifications, sans rien à gérer de votre côté.
+      <span class="cle">La création est offerte</span>, avec la première version d'un outil
+      simple&nbsp;: seule la mise en service est facturée, {euros(conditions.miseEnService)}&nbsp;HT
+      une fois.
     </p>
   </div>
 
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
-    <p>Pour votre site ou votre bot Discord.</p>
+    <p>Pour votre outil, votre site ou votre bot Discord.</p>
     <Formules variante="offre" />
     <p class="plein">{besoinRegulier}</p>
     <div class="engagement plein">
@@ -63,7 +65,7 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
         <h3>Logiciel standard</h3>
         <ul>
           <li>Prêt tout de suite, mais c'est à vous de vous adapter à lui.</li>
-          <li>Pas relié à votre site.</li>
+          <li>Pas relié à vos autres outils ni à votre site.</li>
         </ul>
       </li>
       <li>
@@ -105,7 +107,7 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
       <li>
         <h3 id="bots">Bots Discord</h3>
         <p>
-          Même principe que les sites&nbsp;: mise en service, puis la formule de votre choix.
+          Même principe que les outils et les sites&nbsp;: mise en service, puis la formule de votre choix.
           Compris&nbsp;: un bot à votre nom ({socleBot.join(', ')}), configuré pour votre
           serveur, avec son tableau de bord sur votrebot.cabalex.dev ou sur votre domaine.
         </p>
@@ -123,7 +125,7 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
           <span class="etiquette">HT, sur devis</span>
         </p>
         <p>
-          Quand un site ne suffit plus. Exemple en production&nbsp;:
+          Quand il faut un outil plus complet. Exemple en production&nbsp;:
           <a href="/plumes-jumelles">Plumes Jumelles</a>, avec abonnements, boutique et
           gestion des commandes.
         </p>
@@ -138,7 +140,7 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
       <details>
         <summary>Pourquoi la création est-elle offerte&nbsp;?</summary>
         <p>
-          Parce que je me rémunère sur l'abonnement&nbsp;: le temps passé à créer votre site est
+          Parce que je me rémunère sur l'abonnement&nbsp;: le temps passé à créer votre outil ou votre site est
           couvert par les {conditions.engagementMois} mois d'engagement. Vous n'avez pas de grosse
           somme à avancer au départ. Seuls des frais de mise en service sont facturés&nbsp;:
           {euros(conditions.miseEnService)} HT, une seule fois.
@@ -213,7 +215,7 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
         <summary>Est-ce rentable pour une petite entreprise&nbsp;?</summary>
         <p>
           Par exemple, un outil qui vous fait gagner quelques heures par mois, ou qui évite des
-          rendez-vous manqués, peut vite se rembourser. Et le site est déjà compris dans la
+          rendez-vous manqués, peut vite se rembourser. Votre site et son hébergement sont déjà compris dans la
           formule {formuleRecommandee.nom}.
         </p>
       </details>
