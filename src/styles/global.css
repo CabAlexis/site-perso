@@ -226,6 +226,13 @@
   .bandeau a { text-decoration: none; }
   .bandeau a:hover { text-decoration: underline; text-decoration-color: var(--signal); }
   .bandeau .accueil { font-weight: 500; margin-inline-end: auto; }
+  /* Page courante : en rouge, soulignée, comme au survol mais en plus franc. */
+  .bandeau a[aria-current='page'] {
+    color: var(--signal);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: currentColor;
+  }
 
   .pied {
     margin-top: calc(var(--rythme) * 5);
@@ -709,6 +716,7 @@
   .reference-volets :is(h4, h5) { font-size: var(--t-1); font-stretch: 92%; font-weight: 700; line-height: 1.25; }
   @media (min-width: 56rem) { .reference-volets { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .reference + .projets-cartes { margin-top: calc(var(--rythme) * 1.6); }
+  .projets-cartes + .appels { margin-top: var(--rythme); }
 
   /* Résumé d'un projet : quatre lignes courtes, l'étiquette au-dessus. */
   .resume-projet { display: grid; gap: 0.45rem; max-width: var(--mesure); }

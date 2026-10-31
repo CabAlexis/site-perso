@@ -14,6 +14,13 @@ const { titre, description, type = 'website', noindex = false } = Astro.props;
 const chemin = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
 const canonique = new URL(chemin, Astro.site);
 const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis Cabillic`;
+// Menu principal, dans l'ordre de lecture : l'offre, les preuves, le contact.
+// L'entrée de la page courante est marquée (aria-current).
+const menu = [
+  { href: '/offre', libelle: 'Offre' },
+  { href: '/tous-les-projets', libelle: 'Projets' },
+  { href: '/#contact', libelle: 'Contact' },
+];
 ---
 <!doctype html>
 <html lang="fr">
@@ -48,9 +55,7 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
     <header class="bandeau grille">
       <nav class="plein" aria-label="Navigation principale">
         <a class="accueil" href="/">Alexis Cabillic</a>
-        <a href="/offre">Offre</a>
-        <a href="/#realisations">Réalisations</a>
-        <a href="/#contact">Contact</a>
+        {menu.map((m) => <a href={m.href} aria-current={m.href === chemin ? 'page' : undefined}>{m.libelle}</a>)}
       </nav>
     </header>
 
@@ -62,6 +67,7 @@ const titreComplet = titre === 'Alexis Cabillic' ? titre : `${titre} — Alexis 
       <div class="plein">
         <p>Alexis Cabillic, développeur web à Pau. <a href="mailto:alexis@cabalex.dev">alexis@cabalex.dev</a></p>
         <ul>
+          <li><a href="/tous-les-projets">Tous les projets</a></li>
           <li><a href="/mentions-legales">Mentions légales</a></li>
           <li><a href="https://github.com/CabAlexis/site-perso">Code source de ce site</a></li>
         </ul>
