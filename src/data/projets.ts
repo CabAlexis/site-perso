@@ -56,8 +56,18 @@ const projet = z.object({
   // Réalisations : les sites en grandes cartes sur l'accueil, les bots Discord
   // regroupés dessous.
   nature: z.enum(['site', 'bot']).optional(),
-  // Ce que la page montre, en une ligne, pour l'accueil.
-  angle: z.string().min(1),
+  // Pour l'accueil, en mots simples et sans terme technique : pour qui, le
+  // besoin, ce que j'ai fait, ce que ça change. Une ligne courte chacun.
+  resume: z.object({
+    pourQui: z.string().min(10).max(180),
+    besoin: z.string().min(10).max(180),
+    fait: z.string().min(10).max(180),
+    change: z.string().min(10).max(180),
+  }),
+  // La stack et les choix techniques, pour les développeurs et les recruteurs :
+  // dans le bloc repliable « Détails techniques » de l'accueil. Vérifiables
+  // dans le dépôt du projet.
+  technique: z.array(z.string().min(2)).min(1),
   statut: z.object({
     code: z.enum(['production', 'service', 'fonctionnel', 'arret']),
     libelle: z.string().min(1),
@@ -107,7 +117,19 @@ const fiches = [
     modele: 'demo',
     nature: 'site',
     titre: 'Ici Immobilier (démo)',
-    angle: "Le site vitrine complet d'une agence immobilière à Pau, que l'agente met à jour elle-même depuis son espace pro.",
+    resume: {
+      pourQui: "Une agence immobilière à Pau, en démonstration (agente et annonces fictives).",
+      besoin: "Présenter ses biens et les tenir à jour sans dépendre de personne.",
+      fait: "Le site complet : annonces, filtre par commune, demande d'estimation, avis et espace pro.",
+      change: "L'agente modifie elle-même ses annonces et son profil.",
+    },
+    technique: [
+      "Laravel 12, Inertia, Vue 3",
+      "éditeur TipTap",
+      "photos avec Spatie Media Library",
+      "données structurées Schema.org",
+      "site non indexé (démonstration)",
+    ],
     statut: { code: 'production', libelle: 'En ligne · site de démonstration' },
     description:
       "Site vitrine de démonstration pour une agence immobilière à Pau : annonces, filtre par "
@@ -131,7 +153,20 @@ const fiches = [
     rubrique: 'realisations',
     nature: 'site',
     titre: 'Plumes Jumelles',
-    angle: "Un site d'abonnement et une boutique, livrés à deux créatrices qui n'avaient qu'une page Instagram.",
+    resume: {
+      pourQui: "Deux créatrices qui animaient une communauté de lectrices sur Instagram.",
+      besoin: "Un abonnement (une histoire inédite par courrier chaque mois) et une boutique, à gérer elles-mêmes.",
+      fait: "Un site à elles, avec paiement en ligne, abonnement, boutique et espace de gestion.",
+      change: "Depuis le 4 septembre 2026, elles gèrent seules produits, abonnées, commandes et remboursements.",
+    },
+    technique: [
+      "Laravel 13, Inertia, Vue 3",
+      "Stripe (Laravel Cashier)",
+      "back-office maison",
+      "mails authentifiés DKIM",
+      "109 tests PHPUnit (au 28 septembre 2026)",
+      "première version AdonisJS + Nuxt, réécrite en Laravel le 28 mai 2026",
+    ],
     statut: { code: 'production', libelle: 'En production depuis le 4 septembre 2026' },
     description:
       "Abonnement postal et boutique en Laravel pour deux créatrices venues d'Instagram : "
@@ -158,7 +193,19 @@ const fiches = [
     modele: 'produit',
     nature: 'bot',
     titre: 'DofIntendant',
-    angle: "Un bot Discord gratuit pour les guildes Dofus, module par module, qui ne lit jamais le contenu des messages.",
+    resume: {
+      pourQui: "Les guildes et alliances Dofus, sur Discord.",
+      besoin: "S'organiser sur leur serveur : métiers, accueil des recrues, groupes de donjon, expérience.",
+      fait: "Un bot gratuit où chaque serveur active seulement ce dont il a besoin, avec une page de réglages en ligne.",
+      change: "Utilisé par 3 serveurs au 15 octobre 2026, sans jamais lire le contenu des messages.",
+    },
+    technique: [
+      "TypeScript, discord.js 14",
+      "PostgreSQL (Drizzle)",
+      "site et tableau de bord en Laravel 12, Inertia, Vue",
+      "connexion par Discord (OAuth2)",
+      "aucun intent privilégié",
+    ],
     statut: { code: 'service', libelle: 'En service · public et gratuit' },
     description:
       'Bot Discord gratuit et modulaire pour les guildes et alliances Dofus : métiers, Almanax, '
@@ -183,8 +230,20 @@ const fiches = [
     rubrique: 'realisations',
     nature: 'bot',
     titre: 'Bot Légendes',
-    angle: "Un bot Discord pensé pour qu'une panne ne fasse rien perdre et n'ouvre rien.",
-    statut: { code: 'service', libelle: 'En service · démon supervisord' },
+    resume: {
+      pourQui: "L'alliance Dofus « Faut Y Songer », quelques dizaines de membres.",
+      besoin: "Organiser la vie du serveur (collection, tirages au sort, arrivées, inscriptions aux sorties) sans rien perdre au redémarrage.",
+      fait: "Un bot pensé pour les pannes, qui reprend où il en était.",
+      change: "Un tirage prévu pendant une coupure a bien lieu. Si le bot tombe, la porte reste fermée : personne n'entre sans contrôle.",
+    },
+    technique: [
+      "discord.js, better-sqlite3, dotenv",
+      "71 commandes slash (au 2 octobre 2026)",
+      "démon supervisord avec redémarrage automatique",
+      "participants lus en REST au tirage",
+      "migrations par lecture du schéma réel",
+    ],
+    statut: { code: 'service', libelle: 'En service · relancé automatiquement en cas de panne' },
     description:
       "Bot Discord d'une alliance Dofus, conçu pour la panne : état en base, giveaways repris "
       + 'au redémarrage, tirage lu en REST, porte fermée si le bot tombe.',
@@ -210,7 +269,19 @@ const fiches = [
     rubrique: 'realisations',
     nature: 'bot',
     titre: 'Patchoumio',
-    angle: "Un bot Discord qui répond aux joueurs avec des fiches rivens (prix du marché, stats à viser) et des liens de builds, géré depuis un panel web d'administration.",
+    resume: {
+      pourQui: "Le youtubeur Patchoumio et le serveur Discord Warframe de sa communauté.",
+      besoin: "Que les joueurs aient une réponse en tapant le nom d'une arme, et que l'équipe tienne le contenu à jour.",
+      fait: "Un bot qui répond avec le prix du marché, les statistiques à viser et des équipements conseillés, plus un espace en ligne pour l'équipe.",
+      change: "L'équipe modifie le contenu elle-même, et le bot en tient compte en 30 secondes au plus. 420 armes couvertes au 12 octobre 2026.",
+    },
+    technique: [
+      "TypeScript, discord.js 14, better-sqlite3, recherche approchée Fuse.js",
+      "panel en Laravel 12 et Inertia",
+      "base SQLite partagée, relue en lecture seule toutes les 30 s",
+      "prix via l'API v1 de warframe.market (une requête par seconde au plus)",
+      "intent privilégié borné par salon et par longueur",
+    ],
     statut: { code: 'service', libelle: 'En service · serveur Discord de Patchoumio' },
     description:
       'Bot Discord d’un serveur Warframe francophone : fiches rivens au prix de warframe.market, '
@@ -237,8 +308,20 @@ const fiches = [
     slug: 'nutrifollow',
     rubrique: 'labo',
     titre: 'NutriFollow',
-    angle: 'Un SaaS pour diététiciens, conçu, construit et sécurisé seul, de la base de données au serveur.',
-    statut: { code: 'fonctionnel', libelle: 'Fonctionnel · migration HDS requise avant mise en service' },
+    resume: {
+      pourQui: "Les diététiciens indépendants et leurs patients.",
+      besoin: "Suivre les patients entre deux consultations, sur un même outil.",
+      fait: "Seul, un logiciel en ligne : plans alimentaires, suivi, rendez-vous, messagerie, et un espace patient qui s'installe sur le téléphone.",
+      change: "Pas encore utilisé par de vrais patients : il doit d'abord passer sur un hébergement certifié pour les données de santé et recevoir deux protections supplémentaires.",
+    },
+    technique: [
+      "SaaS en Laravel 13, Inertia, Vue 3",
+      "interface patient en PWA",
+      "temps réel, IA asynchrone, audit interne",
+      "hébergement HDS requis avant mise en service",
+      "184 tests Pest, 44 Vitest, 70 Dusk (au 2 octobre 2026)",
+    ],
+    statut: { code: 'fonctionnel', libelle: 'Fonctionnel · pas encore ouvert' },
     description:
       'SaaS de suivi diététique construit seul en Laravel : deux interfaces, temps réel, IA '
       + 'asynchrone, audit interne. Fonctionnel, migration HDS requise.',
@@ -261,7 +344,18 @@ const fiches = [
     slug: 'dofus-switcher',
     rubrique: 'labo',
     titre: 'Dofus Switcher',
-    angle: 'Un outil de bureau KDE Plasma 6 / Wayland qui intercepte la souris au niveau evdev, sans jamais toucher au jeu.',
+    resume: {
+      pourQui: "Moi, pour jouer plusieurs comptes Dofus Retro sous Linux.",
+      besoin: "Passer d'une fenêtre de jeu à l'autre avec la souris, sans jamais agir dans le jeu à ma place (les règles d'Ankama l'interdisent).",
+      fait: "Un petit logiciel pour l'ordinateur, à la place d'un bricolage.",
+      change: "Il a servi en juin 2026. Je ne l'utilise plus et le projet est à l'arrêt.",
+    },
+    technique: [
+      "Python, PySide6 (Qt)",
+      "KDE Plasma 6 / Wayland",
+      "interception evdev, réinjection uinput",
+      "278 tests pytest, 90 % de couverture sur core/ (au 2 octobre 2026)",
+    ],
     statut: { code: 'arret', libelle: "À l'arrêt · dernière version le 27 juin 2026" },
     description:
       'Gestion multi-comptes Dofus Retro sous KDE Plasma 6 / Wayland : grab evdev, réinjection '

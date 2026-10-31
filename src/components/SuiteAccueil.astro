@@ -11,6 +11,7 @@ import Etape from './Etape.astro';
 import Formules from './Formules.astro';
 import Deroulement from './Deroulement.astro';
 import Exemples from './Exemples.astro';
+import ResumeProjet from './ResumeProjet.astro';
 import Todo from './Todo.astro';
 import { prepublication } from '../data/publication.json';
 import { sites, bots, labo } from '../data/projets';
@@ -136,12 +137,13 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
         <li>
           <a class="carte" href={`/${projet.slug}`}>
             <span class="trace"><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} transition={`coupe-${projet.slug}`} /></span>
-            <span class="carte-texte">
+            <div class="carte-texte">
               <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> <span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></span>
-              <span class="carte-angle">{projet.angle}</span>
+              <ResumeProjet projet={projet} partie="resume" />
               <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
-            </span>
+            </div>
           </a>
+          <ResumeProjet projet={projet} partie="technique" />
         </li>
       ))}
     </ol>
@@ -150,8 +152,9 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
       {bots.map((projet) => (
         <li>
           <a href={`/${projet.slug}`}>{projet.titre}</a>
-          <span>{projet.angle}</span>
+          <ResumeProjet projet={projet} partie="resume" />
           <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+          <ResumeProjet projet={projet} partie="technique" />
         </li>
       ))}
     </ul>
@@ -207,8 +210,9 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
         {labo.map((projet) => (
           <li>
             <a href={`/${projet.slug}`}>{projet.titre}</a>
-            <span>{projet.angle}</span>
+            <ResumeProjet projet={projet} partie="resume" />
             <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+            <ResumeProjet projet={projet} partie="technique" />
           </li>
         ))}
       </ul>

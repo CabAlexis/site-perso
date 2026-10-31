@@ -1,0 +1,35 @@
+---
+/*
+ * Un projet sur l'accueil, en mots simples : pour qui, le besoin, ce que j'ai
+ * fait, ce que ça change (`resume` dans projets.ts). La stack reste à portée
+ * dans le bloc repliable « Détails techniques » (`technique`), rendu à part
+ * (`partie="technique"`) parce qu'un <details> ne va pas dans le lien d'une
+ * carte.
+ */
+import type { Projet } from '../data/projets';
+
+interface Props {
+  projet: Projet;
+  partie: 'resume' | 'technique';
+}
+const { projet, partie } = Astro.props;
+const { pourQui, besoin, fait, change } = projet.resume;
+const lignes = [
+  ['Pour qui', pourQui],
+  ['Le besoin', besoin],
+  ["Ce que j'ai fait", fait],
+  ['Ce que ça change', change],
+];
+---
+{partie === 'resume' ? (
+  <dl class="resume-projet">
+    {lignes.map(([terme, texte]) => (
+      <div><dt class="etiquette">{terme}</dt><dd>{texte}</dd></div>
+    ))}
+  </dl>
+) : (
+  <details class="technique">
+    <summary class="etiquette">Détails techniques</summary>
+    <p>{projet.technique.join(' · ')}</p>
+  </details>
+)}

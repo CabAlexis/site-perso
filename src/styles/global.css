@@ -628,8 +628,8 @@
   @keyframes redresse { to { transform: rotateX(16deg); } }
 
   /*
-   * Les cinq projets en cartes : la vignette (silhouette de la coupe), le
-   * nom, l'angle, le statut. Au survol ou au focus, la vignette s'allume et
+   * Les projets en cartes : la vignette (silhouette de la coupe), le nom, le
+   * résumé en quatre lignes, le statut, puis les détails techniques repliés. Au survol ou au focus, la vignette s'allume et
    * ses paquets de signal circulent ; au clic, elle devient la coupe de la
    * page projet (transition de vue).
    */
@@ -674,7 +674,28 @@
     transition: color 0.2s;
   }
   .carte-nom .etiquette { font-size: var(--t--1); font-stretch: 100%; font-weight: 400; }
-  .carte-angle { max-width: var(--mesure); }
+  .projets-cartes > li { display: grid; gap: 0.6rem; align-content: start; }
+
+  /* Résumé d'un projet : quatre lignes courtes, l'étiquette au-dessus. */
+  .resume-projet { display: grid; gap: 0.45rem; max-width: var(--mesure); }
+  .resume-projet > div { display: grid; gap: 0.05rem; }
+  .resume-projet dd { font-size: var(--t-0); font-stretch: 100%; font-weight: 400; line-height: 1.4; }
+  .resume-projet > div:last-child dt { color: var(--signal); }
+  .resume-projet > div:last-child dd { font-weight: 600; }
+
+  /* « Détails techniques » : replié par défaut, pour les développeurs et les
+     recruteurs. Même code que la FAQ : + et − en rouge, aucun script. */
+  .technique summary {
+    display: inline-flex;
+    gap: 0.5rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .technique summary::-webkit-details-marker { display: none; }
+  .technique summary::after { content: '+'; content: '+' / ''; color: var(--signal); }
+  .technique[open] summary::after { content: '−'; content: '−' / ''; }
+  .technique summary:hover { color: var(--signal); }
+  .technique p { margin-top: 0.3rem; font-family: var(--mono); font-size: var(--t--1); line-height: 1.5; color: var(--encre-2); }
   /* Couleur seule : élargir la police au survol renvoyait les titres longs à
      la ligne et faisait sauter la carte. */
   .carte:is(:hover, :focus-visible) .carte-nom { color: var(--signal); }
