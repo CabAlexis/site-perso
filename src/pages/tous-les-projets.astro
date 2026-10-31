@@ -1,0 +1,75 @@
+---
+/*
+ * Tous les projets : la référence d'avant mon indépendance, les sites, les
+ * bots Discord et le labo. L'accueil n'en montre que les plus parlants pour
+ * une PME et renvoie ici.
+ */
+import Base from '../layouts/Base.astro';
+import Reference from '../components/Reference.astro';
+import CartesSites from '../components/CartesSites.astro';
+import ResumeProjet from '../components/ResumeProjet.astro';
+import { sites, bots, labo } from '../data/projets';
+import { references } from '../data/references';
+import { contact } from '../data/offre';
+---
+<Base
+  titre="Tous les projets"
+  description="Les projets d'Alexis Cabillic, développeur freelance à Pau : PLUSDE avant de me lancer, des sites, des bots Discord et des projets personnels."
+>
+  <div class="grille bloc offre-tete">
+    <p class="etiquette plein">Alexis Cabillic · développeur freelance à Pau</p>
+    <h1 class="affiche plein">Tous les projets</h1>
+    <p class="chapeau">
+      Pour chacun&nbsp;: pour qui, le besoin, ce que j'ai fait et ce que ça change. Les détails
+      techniques sont repliés sous chaque projet.
+    </p>
+  </div>
+
+  <section class="grille bloc" aria-labelledby="avant">
+    <h2 id="avant" class="intertitre">Avant de me lancer</h2>
+    {references.map((r) => <Reference reference={r} />)}
+  </section>
+
+  <section class="grille bloc" aria-labelledby="sites">
+    <h2 id="sites" class="intertitre">Sites</h2>
+    <CartesSites liste={sites} />
+  </section>
+
+  <section class="grille bloc" aria-labelledby="bots">
+    <h2 id="bots" class="intertitre">Bots Discord</h2>
+    <ul class="bots plein" role="list">
+      {bots.map((projet) => (
+        <li>
+          <a href={`/${projet.slug}`}>{projet.titre}</a>
+          <ResumeProjet projet={projet} partie="resume" />
+          <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+          <ResumeProjet projet={projet} partie="technique" />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="labo">
+    <h2 id="labo" class="intertitre">Labo</h2>
+    <div class="prose">
+      <p>Projets personnels, pour expérimenter et apprendre.</p>
+      <ul class="labo" role="list">
+        {labo.map((projet) => (
+          <li>
+            <a href={`/${projet.slug}`}>{projet.titre}</a>
+            <ResumeProjet projet={projet} partie="resume" />
+            <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+            <ResumeProjet projet={projet} partie="technique" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="grille bloc" aria-labelledby="contact">
+    <h2 id="contact" class="intertitre">Parlons de votre besoin</h2>
+    <div class="prose">
+      <p class="appels"><a class="appel" href={contact.mailto}>Écrire à {contact.email}</a></p>
+    </div>
+  </section>
+</Base>

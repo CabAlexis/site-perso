@@ -87,8 +87,8 @@ const morceaux = (texte: string) => texte.split(/(\S*\p{L}-\p{L}\S*)/u);
 
     <nav class="suite grille" aria-label="Autres projets">
       <div class="plein suite-liens">
-        {precedent ? <a href={`/${precedent.slug}`} rel="prev"><span class="etiquette">Précédent</span> {precedent.titre}</a> : <a href="/"><span class="etiquette">Retour</span> Accueil</a>}
-        {suivant ? <a href={`/${suivant.slug}`} rel="next"><span class="etiquette">Suivant</span> {suivant.titre}</a> : <a href="/"><span class="etiquette">Retour</span> Accueil</a>}
+        {precedent ? <a href={`/${precedent.slug}`} rel="prev"><span class="etiquette">Précédent</span> {precedent.titre}</a> : <a href="/tous-les-projets"><span class="etiquette">Retour</span> Tous les projets</a>}
+        {suivant ? <a href={`/${suivant.slug}`} rel="next"><span class="etiquette">Suivant</span> {suivant.titre}</a> : <a href="/tous-les-projets"><span class="etiquette">Retour</span> Tous les projets</a>}
       </div>
     </nav>
   </article>

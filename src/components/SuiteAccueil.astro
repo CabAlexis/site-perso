@@ -1,21 +1,23 @@
 ---
 /*
  * Suite de l'accueil, sous l'en-tête. D'abord pour le client : ce que je fais,
- * des exemples d'outils, comment ça se passe, qui je suis, les formules. Puis les réalisations (les sites en
- * cartes, les bots Discord regroupés dessous), « Comment je travaille », le
- * labo (projets personnels) et le contact.
+ * des exemples d'outils, comment ça se passe, qui je suis, les formules. Puis
+ * les réalisations les plus parlantes pour une PME (PLUSDE en tête, puis les
+ * sites marqués `accueil`) avec un lien vers « Tous les projets », « Comment je
+ * travaille » et le contact.
  */
-import Vignette from './Vignette.astro';
 import Coupe from './Coupe.astro';
 import Etape from './Etape.astro';
 import Formules from './Formules.astro';
 import Deroulement from './Deroulement.astro';
 import Exemples from './Exemples.astro';
-import ResumeProjet from './ResumeProjet.astro';
+import Reference from './Reference.astro';
+import CartesSites from './CartesSites.astro';
 import Todo from './Todo.astro';
 import { prepublication } from '../data/publication.json';
-import { sites, bots, labo } from '../data/projets';
-import { boucle, coupes } from '../data/coupes';
+import { sitesAccueil } from '../data/projets';
+import { references } from '../data/references';
+import { boucle } from '../data/coupes';
 import { contact, conditions, prestations, formuleRecommandee, engagementTotal, besoinPonctuel, euros } from '../data/offre';
 ---
   <section class="grille bloc" aria-labelledby="services">
@@ -132,32 +134,11 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
 
   <section class="grille bloc" aria-labelledby="realisations">
     <h2 id="realisations" class="intertitre">Réalisations</h2>
-    <ol class="projets-cartes plein">
-      {sites.map((projet, i) => (
-        <li>
-          <a class="carte" href={`/${projet.slug}`}>
-            <span class="trace"><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} transition={`coupe-${projet.slug}`} /></span>
-            <div class="carte-texte">
-              <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> <span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></span>
-              <ResumeProjet projet={projet} partie="resume" />
-              <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
-            </div>
-          </a>
-          <ResumeProjet projet={projet} partie="technique" />
-        </li>
-      ))}
-    </ol>
-    <h3 class="bots-titre plein">Bots Discord</h3>
-    <ul class="bots plein" role="list">
-      {bots.map((projet) => (
-        <li>
-          <a href={`/${projet.slug}`}>{projet.titre}</a>
-          <ResumeProjet projet={projet} partie="resume" />
-          <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
-          <ResumeProjet projet={projet} partie="technique" />
-        </li>
-      ))}
-    </ul>
+    {references.map((r) => <Reference reference={r} />)}
+    <CartesSites liste={sitesAccueil} />
+    <p class="appels plein">
+      <a href="/tous-les-projets">Tous les projets, dont les bots Discord et le labo</a>
+    </p>
   </section>
 
   <section class="corps grille bloc facons" aria-labelledby="facons">
@@ -199,23 +180,6 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
         cherche d'où vient le problème plutôt que de le masquer, pour qu'il ne revienne pas.
           </p>
         </Etape>
-    </div>
-  </section>
-
-  <section class="grille bloc" aria-labelledby="labo">
-    <h2 id="labo" class="intertitre">Labo</h2>
-    <div class="prose">
-      <p>Projets personnels, pour expérimenter et apprendre.</p>
-      <ul class="labo" role="list">
-        {labo.map((projet) => (
-          <li>
-            <a href={`/${projet.slug}`}>{projet.titre}</a>
-            <ResumeProjet projet={projet} partie="resume" />
-            <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
-            <ResumeProjet projet={projet} partie="technique" />
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
 

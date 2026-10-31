@@ -47,16 +47,19 @@ export const EXCEPTIONS_PREUVES = ['dofus-switcher', 'bot-legendes', 'patchoumio
 const projet = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
   titre: z.string().min(1),
-  // Réalisations : en vitrine sur l'accueil. Labo : projets personnels, sans
-  // client, dans un bloc compact en bas de l'accueil.
+  // Réalisations : sites et bots pour des clients ou pour tous. Labo :
+  // projets personnels, sans client. Tous sur la page « Tous les projets ».
   rubrique: z.enum(['realisations', 'labo']),
   // Réalisation sans client unique : un produit public, installable par tous,
   // ou un site de démonstration.
   modele: z.enum(['produit', 'demo']).optional(),
-  // Réalisations : les sites en grandes cartes sur l'accueil, les bots Discord
-  // regroupés dessous.
+  // Réalisations : les sites en grandes cartes, les bots Discord regroupés
+  // dessous (page « Tous les projets »).
+  // Sur l'accueil aussi : les projets les plus parlants pour une PME. Les
+  // autres ne sont que sur la page « Tous les projets ».
+  accueil: z.boolean().optional(),
   nature: z.enum(['site', 'bot']).optional(),
-  // Pour l'accueil, en mots simples et sans terme technique : pour qui, le
+  // Sur les cartes, en mots simples et sans terme technique : pour qui, le
   // besoin, ce que j'ai fait, ce que ça change. Une ligne courte chacun.
   resume: z.object({
     pourQui: z.string().min(10).max(180),
@@ -65,7 +68,7 @@ const projet = z.object({
     change: z.string().min(10).max(180),
   }),
   // La stack et les choix techniques, pour les développeurs et les recruteurs :
-  // dans le bloc repliable « Détails techniques » de l'accueil. Vérifiables
+  // dans le bloc repliable « Détails techniques » des cartes. Vérifiables
   // dans le dépôt du projet.
   technique: z.array(z.string().min(2)).min(1),
   statut: z.object({
@@ -112,46 +115,10 @@ export type Projet = z.infer<typeof projet>;
 
 const fiches = [
   {
-    slug: 'ici-immobilier',
-    rubrique: 'realisations',
-    modele: 'demo',
-    nature: 'site',
-    titre: 'Ici Immobilier (démo)',
-    resume: {
-      pourQui: "Une agence immobilière à Pau, en démonstration (agente et annonces fictives).",
-      besoin: "Présenter ses biens et les tenir à jour sans dépendre de personne.",
-      fait: "Le site complet : annonces, filtre par commune, demande d'estimation, avis et espace pro.",
-      change: "L'agente modifie elle-même ses annonces et son profil.",
-    },
-    technique: [
-      "Laravel 12, Inertia, Vue 3",
-      "éditeur TipTap",
-      "photos avec Spatie Media Library",
-      "données structurées Schema.org",
-      "site non indexé (démonstration)",
-    ],
-    statut: { code: 'production', libelle: 'En ligne · site de démonstration' },
-    description:
-      "Site vitrine de démonstration pour une agence immobilière à Pau : annonces, filtre par "
-      + 'commune, demande d’estimation, avis, et un espace pro pour tout mettre à jour.',
-    enBref: [
-      { terme: "Le projet", texte: "Le site vitrine complet d'une agence immobilière à Pau, en version de démonstration (agente et annonces fictives)." },
-      { terme: "Pour qui", texte: "Un indépendant ou une petite entreprise qui veut un site à son image, qu'il met à jour lui-même." },
-      { terme: "Ce qu'il montre", texte: "Les annonces, le filtre par commune, la demande d'estimation, les avis, et un espace pro où l'agente modifie elle-même ses annonces et son profil." },
-    ],
-    arbitrages: [
-      'Biens, avis et coordonnées fictifs : une démonstration, pas une vraie agence.',
-      "Site non indexé par les moteurs de recherche : une démonstration n'a pas à y apparaître.",
-    ],
-    elements: [
-      { libelle: 'Site de démonstration', valeur: 'ici-immobilier.cabalex.dev', url: 'https://ici-immobilier.cabalex.dev' },
-      { libelle: 'Annonces', valeur: '12 biens fictifs', url: 'https://ici-immobilier.cabalex.dev/biens', note: 'au 15 octobre 2026' },
-    ],
-  },
-  {
     slug: 'plumes-jumelles',
     rubrique: 'realisations',
     nature: 'site',
+    accueil: true,
     titre: 'Plumes Jumelles',
     resume: {
       pourQui: "Deux créatrices qui animaient une communauté de lectrices sur Instagram.",
@@ -185,6 +152,44 @@ const fiches = [
     elements: [
       { libelle: 'En production', valeur: 'plumes-jumelles.fr', url: 'https://plumes-jumelles.fr' },
       { libelle: 'Tests', valeur: '109 tests PHPUnit', note: 'suite Feature, au 28 septembre 2026' },
+    ],
+  },
+  {
+    slug: 'ici-immobilier',
+    rubrique: 'realisations',
+    modele: 'demo',
+    nature: 'site',
+    accueil: true,
+    titre: 'Ici Immobilier (démo)',
+    resume: {
+      pourQui: "Une agence immobilière à Pau, en démonstration (agente et annonces fictives).",
+      besoin: "Présenter ses biens et les tenir à jour sans dépendre de personne.",
+      fait: "Le site complet : annonces, filtre par commune, demande d'estimation, avis et espace pro.",
+      change: "L'agente modifie elle-même ses annonces et son profil.",
+    },
+    technique: [
+      "Laravel 12, Inertia, Vue 3",
+      "éditeur TipTap",
+      "photos avec Spatie Media Library",
+      "données structurées Schema.org",
+      "site non indexé (démonstration)",
+    ],
+    statut: { code: 'production', libelle: 'En ligne · site de démonstration' },
+    description:
+      "Site vitrine de démonstration pour une agence immobilière à Pau : annonces, filtre par "
+      + 'commune, demande d’estimation, avis, et un espace pro pour tout mettre à jour.',
+    enBref: [
+      { terme: "Le projet", texte: "Le site vitrine complet d'une agence immobilière à Pau, en version de démonstration (agente et annonces fictives)." },
+      { terme: "Pour qui", texte: "Un indépendant ou une petite entreprise qui veut un site à son image, qu'il met à jour lui-même." },
+      { terme: "Ce qu'il montre", texte: "Les annonces, le filtre par commune, la demande d'estimation, les avis, et un espace pro où l'agente modifie elle-même ses annonces et son profil." },
+    ],
+    arbitrages: [
+      'Biens, avis et coordonnées fictifs : une démonstration, pas une vraie agence.',
+      "Site non indexé par les moteurs de recherche : une démonstration n'a pas à y apparaître.",
+    ],
+    elements: [
+      { libelle: 'Site de démonstration', valeur: 'ici-immobilier.cabalex.dev', url: 'https://ici-immobilier.cabalex.dev' },
+      { libelle: 'Annonces', valeur: '12 biens fictifs', url: 'https://ici-immobilier.cabalex.dev/biens', note: 'au 15 octobre 2026' },
     ],
   },
   {
@@ -385,6 +390,8 @@ export const realisations = projets.filter((p) => p.rubrique === 'realisations')
 export const labo = projets.filter((p) => p.rubrique === 'labo');
 export const sites = realisations.filter((p) => p.nature === 'site');
 export const bots = realisations.filter((p) => p.nature === 'bot');
+// Sur l'accueil : les sites marqués `accueil`, dans l'ordre des fiches.
+export const sitesAccueil = sites.filter((p) => p.accueil);
 
 // Numérotation et précédent/suivant restent à l'intérieur de la rubrique.
 export function projetParSlug(slug: string): { projet: Projet; numero: number; total: number; precedent?: Projet; suivant?: Projet } {

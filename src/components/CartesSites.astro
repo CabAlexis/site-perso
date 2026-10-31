@@ -1,0 +1,32 @@
+---
+/*
+ * Les sites en grandes cartes : la vignette (silhouette de la coupe), le nom,
+ * le résumé en quatre lignes et le statut dans le lien vers la page projet,
+ * puis les détails techniques repliés, hors du lien. Partagé par l'accueil
+ * (sites marqués `accueil`) et « Tous les projets ».
+ */
+import Vignette from './Vignette.astro';
+import ResumeProjet from './ResumeProjet.astro';
+import { coupes } from '../data/coupes';
+import type { Projet } from '../data/projets';
+
+interface Props {
+  liste: Projet[];
+}
+const { liste } = Astro.props;
+---
+<ol class="projets-cartes plein">
+  {liste.map((projet, i) => (
+    <li>
+      <a class="carte" href={`/${projet.slug}`}>
+        <span class="trace"><Vignette id={`vignette-${projet.slug}`} coupe={coupes[projet.slug]} transition={`coupe-${projet.slug}`} /></span>
+        <div class="carte-texte">
+          <span class="carte-nom"><span class="etiquette">{String(i + 1).padStart(2, '0')}</span> <span style={`view-transition-name: titre-${projet.slug}`}>{projet.titre}</span></span>
+          <ResumeProjet projet={projet} partie="resume" />
+          <span class:list={['etiquette', 'statut', `statut-${projet.statut.code}`]}>{projet.statut.libelle}</span>
+        </div>
+      </a>
+      <ResumeProjet projet={projet} partie="technique" />
+    </li>
+  ))}
+</ol>
