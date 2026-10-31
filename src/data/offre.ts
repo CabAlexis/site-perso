@@ -226,8 +226,7 @@ export const auDelaRecommandee = `Au-delà d’une évolution par mois, le trava
 export const contact = {
   email: 'alexis@cabalex.dev',
   // Objet pré-rempli du mail ouvert par l'appel à l'action.
-  mailto: `mailto:alexis@cabalex.dev?subject=${encodeURIComponent('Mon projet')}`,
-  mailtoDevis: `mailto:alexis@cabalex.dev?subject=${encodeURIComponent('Demande de devis')}`,
+  mailto: `mailto:alexis@cabalex.dev?subject=${encodeURIComponent('Mon besoin')}`,
   zone: 'Pau et alentours. À distance : toute la France.',
 };
 

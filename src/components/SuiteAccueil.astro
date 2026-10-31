@@ -1,7 +1,7 @@
 ---
 /*
  * Suite de l'accueil, sous l'en-tête. D'abord pour le client : ce que je fais,
- * des exemples d'outils, comment ça se passe, les formules. Puis les réalisations (les sites en
+ * des exemples d'outils, comment ça se passe, qui je suis, les formules. Puis les réalisations (les sites en
  * cartes, les bots Discord regroupés dessous), « Comment je travaille », le
  * labo (projets personnels) et le contact.
  */
@@ -80,6 +80,23 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
     <Deroulement />
   </section>
 
+  <section class="grille bloc qui" aria-labelledby="qui">
+    <h2 id="qui" class="intertitre">Qui je suis</h2>
+    <p class="monogramme marge" aria-hidden="true"><span>A</span><span>C</span></p>
+    <div class="prose">
+      <p class="chapeau">
+        Je m'appelle Alexis Cabillic, je suis développeur à Pau. Je crée des outils pour les
+        artisans, les indépendants et les PME&nbsp;: ce qui vous fait gagner du temps au
+        quotidien, et le site qui va avec quand il en faut un.
+      </p>
+      <p>
+        J'utilise l'IA pour aller plus vite, mais c'est à moi que vous parlez, du premier
+        échange au suivi, et <span class="cle">je reste responsable de chaque ligne</span> de ce
+        que je vous livre.
+      </p>
+    </div>
+  </section>
+
   <section class="grille bloc" aria-labelledby="formules">
     <h2 id="formules" class="intertitre">Trois formules</h2>
     <p>
@@ -105,7 +122,7 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
         sur mesure, à partir de {euros(prestations.surMesure.aPartirDe)} HT.
       </p>
       <p class="appels">
-        <a class="appel" href={contact.mailto}>Parlons de votre projet</a>
+        <a class="appel" href={contact.mailto}>Parlons de votre besoin</a>
         <a href="/offre">Le détail de l'offre</a>
       </p>
     </div>
@@ -201,9 +218,10 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
     <h2 id="contact" class="intertitre">Contact</h2>
     <div class="prose">
       <p class="chapeau">
-        Dites-moi en quelques lignes ce que vous faites et ce que vous attendez de votre site.
+        Dites-moi en quelques lignes ce que vous faites et ce qui vous fait perdre du temps. On
+        en parle, gratuitement et sans engagement.
       </p>
-      <p class="appels"><a class="appel" href={contact.mailto}>Parlons de votre projet</a></p>
+      <p class="appels"><a class="appel" href={contact.mailto}>Parlons de votre besoin</a></p>
       <dl class="coordonnees">
         <div>
           <dt class="etiquette">Mail</dt>

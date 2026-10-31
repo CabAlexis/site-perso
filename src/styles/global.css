@@ -819,6 +819,35 @@
   @media (min-width: 68rem) {
     .exemples dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
+  /*
+   * « Qui je suis » : pas de photo, un monogramme dessiné comme une vignette
+   * de la table à dessin (quadrillage, filet d'encre), le C en rouge comme la
+   * dernière ligne de l'accroche. Au-dessus du texte sur mobile, dans la
+   * marge sur grand écran.
+   */
+  .monogramme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(6.5rem, 30vw, 9rem);
+    aspect-ratio: 1;
+    border: 1.5px solid var(--encre);
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--trait) 55%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--trait) 55%, transparent) 1px, transparent 1px);
+    background-size: 12.5% 12.5%;
+    background-position: -1px -1px;
+    font-size: clamp(3rem, 2rem + 4vw, 4.6rem);
+    font-stretch: 62%;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .monogramme span + span { color: var(--signal); }
+  @media (min-width: 68rem) {
+    .qui > .monogramme { grid-row: 2 / span 2; align-self: start; width: 11rem; font-size: 5.6rem; }
+  }
+
   /* « Pourquoi pas… » : trois cartes empilées sur mobile, côte à côte sur
      grand écran ; la formule recommandée reprend l'habit de sa carte. */
   .alternatives {
