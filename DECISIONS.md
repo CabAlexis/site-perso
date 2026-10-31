@@ -39,3 +39,4 @@ La phrase actuelle (« après 12 mois cumulés, vous recevez une copie complète
 - **URL `/tous-les-projets`.** Écarté : `/projets`, à cause du dossier d'images `public/projets/` (risque de conflit côté serveur, configuration Nginx absente du dépôt).
 - **Ordre des fiches.** Plumes Jumelles (client réel) passe avant Ici Immobilier (démo) : sa page devient « 01 / 05 ». Les pages projets renvoient vers « Tous les projets » au lieu de l'accueil.
 - **Plumes Jumelles (validé).** « ma première référence client livrée depuis que je suis à mon compte ».
+- **Menu (2026-10-31).** « Projets » plutôt que « Réalisations » : le libellé reprend le titre de la page d'arrivée (« Tous les projets »), qui contient aussi le labo et la référence d'avant l'indépendance. Ordre Offre · Projets · Contact. L'ancienne entrée « Réalisations » vers /#realisations disparaît. Page courante marquée par aria-current (rouge, soulignée), valable pour toutes les entrées du menu.
