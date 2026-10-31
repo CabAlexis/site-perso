@@ -1,0 +1,36 @@
+---
+/*
+ * Exemples d'outils (offre.ts, `exemples`) : une ligne par exemple, le titre
+ * à gauche et, à droite, le besoin, l'outil et ce que ça change. Partagé par
+ * l'accueil et /offre. Ce sont des exemples, pas des réalisations : filet
+ * tireté, comme le reste de ce qui n'est pas prouvé sur le site.
+ */
+import { exemples, formuleRecommandee } from '../data/offre';
+
+interface Props {
+  niveau?: 3 | 4;
+}
+const { niveau = 3 } = Astro.props;
+const Titre = `h${niveau}`;
+
+const cadres = {
+  recommandee: `Avec la formule ${formuleRecommandee.nom}`,
+  devis: 'Sur devis',
+  toutes: 'Dans toutes les formules',
+};
+---
+<ul class="exemples plein" role="list">
+  {exemples.map((e) => (
+    <li id={e.ancre && `exemple-${e.ancre}`}>
+      <div class="exemple-tete">
+        <Titre>{e.titre}</Titre>
+        <p class="etiquette">{cadres[e.cadre]}</p>
+      </div>
+      <dl>
+        <div><dt class="etiquette">Le besoin</dt><dd>{e.besoin}</dd></div>
+        <div><dt class="etiquette">L'outil</dt><dd>{e.outil}</dd></div>
+        <div class="exemple-change"><dt class="etiquette">Ce que ça change</dt><dd>{e.change}</dd></div>
+      </dl>
+    </li>
+  ))}
+</ul>

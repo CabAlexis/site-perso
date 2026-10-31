@@ -1,7 +1,7 @@
 ---
 /*
  * Suite de l'accueil, sous l'en-tête. D'abord pour le client : ce que je fais,
- * comment ça se passe, les formules. Puis les réalisations (les sites en
+ * des exemples d'outils, comment ça se passe, les formules. Puis les réalisations (les sites en
  * cartes, les bots Discord regroupés dessous), « Comment je travaille », le
  * labo (projets personnels) et le contact.
  */
@@ -10,6 +10,7 @@ import Coupe from './Coupe.astro';
 import Etape from './Etape.astro';
 import Formules from './Formules.astro';
 import Deroulement from './Deroulement.astro';
+import Exemples from './Exemples.astro';
 import Todo from './Todo.astro';
 import { prepublication } from '../data/publication.json';
 import { sites, bots, labo } from '../data/projets';
@@ -65,21 +66,13 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
     </div>
   </section>
 
-  <section class="grille bloc" aria-labelledby="outil">
-    <h2 id="outil" class="intertitre">Un outil pour votre métier</h2>
-    <p class="accroche-outil plein">
-      Ce qui vous fait perdre du temps chaque semaine, je le transforme en outil.
+  <section class="grille bloc" aria-labelledby="exemples">
+    <h2 id="exemples" class="intertitre">Exemples d'outils</h2>
+    <p class="plein">Des exemples de ce que je peux créer pour vous, à partir de votre besoin.</p>
+    <Exemples />
+    <p class="appels plein">
+      <a class="appel" href={`#formule-${formuleRecommandee.id}`}>La formule {formuleRecommandee.nom}, {euros(formuleRecommandee.prixMensuel)}&nbsp;HT par mois</a>
     </p>
-    <div class="prose">
-      <p>
-        Un planning qui regroupe vos interventions par secteur, des rendez-vous pris en ligne, le
-        suivi de vos clients&nbsp;: une première version à la mise en service, puis des améliorations chaque
-        mois avec la formule {formuleRecommandee.nom}.
-      </p>
-      <p class="appels">
-        <a class="appel" href={`#formule-${formuleRecommandee.id}`}>La formule {formuleRecommandee.nom}, {euros(formuleRecommandee.prixMensuel)}&nbsp;HT par mois</a>
-      </p>
-    </div>
   </section>
 
   <section class="grille bloc" aria-labelledby="deroulement">
@@ -98,10 +91,9 @@ import { contact, conditions, prestations, formuleRecommandee, engagementTotal, 
     <Formules />
     <div class="prose">
       <p class="modules-ligne">
-        Besoin d'un outil sur mesure (planning, prise de rendez-vous, devis en ligne…)&nbsp;?
         Un outil simple se construit avec la formule {formuleRecommandee.nom} ; au-delà, sur
         devis, payable comptant ou étalé avec votre abonnement. {besoinPonctuel}
-        <a href="/offre#modules">Exemples de modules</a>
+        <a href="#exemples">Exemples d'outils</a>
       </p>
       <p>
         {engagementTotal} Après {conditions.engagementMois}&nbsp;mois d'abonnement cumulés, vous

@@ -2,8 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Formules from '../components/Formules.astro';
 import Deroulement from '../components/Deroulement.astro';
+import Exemples from '../components/Exemples.astro';
 import Todo from '../components/Todo.astro';
-import { formules, comprisOffre, socleBot, conditions, prestations, contact, modules, paiementModule, formuleRecommandee, optionsUnite, besoinRegulier, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
+import { formules, comprisOffre, socleBot, conditions, prestations, contact, paiementModule, formuleRecommandee, optionsUnite, besoinRegulier, engagementTotal, finEngagement, auDelaRecommandee, euros, moisPayes } from '../data/offre';
 
 const { acomptePourcent, etalementMoisMax } = paiementModule;
 const partenaire = formules.find((f) => f.id === 'partenaire')!;
@@ -39,7 +40,7 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
       </p>
     )}
     <p class="appels plein">
-      <a class="appel" href="#module-planning">Voir un exemple d'outil</a>
+      <a class="appel" href="#exemple-planning">Voir un exemple d'outil</a>
     </p>
   </section>
 
@@ -83,17 +84,18 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
     </ul>
   </section>
 
+  <section class="grille bloc" aria-labelledby="exemples">
+    <h2 id="exemples" class="intertitre">Exemples d'outils</h2>
+    <p class="plein">Des exemples de ce que je peux créer pour vous, à partir de votre besoin.</p>
+    <Exemples />
+  </section>
+
   <section class="grille bloc" aria-labelledby="sur-mesure">
     <h2 id="sur-mesure" class="intertitre">Sur mesure</h2>
     <ul class="sur-mesure plein" role="list">
       <li>
-        <h3 id="modules">Modules</h3>
-        <p>Un outil ajouté à votre site, par exemple&nbsp;:</p>
-        <ul>
-          {modules.map((m) => (
-            <li id={m.ancre && `module-${m.ancre}`}><strong>{m.titre}.</strong> {m.texte}</li>
-          ))}
-        </ul>
+        <h3 id="modules">Outils sur mesure</h3>
+        <p>Un outil pensé pour votre métier, relié à votre site s'il y en a un (<a href="#exemples">exemples</a>).</p>
         <p>
           Un outil simple se construit avec la
           <a href={`#formule-${formuleRecommandee.id}`}>formule {formuleRecommandee.nom}</a>.
@@ -216,9 +218,9 @@ const partenaire = formules.find((f) => f.id === 'partenaire')!;
         </p>
       </details>
       <details>
-        <summary>Puis-je étaler le paiement d'un module&nbsp;?</summary>
+        <summary>Puis-je étaler le paiement d'un outil sur devis&nbsp;?</summary>
         <p>
-          Oui. Chaque module est sur devis, et vous choisissez&nbsp;: paiement comptant à la
+          Oui. Chaque outil plus complet est sur devis, et vous choisissez&nbsp;: paiement comptant à la
           livraison, ou paiement étalé, ajouté à votre abonnement mensuel. Dans ce cas, vous
           versez {acomptePourcent}&nbsp;% d'acompte à la commande, puis le reste est réparti sur
           {etalementMoisMax}&nbsp;mois au plus. Si vous partez avant la fin de l'étalement, le

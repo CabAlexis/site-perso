@@ -215,7 +215,7 @@ export const engagementTotal = `Engagement de ${conditions.engagementMois}\u00a0
 export const besoinRegulier = `Besoin régulier de points ou d’évolutions\u00a0? La formule ${formuleRecommandee.nom} les inclut chaque mois.`;
 
 // Sous les sélecteurs : la formule recommandée sur la durée la plus courte.
-export const besoinPonctuel = `Un besoin ponctuel, comme un module\u00a0? Prenez ${dureeCourte}\u00a0mois de ${formuleRecommandee.nom}\u00a0: votre site reste ensuite en ${essentiel.nom}.`;
+export const besoinPonctuel = `Un besoin ponctuel, comme un nouvel outil\u00a0? Prenez ${dureeCourte}\u00a0mois de ${formuleRecommandee.nom}\u00a0: votre site reste ensuite en ${essentiel.nom}.`;
 
 // À la fin d'un engagement de Suivi ou de Partenaire.
 export const finEngagement = `Sans renouvellement, passage en ${essentiel.nom}, à ${euros(essentiel.prixMensuel)}\u00a0HT par mois\u00a0: votre site et votre outil restent en ligne et maintenus. Vous pouvez renouveler la ${renouvelables.map((f) => f.nom).join(' ou la ')} pour ${ou(durees.filter((d) => renouvelables.every((f) => tarifPour(f, d))).reverse())}\u00a0mois à tout moment.`;
@@ -232,36 +232,61 @@ export const contact = {
 };
 
 /*
- * Modules sur mesure : des EXEMPLES de ce que je peux développer, pas des
- * réalisations. Aucun client, aucun chiffre ici.
+ * Exemples d'outils : des EXEMPLES de ce que je peux créer, pas des
+ * réalisations. Aucun client, aucun chiffre ici. Les outils d'abord, le site
+ * vitrine en dernier ; chacun se lit besoin → outil → ce que ça change.
  */
-export const modules = z.array(z.object({
+export const exemples = z.array(z.object({
   titre: z.string().min(1),
-  texte: z.string().min(20),
-  // Assez simple pour se construire avec la formule recommandée : première
-  // version à la mise en service, puis améliorations chaque mois.
-  avecFormuleRecommandee: z.boolean().optional(),
-  // Ancre (#module-…) pour y renvoyer depuis la page.
+  besoin: z.string().min(20),
+  outil: z.string().min(20),
+  change: z.string().min(10),
+  // Comment il se construit : avec la formule recommandée (première version
+  // à la mise en service, puis améliorations chaque mois), sur devis, ou dans
+  // n'importe quelle formule (le site vitrine).
+  cadre: z.enum(['recommandee', 'devis', 'toutes']),
+  // Ancre (#exemple-…) pour y renvoyer depuis la page.
   ancre: z.string().regex(/^[a-z-]+$/).optional(),
-})).min(1).max(3).parse([
+})).min(1).max(5).parse([
   {
-    titre: 'Planning pour les métiers à domicile',
+    titre: 'Planning des interventions',
     ancre: 'planning',
-    texte: 'Les temps de trajet sont pris en compte et les rendez-vous regroupés par secteur, pour moins rouler et faire plus d’interventions dans la journée.',
-    avecFormuleRecommandee: true,
+    besoin: 'Vous passez trop de temps sur la route entre deux interventions.',
+    outil: 'Un planning qui regroupe vos rendez-vous par secteur, en tenant compte des trajets.',
+    change: 'Pour moins rouler et caser plus d’interventions dans la journée.',
+    cadre: 'recommandee',
   },
   {
-    titre: 'Prise de rendez-vous en ligne',
-    texte: 'Vos clients réservent un créneau libre, vous recevez la demande, et des rappels partent automatiquement par e-mail.',
-    avecFormuleRecommandee: true,
+    titre: 'Prise de rendez-vous',
+    besoin: 'Le téléphone sonne pendant que vous travaillez.',
+    outil: 'Vos clients réservent un créneau libre en ligne, et des rappels partent par e-mail.',
+    change: 'Moins d’appels à prendre, moins de rendez-vous oubliés.',
+    cadre: 'recommandee',
   },
   {
-    titre: 'Demande de devis guidée',
-    texte: 'Le client décrit son besoin étape par étape, photos comprises, et vous recevez une demande complète.',
+    titre: 'Suivi de clients',
+    besoin: 'L’historique de chaque client est éparpillé entre carnets, SMS et tableurs.',
+    outil: 'Une fiche par client, avec ses interventions et vos notes.',
+    change: 'Retrouver l’historique sans chercher, au bureau comme chez le client.',
+    cadre: 'recommandee',
+  },
+  {
+    titre: 'Application pour l’équipe terrain',
+    besoin: 'Vos équipes notent leurs interventions sur papier, et vous ressaisissez tout le soir.',
+    outil: 'Une application sur leur téléphone\u00a0: le planning du jour et le compte rendu à remplir sur place, photos comprises.',
+    change: 'Pour éviter la ressaisie du soir et suivre l’avancement dans la journée.',
+    cadre: 'devis',
+  },
+  {
+    titre: 'Site vitrine',
+    besoin: 'On vous cherche en ligne sans vous trouver, ou on tombe sur des horaires périmés.',
+    outil: 'Un site à votre image, que vous mettez à jour vous-même.',
+    change: 'Vos clients trouvent les bonnes informations et vous contactent directement.',
+    cadre: 'toutes',
   },
 ]);
 
-// Paiement d'un module, sur devis : comptant à la livraison, ou étalé avec
+// Paiement d'un outil sur devis : comptant à la livraison, ou étalé avec
 // l'abonnement (acompte à la commande, puis le reste sur quelques mois).
 export const paiementModule = {
   acomptePourcent: 30,
