@@ -19,3 +19,12 @@ Une entrée par décision : date, contexte, choix, alternative écartée.
 La phrase actuelle (« après 12 mois cumulés, vous recevez une copie complète et utilisable de votre site ») **n'est pas modifiée**. Règle envisagée par l'utilisateur, à valider avec son avocat avant publication :
 - pour un site : copie complète, comme aujourd'hui ;
 - pour un outil : les données appartiennent au client et sont exportables à tout moment ; le code reste la propriété du prestataire (cession possible, à part).
+
+## 2026-10-31 — Projets de l'accueil sans jargon
+
+- **Format (validé).** Sur l'accueil, chaque projet se lit en quatre lignes : pour qui, le besoin, ce que j'ai fait, ce que ça change (champ `resume` de `projets.ts`, qui remplace `angle`). Aucun terme technique ; « bot », « Discord » et « Linux » gardés (noms de l'offre ou de contexte).
+- **Détails techniques.** La stack, vérifiée dans les dépôts frères, va dans un `<details>` replié « Détails techniques » (champ `technique`), placé après le lien de la carte (un élément interactif ne va pas dans un lien). Écarté : le garder dans la carte.
+- **Statuts.** Bot Légendes : « démon supervisord » → « relancé automatiquement en cas de panne » ; NutriFollow : « migration HDS requise avant mise en service » → « pas encore ouvert » (le HDS reste dans les détails et sur la page).
+- **Longueur des lignes.** Limite du schéma à 180 caractères pour garder mot pour mot les textes validés. Écarté : les raccourcir à 120.
+- **« logs ».** Devient « journal du serveur » (registre chronologique ; « historique » écarté). « tableau de bord web » retiré de `socleBot` : la phrase de /offre le cite déjà juste après.
+- **Hors périmètre.** Les meta descriptions et le contenu des pages projets restent techniques par endroits.
