@@ -8,7 +8,7 @@
  *
  * La création et la mise en service sont dites une fois autour des cartes ;
  * chaque carte liste en puces ce que paie le client (`comprend` dans
- * offre.ts, après le socle).
+ * offre.ts, et le socle en tête ou en dernier selon `socleEnTete`).
  *
  * Variante « offre » : le choix de la durée et du paiement, des boutons
  * radio, et chaque carte porte toutes les combinaisons, dont le CSS n'affiche
@@ -92,7 +92,7 @@ const paiementsAffiches: readonly Paiement[] = accueil ? ['mensuel'] : paiements
       <div class="formule-comprend">
         <p class="etiquette">Ce que comprend votre abonnement</p>
         <ul>
-          {[socleCourt, ...f.comprend].map((c) => <li>{c}</li>)}
+          {(f.socleEnTete ? [socleCourt, ...f.comprend] : [...f.comprend, socleCourt]).map((c) => <li>{c}</li>)}
           {optionsUnite.formule === f.id && (
             <li class="formule-option">
               À l'unité&nbsp;: un point de {optionsUnite.point.duree} ({euros(optionsUnite.point.prix)}&nbsp;HT) ou une évolution

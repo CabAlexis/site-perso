@@ -37,9 +37,12 @@ const formule = z.object({
   // Temps de travail mensuel derrière les évolutions. JAMAIS affiché sur le
   // site : il sert de référence pour les CGV.
   dureeEvolutionInterne: z.string().min(1),
-  // Ce que paie le client, en puces courtes, après le socle (`socleCourt`) :
+  // Ce que paie le client, en puces courtes, avec le socle (`socleCourt`) :
   // une puce = une chose concrète. Affiché dans les cartes (accueil et /offre).
-  comprend: z.array(z.string().min(1).max(100)).min(1),
+  comprend: z.array(z.string().min(1).max(120)).min(1),
+  // Le socle en tête des puces quand il fait l'essentiel de la formule ;
+  // sinon l'outil d'abord, le socle en dernier.
+  socleEnTete: z.boolean().optional(),
   // La formule mise en avant ; les autres servent de repères. Une seule.
   recommandee: z.boolean().optional(),
   // Pour qui, en une phrase complète (affichée près des cartes sur /offre).
@@ -63,6 +66,7 @@ export const formules: Formule[] = z.array(formule).length(3)
     accroche: 'Le site, sans souci',
     dureeEvolutionInterne: '30\u00a0min par mois',
     comprend: ['Corrections et mises à jour de contenu'],
+    socleEnTete: true,
   },
   {
     id: 'suivi',
@@ -73,12 +77,12 @@ export const formules: Formule[] = z.array(formule).length(3)
       { mois: 3, prixMensuel: 199 },
     ],
     pourQui: 'Petites entreprises avec rendez-vous, interventions ou stock',
-    accroche: 'Le site et vos outils, qui grandissent avec vous',
+    accroche: 'Votre outil sur mesure, qui évolue chaque mois',
     dureeEvolutionInterne: '1\u00a0h\u00a030 par mois, ne se cumulent pas d’un mois sur l’autre',
     comprend: [
-      'Une évolution par mois (page, champ de formulaire, export, fonction dans l’outil ou le bot)',
-      'Un point mensuel',
-      'Votre outil métier qui s’améliore chaque mois',
+      'Votre outil, amélioré chaque mois\u00a0: une évolution par mois (fonction, export, champ de formulaire, page)',
+      'Utilisable sur ordinateur et sur téléphone, comme une application, sans passer par l’App Store ni Google Play',
+      'Un point mensuel pour en parler',
     ],
     recommandee: true,
     pourQuiDetail: 'Les petites entreprises qui gèrent chaque semaine des rendez-vous, des interventions ou du stock\u00a0: salons, garages, artisans du dépannage, commerces.',
@@ -136,7 +140,8 @@ export const optionsUnite = {
   evolution: { prix: 119 },
 };
 
-// Le socle en une puce, en tête de « Ce que comprend votre abonnement ».
+// Le socle en une puce de « Ce que comprend votre abonnement » (en tête ou en
+// dernier, voir `socleEnTete`).
 export const socleCourt = 'Hébergement, domaine, mails, sécurité, sauvegardes';
 
 export const conditions = {
