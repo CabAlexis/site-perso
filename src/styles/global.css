@@ -568,9 +568,6 @@
     text-wrap: nowrap;
   }
   .tete-l1 { font-stretch: 62%; }
-  /* 100 % et non 125 % : « à la mise en ligne, » est long ; à 125 % elle
-     débordait sur mobile et écrasait les deux autres lignes. */
-  .tete-l2 { font-stretch: 100%; font-weight: 300; padding-inline-start: 0.4em; }
   .tete-l3 { font-stretch: 80%; color: var(--signal); justify-self: start; }
   .tete-l3::after {
     content: '';
@@ -612,8 +609,7 @@
   @media (prefers-reduced-motion: no-preference) {
     .tete-l { animation: etire 1.1s cubic-bezier(0.2, 0.7, 0.15, 1) both; }
     .tete-l1 { --depart: 125%; --poids: 200; animation-delay: 0.1s; }
-    .tete-l2 { --depart: 62%; --poids: 900; animation-delay: 0.25s; }
-    .tete-l3 { --depart: 125%; --poids: 200; animation-delay: 0.4s; }
+    .tete-l3 { --depart: 125%; --poids: 200; animation-delay: 0.3s; }
     .tete-l3::after { animation: souligne 0.8s cubic-bezier(0.45, 0, 0.2, 1) 1.2s both; }
   }
   @keyframes etire { from { font-stretch: var(--depart); font-weight: var(--poids); } }

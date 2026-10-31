@@ -4,28 +4,28 @@ import Vignette from '../components/Vignette.astro';
 import SuiteAccueil from '../components/SuiteAccueil.astro';
 import { projets } from '../data/projets';
 import { coupes } from '../data/coupes';
-import { formules, euros } from '../data/offre';
+import { formules, formuleRecommandee, euros } from '../data/offre';
 ---
 <Base
   titre="Alexis Cabillic"
-  description={`Développeur web freelance à Pau. Création de votre site, mise en ligne, puis hébergement, maintenance et modifications. Dès ${euros(formules[0].prixMensuel)} HT par mois.`}
+  description={`Développeur freelance à Pau. Planning, prise de rendez-vous, suivi de clients ou site : l’outil qu’il vous faut, mis en ligne puis hébergé et maintenu, dès ${euros(formules[0].prixMensuel)} HT par mois.`}
 >
   <header class="tete">
     <div class="tete-plan" aria-hidden="true">
       {projets.map((p) => <Vignette id={`plan-${p.slug}`} coupe={coupes[p.slug]} />)}
     </div>
     <div class="grille tete-texte">
-      <p class="etiquette plein">Alexis Cabillic · développeur web freelance à Pau</p>
+      <p class="etiquette plein">Alexis Cabillic · développeur freelance à Pau</p>
       <h1 class="tete-titre plein">
-        <span class="tete-l tete-l1">De la première idée</span>
-        <span class="tete-l tete-l2">à la mise en ligne,</span>
-        <span class="tete-l tete-l3">et tout ce qui suit.</span>
+        <span class="tete-l tete-l1">D'un besoin,</span>
+        <span class="tete-l tete-l3">je crée un outil.</span>
       </h1>
       <div class="tete-bas plein">
         <p class="chapeau">
-          Des sites et des applications web pour les artisans, les indépendants et les PME,
-          conçus, mis en ligne puis entretenus. Un seul interlocuteur, du premier échange au
-          suivi.
+          Un planning, la prise de rendez-vous, le suivi de vos clients, une application pour
+          votre équipe sur le terrain, ou votre site&nbsp;: je crée l'outil qui vous fait gagner
+          du temps et je le mets en ligne. Avec la formule {formuleRecommandee.nom}, on l'améliore
+          ensemble chaque mois. Pour les artisans, les indépendants et les PME.
         </p>
         <p class="etiquette">
           En ligne : un site vitrine pour une agence immobilière (démo), la boutique et
