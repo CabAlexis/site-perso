@@ -62,10 +62,10 @@ const projet = z.object({
   // Sur les cartes, en mots simples et sans terme technique : pour qui, le
   // besoin, ce que j'ai fait, ce que ça change. Une ligne courte chacun.
   resume: z.object({
-    pourQui: z.string().min(10).max(180),
-    besoin: z.string().min(10).max(180),
-    fait: z.string().min(10).max(180),
-    change: z.string().min(10).max(180),
+    pourQui: z.string().min(10).max(220),
+    besoin: z.string().min(10).max(220),
+    fait: z.string().min(10).max(220),
+    change: z.string().min(10).max(220),
   }),
   // La stack et les choix techniques, pour les développeurs et les recruteurs :
   // dans le bloc repliable « Détails techniques » des cartes. Vérifiables
@@ -317,7 +317,7 @@ const fiches = [
       pourQui: "Les diététiciens indépendants et leurs patients.",
       besoin: "Suivre les patients entre deux consultations, sur un même outil.",
       fait: "Seul, un logiciel en ligne : plans alimentaires, suivi, rendez-vous, messagerie, et un espace patient qui s'installe sur le téléphone.",
-      change: "Pas encore utilisé par de vrais patients : il doit d'abord passer sur un hébergement certifié pour les données de santé et recevoir deux protections supplémentaires.",
+      change: "Pas encore utilisé par de vrais patients : il doit d'abord passer sur un hébergement certifié pour les données de santé, masquer l'identité des patients avant l'envoi à l'IA et chiffrer tout le dossier médical.",
     },
     technique: [
       "SaaS en Laravel 13, Inertia, Vue 3",
@@ -333,7 +333,7 @@ const fiches = [
     enBref: [
       { terme: "Le projet", texte: "Un logiciel en ligne pour les diététiciens indépendants : plans alimentaires, suivi des patients entre les consultations, rendez-vous, messagerie." },
       { terme: "Le besoin visé", texte: "Réunir le praticien et ses patients sur un même outil, entre les consultations." },
-      { terme: "Où il en est", texte: "Fonctionnel, pas encore ouvert. Avant d'accueillir de vrais patients, il doit passer sur un hébergement certifié pour les données de santé (HDS) et compléter deux protections supplémentaires." },
+      { terme: "Où il en est", texte: "Fonctionnel, pas encore ouvert. Avant d'accueillir de vrais patients, il doit passer sur un hébergement certifié pour les données de santé (HDS), masquer l'identité des patients avant l'envoi à l'IA et chiffrer tout le dossier médical." },
     ],
     arbitrages: [
       "Le rattachement d'un compte existant par son e-mail, pratique, était une prise de contrôle de compte.",
